@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: EPL-2.0
+# Arrowhead v5.3.0 relay (MQTT over mutual TLS) for the inter-cloud integration tests of the primary Java tree.
+# It runs on its own network "arrowhead-relay-network" with the alias arrowhead-relay; test containers join that
+# network. Published on 127.0.0.1:8894 only (8893 stays free for an organisation relay of federated clouds).
+name: arrowhead-relay
+
+services:
+  relay:
+    image: eclipse-mosquitto:2.0.22@sha256:81a6193ae693942a3231cd3ac52875b02b7e3a19da671b2fb4b55cc874c5b279
+    user: "1883:1883"
+    read_only: true
+    tmpfs:
+      - /tmp:size=4m,mode=1777,noexec,nosuid,nodev
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 128m
+    pids_limit: 64
+    cpus: 0.5
+    command: ["/usr/sbin/mosquitto", "-c", "/mosquitto/config/mosquitto.conf"]
+    restart: unless-stopped
+    volumes:
+      - ./mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./security/trust.pem:/certs/trust.pem:ro
+      - ./security/relay.crt:/certs/relay.crt:ro
+      - ./security/relay.key:/certs/relay.key:ro
+    networks:
+      relay:
+        aliases: [arrowhead-relay]
+    ports:
+      - "127.0.0.1:${RELAY_PORT:-8894}:8883"
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 8883"]
+      interval: 10s
+      timeout: 4s
+      retries: 8
+      start_period: 5s
+
+networks:
+  relay:
+    name: arrowhead-relay-network
