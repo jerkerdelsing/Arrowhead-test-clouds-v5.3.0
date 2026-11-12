@@ -1,0 +1,28 @@
+{
+  "name": "Gatekeeper",
+  "listen": ":8449",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/gatekeeper.crt",
+  "privateKey": "/certs/gatekeeper.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/gatekeeper.json",
+  "passwordFile": "/certs/password",
+  "crlFile": "/crl/ca.crl",
+  "upstreams": {
+    "GateTunnel": "https://gatetunnel:8453"
+  },
+  "federationEnabled": false,
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "authorizationPolicy": "enforce",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [
+    "LocalCloudManager"
+  ],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "gatekeeper",
+  "advertisePort": 8449
+}

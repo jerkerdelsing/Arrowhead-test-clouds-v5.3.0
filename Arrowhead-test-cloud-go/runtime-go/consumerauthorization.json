@@ -1,0 +1,37 @@
+{
+  "name": "ConsumerAuthorization",
+  "listen": ":8445",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/consumerauthorization.crt",
+  "privateKey": "/certs/consumerauthorization.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/consumerauthorization.json",
+  "passwordFile": "/certs/password",
+  "tokenSecretFile": "/certs/token-secret",
+  "crlFile": "/crl/ca.crl",
+  "blacklistURL": "https://blacklist:8464",
+  "blacklistExclude": [
+    "ServiceRegistry",
+    "Authentication",
+    "ConsumerAuthorization",
+    "DynamicServiceOrchestration",
+    "SimpleStoreServiceOrchestration",
+    "CertificateAuthority"
+  ],
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "mqttURL": "ssl://mqtt-broker:8883",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [
+    "DynamicServiceOrchestration",
+    "SimpleStoreServiceOrchestration",
+    "Gatekeeper",
+    "Onboarding"
+  ],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "consumerauthorization",
+  "advertisePort": 8445
+}

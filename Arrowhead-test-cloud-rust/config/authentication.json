@@ -1,0 +1,160 @@
+{
+  "role": "authentication",
+  "name": "Authentication",
+  "cloudSuffix": "RustCloud.Company.arrowhead.eu",
+  "listen": "0.0.0.0:8444",
+  "certificate": "/run/cert.pem",
+  "privateKey": "/run/key.pem",
+  "ca": "/run/ca.pem",
+  "state": "/data/state.json",
+  "passwordFile": "/run/password",
+  "authenticationUrl": "https://authentication:8444/",
+  "registryUrl": "https://serviceregistry:8443/",
+  "authorizationUrl": "https://consumer-authorization:8445/",
+  "managementWhitelist": [
+    "Onboarding"
+  ],
+  "register": true,
+  "advertiseAddress": "authentication",
+  "advertisePort": 8444,
+  "upstreams": {},
+  "crlFile": "/run/trust/current.crl.pem",
+  "messaging": {
+    "amqpHost": "amqp-broker",
+    "amqpPort": 5671,
+    "amqpIdentity": "AmqpBroker",
+    "mqttHost": "mqtt-broker",
+    "mqttPort": 8883,
+    "mqttIdentity": "MqttBroker",
+    "intervalSeconds": 30,
+    "defaultSubscription": "all",
+    "retentionDays": 30
+  },
+  "bootstrapIdentities": [
+    {
+      "systemName": "ServiceRegistry",
+      "passwordFile": "/run/bootstrap/serviceregistry",
+      "sysop": false
+    },
+    {
+      "systemName": "Authentication",
+      "passwordFile": "/run/bootstrap/authentication",
+      "sysop": false
+    },
+    {
+      "systemName": "ConsumerAuthorization",
+      "passwordFile": "/run/bootstrap/consumer-authorization",
+      "sysop": false
+    },
+    {
+      "systemName": "DynamicServiceOrchestration",
+      "passwordFile": "/run/bootstrap/serviceorchestration-dynamic",
+      "sysop": false
+    },
+    {
+      "systemName": "SimpleStoreServiceOrchestration",
+      "passwordFile": "/run/bootstrap/serviceorchestration-simple",
+      "sysop": false
+    },
+    {
+      "systemName": "AIGym",
+      "passwordFile": "/run/bootstrap/aigym",
+      "sysop": false
+    },
+    {
+      "systemName": "Blacklist",
+      "passwordFile": "/run/bootstrap/blacklist",
+      "sysop": false
+    },
+    {
+      "systemName": "CertificateAuthority",
+      "passwordFile": "/run/bootstrap/certificateauthority",
+      "sysop": false
+    },
+    {
+      "systemName": "Choreographer",
+      "passwordFile": "/run/bootstrap/choreographer",
+      "sysop": false
+    },
+    {
+      "systemName": "Configuration",
+      "passwordFile": "/run/bootstrap/configuration",
+      "sysop": false
+    },
+    {
+      "systemName": "DataManager",
+      "passwordFile": "/run/bootstrap/datamanager",
+      "sysop": false
+    },
+    {
+      "systemName": "DeviceQoSEvaluator",
+      "passwordFile": "/run/bootstrap/deviceqosevaluator",
+      "sysop": false
+    },
+    {
+      "systemName": "EventHandler",
+      "passwordFile": "/run/bootstrap/eventhandler",
+      "sysop": false
+    },
+    {
+      "systemName": "Gatekeeper",
+      "passwordFile": "/run/bootstrap/gatekeeper",
+      "sysop": false
+    },
+    {
+      "systemName": "GateTunnel",
+      "passwordFile": "/run/bootstrap/gatetunnel",
+      "sysop": false
+    },
+    {
+      "systemName": "Onboarding",
+      "passwordFile": "/run/bootstrap/onboarding",
+      "sysop": false
+    },
+    {
+      "systemName": "PlantDescriptionEngine",
+      "passwordFile": "/run/bootstrap/plantdescriptionengine",
+      "sysop": false
+    },
+    {
+      "systemName": "SysMonitor",
+      "passwordFile": "/run/bootstrap/sysmonitor",
+      "sysop": false
+    },
+    {
+      "systemName": "TimeManager",
+      "passwordFile": "/run/bootstrap/timemanager",
+      "sysop": false
+    },
+    {
+      "systemName": "TranslationManager",
+      "passwordFile": "/run/bootstrap/translationmanager",
+      "sysop": false
+    },
+    {
+      "systemName": "LocalCloudManager",
+      "passwordFile": "/run/bootstrap/localcloudmanager",
+      "sysop": false
+    },
+    {
+      "systemName": "RandomDataProducer",
+      "passwordFile": "/run/bootstrap/random-data-producer",
+      "sysop": false
+    },
+    {
+      "systemName": "Sysop",
+      "passwordFile": "/run/bootstrap/sysop",
+      "sysop": true
+    },
+    {
+      "systemName": "TestProvider",
+      "passwordFile": "/run/bootstrap/test-provider",
+      "sysop": false
+    },
+    {
+      "systemName": "TestConsumer",
+      "passwordFile": "/run/bootstrap/test-consumer",
+      "sysop": false
+    }
+  ]
+}

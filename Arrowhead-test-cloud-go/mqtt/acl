@@ -1,0 +1,67 @@
+# MQTT access list of the local-cloud broker. The sysMonitor observations of all systems use the AMQP broker
+# (amqp/acl); this broker carries SysMonitor's sysMonitorData output and the other intra-cloud MQTT traffic.
+# Users are full certificate subjects (use_subject_as_username, RFC 2253 order) of system (sy) certificates (M1).
+
+user dnQualifier=sy,CN=SysMonitor.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic write arrowhead/GoCloud/health/mqtt
+topic write arrowhead/GoCloud/sysmonitor/data/+/+
+
+user dnQualifier=sy,CN=AIGym.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/GoCloud/sysmonitor/data/+/+
+
+# MQTT API of the Go core systems (2026-10-24; Java mqtt.api.enabled). Every system certificate may publish requests
+# (the identity token in the request decides); only the core system reads its request topics, so tokens in requests
+# stay with it. Responses go to arrowhead/response/<requester>/..., which only the requester reads.
+pattern write arrowhead/serviceregistry/+/+
+pattern write arrowhead/serviceregistry/general/management/+
+pattern write arrowhead/authentication/+/+
+pattern write arrowhead/authentication/+/+/+
+pattern write arrowhead/consumer-authorization/+/+
+pattern write arrowhead/consumer-authorization/+/+/+
+pattern write arrowhead/serviceorchestration/#
+pattern write arrowhead/serviceorchestration-simple/#
+# MQTT API of the Java Blacklist (blacklist-java, make swap-java-blacklist)
+pattern write arrowhead/blacklist/+
+pattern write arrowhead/blacklist/+/+
+pattern write arrowhead/blacklist/+/+/+
+# MQTT consumers of TestTranslation bridges (the bridge token in the request decides)
+pattern write arrowhead/testtranslation/bridge/+/+
+
+user dnQualifier=sy,CN=ServiceRegistry.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/serviceregistry/#
+topic write arrowhead/response/#
+
+user dnQualifier=sy,CN=Authentication.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/authentication/#
+topic write arrowhead/response/#
+
+user dnQualifier=sy,CN=ConsumerAuthorization.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/consumer-authorization/#
+topic write arrowhead/response/#
+
+user dnQualifier=sy,CN=DynamicServiceOrchestration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/serviceorchestration/#
+topic write arrowhead/response/#
+
+user dnQualifier=sy,CN=SimpleStoreServiceOrchestration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/serviceorchestration-simple/#
+topic write arrowhead/response/#
+
+# MQTT API clients: each reads only its own responses
+
+user dnQualifier=sy,CN=SmokeClient.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/response/SmokeClient/#
+
+user dnQualifier=op,CN=Sysop.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/response/Sysop/#
+
+user dnQualifier=sy,CN=TestTranslation.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/response/TestTranslation/#
+# bridge requests of MQTT consumers, and their responses
+topic read arrowhead/testtranslation/bridge/#
+topic write arrowhead/response/#
+
+# Java Blacklist (blacklist-java): its request topics; responses to the requesters
+user dnQualifier=sy,CN=Blacklist.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/blacklist/#
+topic write arrowhead/response/#

@@ -1,0 +1,1456 @@
+name: ${COMPOSE_PROJECT_NAME:-arrowhead-v53-test-cloud-go}
+
+x-db-common: &db-common
+  platform: ${DOCKER_PLATFORM:-linux/amd64}
+  restart: unless-stopped
+  # TLS with the cloud-CA-signed certificate of security/x509/db/<host>; plain TCP connections are refused.
+  command: ["--ssl-ca=/etc/mysql/tls/ca.crt", "--ssl-cert=/etc/mysql/tls/server.crt", "--ssl-key=/etc/mysql/tls/server.key", "--require-secure-transport=ON"]
+  environment: &db-environment
+    MYSQL_ROOT_PASSWORD: ${DB_ROOT_PSW:?Set DB_ROOT_PSW in .env}
+    MYSQL_USER: ah-operator
+    MYSQL_PASSWORD: ${DB_AH_OPERATOR_PSW:?Set DB_AH_OPERATOR_PSW in .env}
+  healthcheck:
+    test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    interval: 4s
+    timeout: 3s
+    retries: 15
+    start_period: 20s
+  networks: [arrowhead]
+
+x-go-system: &go-system
+  # Native Go core/support systems (../ah5-core-go, ../ah5-support-go), 2026-10-17. JSON configuration in
+  # runtime-go/<service>.json, credentials in security/bundles-go/<service> (scripts/make-go-runtime.sh),
+  # private JSON state on the named volume go-<service>-state. Non-root (the image's 65532; J3): Docker Desktop shows
+  # the owner-only (0600) bind-mounted bundle files as owned by the reading user. No capabilities, read-only root.
+  image: arrowhead-go-native:5.2.2-20261017
+  build:
+    context: ./go-native-full
+    dockerfile: Dockerfile.prebuilt
+  platform: ${DOCKER_PLATFORM:-linux/amd64}
+  restart: unless-stopped
+  networks: [arrowhead]
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 128
+  mem_limit: 192m
+
+x-system-common: &system-common
+  platform: ${DOCKER_PLATFORM:-linux/amd64}
+  restart: unless-stopped
+  networks: [arrowhead]
+
+services:
+  # Mandatory local-cloud core: ServiceRegistry
+  # ServiceRegistry: Go implementation (ah5-core-go/ServiceRegistry) replacing the
+  # Java-Spring reference image aitiaiiot/arrowhead-serviceregistry. Data is kept
+  # in a JSON snapshot on a named volume, so no database container is needed.
+  serviceregistry:
+    <<: *system-common
+    secrets:
+      - { source: AH_PW_SR, target: identity-password }
+      - { source: AH_AUTHENTICATION_SECRET_KEY, target: authentication-secret-key }
+    build:
+      context: ../ah5-core-go/ServiceRegistry
+      dockerfile: Dockerfile.prebuilt
+    image: arrowhead-serviceregistry-go:5.2.2-20261017
+    # non-root (J3), the same user as the other Go systems; its data volume is owned by it
+    user: "65532:65532"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 128m
+    environment:
+      # Secrets as files (J7)
+      AUTHENTICATOR_PASSWORD_FILE: /run/secrets/identity-password
+      AUTHENTICATOR_SECRET_KEY_FILE: /run/secrets/authentication-secret-key
+      # Revocation (J4): client certificates are checked against the cloud CA's CRL (fail closed)
+      SERVER_SSL_CRL_FILE: /crl/ca.crl
+      # Blacklist enforcement (J12); the core systems are not checked
+      ENABLE_BLACKLIST_FILTER: "true"
+      FORCE_BLACKLIST_FILTER: "true"
+      BLACKLIST_CHECK_EXCLUDE_LIST: ServiceRegistry,Authentication,ConsumerAuthorization,DynamicServiceOrchestration,SimpleStoreServiceOrchestration,CertificateAuthority
+      SYSMONITOR_LOCAL_CLOUD: GoCloud
+      SYSMONITOR_ENABLED: "true"
+      # MQTT API (2026-10-24, Java mqtt.api.enabled): arrowhead/serviceregistry/... on the local broker
+      MQTT_API_ENABLED: "true"
+      MQTT_BROKER_ADDRESS: mqtt-broker
+      MQTT_BROKER_PORT: "8883"
+      SYSMONITOR_SSL_CERT_FILE: /certs/serviceregistry.crt
+      SYSMONITOR_SSL_KEY_FILE: /certs/serviceregistry.key
+      SYSMONITOR_SSL_CA_FILE: /certs/ca.crt
+      DOMAIN_NAME: serviceregistry
+      SERVER_SSL_ENABLED: "true"
+      SERVER_SSL_CERT_FILE: /certs/serviceregistry.crt
+      SERVER_SSL_KEY_FILE: /certs/serviceregistry.key
+      SERVER_SSL_TRUST_FILE: /certs/ca.crt
+      SERVER_SSL_CLIENT_AUTH: need
+      SERVER_COMMON_NAME: ServiceRegistry.GoCloud.Company.arrowhead.eu
+      # Mutual TLS plus an identity token: every caller presents a local-cloud client certificate and an identity
+      # token of the same system (token-to-certificate binding). Only the identity lookup is token-free, so that a
+      # system can find Authentication before its first login.
+      AUTHENTICATION_POLICY: outsourced
+      MANAGEMENT_POLICY: whitelist
+      # Onboarding: device-create, device-remove and system-remove of the onboarding procedure
+      MANAGEMENT_WHITELIST: Authentication,LocalCloudManager,DynamicServiceOrchestration,DeviceQoSEvaluator,PlantDescriptionEngine,Onboarding
+      DATA_FILE: /data/serviceregistry.json
+    volumes:
+      - ./runtime/ServiceRegistry-go/application.properties:/config/application.properties:ro
+      - serviceregistry-data:/data
+      - ./security/bundles/serviceregistry:/certs:ro
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${SERVICEREGISTRY_PORT:-7443}:8443"
+
+  # Mandatory local-cloud core: dynamic orchestration
+  serviceorchestration-dynamic-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: aitiaiiot/arrowhead-serviceorchestration-dynamic-db:${AH_VERSION:-5.2.2}
+    environment:
+      <<: *db-environment
+      # the system's own database user gets this cloud's password at initialization (H2)
+      AH_DB_USER: serviceorchestration-dynamic
+      AH_DB_USER_PASSWORD: "${AH_DB_PW_DYNAMICSERVICEORCHESTRATION:?run scripts/rotate-secrets.sh generate}"
+    volumes:
+      - serviceorchestration-dynamic-db:/var/lib/mysql
+      - ./security/x509/db/serviceorchestration-dynamic-db:/etc/mysql/tls:ro
+      - ./db/zz-arrowhead-system-user-password.sh:/docker-entrypoint-initdb.d/zz-arrowhead-system-user-password.sh:ro
+
+  serviceorchestration-dynamic:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/serviceorchestration-dynamic", "-config", "/config/config.json"]
+    # was memory-cgroup OOM-killed (exit 137) at the shared 192m with ~195 MB RSS (2026-10-23):
+    # more headroom plus a soft Go heap limit so the GC works before the cgroup limit is reached
+    mem_limit: 256m
+    environment:
+      GOMEMLIMIT: 150MiB
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/serviceorchestration-dynamic.json:/config/config.json:ro
+      - ./security/bundles-go/serviceorchestration-dynamic:/certs:ro
+      - go-serviceorchestration-dynamic-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${DYNAMIC_ORCHESTRATION_PORT:-8441}:8441"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8441"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Optional alternative orchestrator introduced in 5.2.
+  serviceorchestration-simple-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: aitiaiiot/arrowhead-serviceorchestration-simple-db:${AH_VERSION:-5.2.2}
+    environment:
+      <<: *db-environment
+      # the system's own database user gets this cloud's password at initialization (H2)
+      AH_DB_USER: serviceorchestration-simple
+      AH_DB_USER_PASSWORD: "${AH_DB_PW_SIMPLESTORESERVICEORCHESTRATION:?run scripts/rotate-secrets.sh generate}"
+    volumes:
+      - serviceorchestration-simple-db:/var/lib/mysql
+      - ./security/x509/db/serviceorchestration-simple-db:/etc/mysql/tls:ro
+      - ./db/zz-arrowhead-system-user-password.sh:/docker-entrypoint-initdb.d/zz-arrowhead-system-user-password.sh:ro
+
+  serviceorchestration-simple:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/serviceorchestration-simple", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/serviceorchestration-simple.json:/config/config.json:ro
+      - ./security/bundles-go/serviceorchestration-simple:/certs:ro
+      - go-serviceorchestration-simple-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${SIMPLE_ORCHESTRATION_PORT:-7442}:8442"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8442"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Mandatory local-cloud core: ConsumerAuthorization
+  consumerauthorization-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: aitiaiiot/arrowhead-consumerauthorization-db:${AH_VERSION:-5.2.2}
+    environment:
+      <<: *db-environment
+      # the system's own database user gets this cloud's password at initialization (H2)
+      AH_DB_USER: consumerauthorization
+      AH_DB_USER_PASSWORD: "${AH_DB_PW_CONSUMERAUTHORIZATION:?run scripts/rotate-secrets.sh generate}"
+    volumes:
+      - consumerauthorization-db:/var/lib/mysql
+      - ./security/x509/db/consumerauthorization-db:/etc/mysql/tls:ro
+      - ./db/zz-arrowhead-system-user-password.sh:/docker-entrypoint-initdb.d/zz-arrowhead-system-user-password.sh:ro
+
+  consumerauthorization:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/consumer-authorization", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/consumerauthorization.json:/config/config.json:ro
+      - ./security/bundles-go/consumerauthorization:/certs:ro
+      - go-consumerauthorization-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${CONSUMER_AUTHORIZATION_PORT:-8445}:8445"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8445"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Mandatory Authentication core for outsourced identity tokens.
+  authentication-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: aitiaiiot/arrowhead-authentication-db:${AH_VERSION:-5.2.2}
+    environment:
+      <<: *db-environment
+      # the system's own database user gets this cloud's password at initialization (H2)
+      AH_DB_USER: authentication
+      AH_DB_USER_PASSWORD: "${AH_DB_PW_AUTHENTICATION:?run scripts/rotate-secrets.sh generate}"
+    volumes:
+      - authentication-db:/var/lib/mysql
+      - ./security/x509/db/authentication-db:/etc/mysql/tls:ro
+      - ./db/zz-arrowhead-system-user-password.sh:/docker-entrypoint-initdb.d/zz-arrowhead-system-user-password.sh:ro
+
+
+  authentication:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/authentication", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+    volumes:
+      - ./runtime-go/authentication.json:/config/config.json:ro
+      - ./security/bundles-go/authentication:/certs:ro
+      - go-authentication-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${AUTHENTICATION_PORT:-8444}:8444"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8444"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Released v5 support: Blacklist
+  blacklist-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: aitiaiiot/arrowhead-blacklist-db:${AH_VERSION:-5.2.2}
+    environment:
+      <<: *db-environment
+      # the system's own database user gets this cloud's password at initialization (H2)
+      AH_DB_USER: blacklist
+      AH_DB_USER_PASSWORD: "${AH_DB_PW_BLACKLIST:?run scripts/rotate-secrets.sh generate}"
+    volumes:
+      - blacklist-db:/var/lib/mysql
+      - ./security/x509/db/blacklist-db:/etc/mysql/tls:ro
+      - ./db/zz-arrowhead-system-user-password.sh:/docker-entrypoint-initdb.d/zz-arrowhead-system-user-password.sh:ro
+
+  blacklist:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/Blacklist", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/blacklist.json:/config/config.json:ro
+      - ./security/bundles-go/blacklist:/certs:ro
+      - go-blacklist-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${BLACKLIST_PORT:-8464}:8464"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8464"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Java Blacklist with its MQTT API (2026-10-24; make swap-java-blacklist / make restore-go-blacklist): the released
+  # Java system (image of TestCloud's java-patch build, not rebuilt here) in place of the Go Blacklist, which is only
+  # stopped (its state volume go-blacklist-state stays). The network alias keeps https://blacklist:8464 for all
+  # callers. Never run both: they share the alias and the host port. Hardened as TestCloud's Java systems: its own
+  # MySQL 8.4 database on an internal network (J1/J8), secrets only as files (J7), keystores with its own password in
+  # its credential bundle (security/bundles-java, scripts/make-java-blacklist-bundle.sh), read-only and non-root (J3).
+  blacklist-java-db:
+    profiles: ["java-blacklist"]
+    <<: *db-common
+    image: arrowhead-blacklist-db:${AH_VERSION:-5.2.2}-mysql8.4
+    pull_policy: never
+    command: ["--innodb-use-native-aio=0", "--ssl-ca=/etc/mysql/tls/ca.crt", "--ssl-cert=/etc/mysql/tls/server.crt", "--ssl-key=/etc/mysql/tls/server.key", "--require-secure-transport=ON"]
+    # the official entrypoint, wrapped so that mysqld starts without the passwords in its environment (J7)
+    entrypoint: ["/usr/local/bin/ah-db-entrypoint.sh"]
+    user: "999:999"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 768m
+    pids_limit: 512
+    tmpfs:
+      - /var/run/mysqld:rw,nosuid,nodev,uid=999,gid=999,mode=0750,size=1m
+      - /tmp:rw,nosuid,nodev,mode=1777,size=64m
+    secrets:
+      - { source: AH_DB_ROOT_BLACKLIST, target: db-root-password }
+      - { source: AH_DB_PW_BLACKLIST, target: db-user-password }
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db-root-password
+      AH_DB_USER: blacklist
+      AH_DB_USER_PASSWORD_FILE: /run/secrets/db-user-password
+    volumes:
+      - blacklist-java-db:/var/lib/mysql
+      - ./security/bundles-java/blacklist-db:/etc/mysql/tls:ro
+      - ./db/mysql-entrypoint.sh:/usr/local/bin/ah-db-entrypoint.sh:ro
+      - ./db/zz-arrowhead-system-user-password.sh:/docker-entrypoint-initdb.d/zz-arrowhead-system-user-password.sh:ro
+      - ./db/00-temporary-ah-operator.sql:/docker-entrypoint-initdb.d/00-temporary-ah-operator.sql:ro
+      - ./db/zzz-drop-temporary-ah-operator.sql:/docker-entrypoint-initdb.d/zzz-drop-temporary-ah-operator.sql:ro
+    # reachable only from blacklist-java (J1); the JDBC URL names blacklist-db, the host of its TLS certificate
+    networks:
+      db-blacklist-java:
+        aliases: [blacklist-db]
+
+  blacklist-java:
+    profiles: ["java-blacklist"]
+    <<: *system-common
+    image: arrowhead-blacklist:5.2.2-sysmonitor
+    pull_policy: never
+    # Hardening (J3) as in TestCloud: read-only root filesystem, no capabilities, no privilege gain
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 1g
+    pids_limit: 256
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,mode=1777,size=64m
+      - /app/logs:rw,nosuid,nodev,noexec,mode=1777,size=32m
+    networks:
+      arrowhead:
+        aliases: [blacklist]
+      db-blacklist-java: {}
+    depends_on:
+      blacklist-java-db:
+        condition: service_healthy
+      serviceregistry:
+        condition: service_started
+    secrets:
+      - { source: AH_DB_PW_BLACKLIST, target: ah.db-password }
+      - { source: AH_PW_BL, target: ah.identity-password }
+      - { source: AH_STORE_PW_BL, target: ah.store-password }
+    environment:
+      ARROWHEAD_CLOUD_NAME: GoCloud
+      # Secrets are files under /run/secrets (J7), read through Spring's config tree; the environment holds only
+      # ${ah.*} references to them
+      SPRING_CONFIG_IMPORT: "configtree:/run/secrets/"
+      # No generated in-memory user (J14)
+      SPRING_AUTOCONFIGURE_EXCLUDE: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+      LOG4J_CONFIGURATION_FILE: /app/config/log4j2.xml
+      # Revocation (J4)
+      ARROWHEAD_SSL_CRL_FILE: /crl/ca.crl
+      SYSMONITOR_ENABLED: "true"
+      SYSMONITOR_SSL_KEY_STORE: file:/app/config/certificate/Blacklist.p12
+      SYSMONITOR_SSL_KEY_STORE_PASSWORD: "$${ah.store-password}"
+      SYSMONITOR_SSL_TRUST_STORE: file:/app/config/certificate/truststore.p12
+      SYSMONITOR_SSL_TRUST_STORE_PASSWORD: "$${ah.store-password}"
+      SPRING_DATASOURCE_URL: jdbc:mariadb://blacklist-db:3306/ah_blacklist?sslMode=verify-full&serverSslCert=/etc/arrowhead/db-tls/ca.crt
+      SPRING_DATASOURCE_PASSWORD: "$${ah.db-password}"
+      DOMAIN_NAME: blacklist
+      SERVICE_REGISTRY_ADDRESS: serviceregistry
+      SERVICE_REGISTRY_PORT: 8443
+      AUTHENTICATION_POLICY: outsourced
+      AUTHENTICATOR_CREDENTIALS: "{'password':'$${ah.identity-password}'}"
+      SERVER_SSL_ENABLED: "true"
+      SERVER_SSL_KEY_STORE: file:/app/config/certificate/Blacklist.p12
+      SERVER_SSL_KEY_STORE_PASSWORD: "$${ah.store-password}"
+      SERVER_SSL_KEY_PASSWORD: "$${ah.store-password}"
+      SERVER_SSL_TRUST_STORE: file:/app/config/certificate/truststore.p12
+      SERVER_SSL_TRUST_STORE_PASSWORD: "$${ah.store-password}"
+      SERVER_SSL_CLIENT_AUTH: need
+      SERVER_SSL_ENABLED_PROTOCOLS: TLSv1.3,TLSv1.2
+      SERVICE_INTERFACE_POLICY: CERT_AUTH
+      # MQTT API: arrowhead/blacklist/... on the local broker (TLS with the system keystore; user = certificate subject)
+      MQTT_API_ENABLED: "true"
+      MQTT_BROKER_ADDRESS: mqtt-broker
+      MQTT_BROKER_PORT: "8883"
+      JAVA_TOOL_OPTIONS: "-Xms64m -Xmx256m"
+    volumes:
+      # credential bundle (J15): keystores with the system's own password, and the CA for the database TLS
+      - ./security/bundles-java/blacklist/ca.crt:/etc/arrowhead/db-tls/ca.crt:ro
+      - ./security/bundles-java/blacklist/keystores:/app/config/certificate:ro
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${BLACKLIST_PORT:-8464}:8464"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/8464"]
+      interval: 10s
+      timeout: 4s
+      retries: 12
+      start_period: 60s
+
+  # Released v5 support: TranslationManager
+  translation-manager-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: aitiaiiot/arrowhead-translation-manager-db:${AH_VERSION:-5.2.2}
+    environment:
+      <<: *db-environment
+      # the system's own database user gets this cloud's password at initialization (H2)
+      AH_DB_USER: translationmanager
+      AH_DB_USER_PASSWORD: "${AH_DB_PW_TRANSLATIONMANAGER:?run scripts/rotate-secrets.sh generate}"
+    volumes:
+      - translation-manager-db:/var/lib/mysql
+      - ./security/x509/db/translation-manager-db:/etc/mysql/tls:ro
+      - ./db/zz-arrowhead-system-user-password.sh:/docker-entrypoint-initdb.d/zz-arrowhead-system-user-password.sh:ro
+
+  translation-manager:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/TranslationManager", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/translation-manager.json:/config/config.json:ro
+      - ./security/bundles-go/translation-manager:/certs:ro
+      - go-translation-manager-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${TRANSLATION_MANAGER_PORT:-7465}:8465"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8465"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Test application system of the TranslationManager (2026-10-24): generic_https interface translator and
+  # simpleJson <-> senml data model translator (ah5-support-go, role TestTranslation); smoke-translation.sh
+  test-translation:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/TestTranslation", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/test-translation.json:/config/config.json:ro
+      - ./security/bundles-go/test-translation:/certs:ro
+      - go-test-translation-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${TEST_TRANSLATION_PORT:-7466}:8466"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8466"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Released v5.2 support: DeviceQoSEvaluator
+  device-qos-evaluator-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: aitiaiiot/arrowhead-device-qos-evaluator-db:${AH_VERSION:-5.2.2}
+    environment:
+      <<: *db-environment
+      # the system's own database user gets this cloud's password at initialization (H2)
+      AH_DB_USER: deviceqosevaluator
+      AH_DB_USER_PASSWORD: "${AH_DB_PW_DEVICEQOSEVALUATOR:?run scripts/rotate-secrets.sh generate}"
+    volumes:
+      - device-qos-evaluator-db:/var/lib/mysql
+      - ./security/x509/db/device-qos-evaluator-db:/etc/mysql/tls:ro
+      - ./db/zz-arrowhead-system-user-password.sh:/docker-entrypoint-initdb.d/zz-arrowhead-system-user-password.sh:ro
+
+  device-qos-evaluator:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/DeviceQoSEvaluator", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/device-qos-evaluator.json:/config/config.json:ro
+      - ./security/bundles-go/device-qos-evaluator:/certs:ro
+      - go-device-qos-evaluator-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${DEVICE_QOS_EVALUATOR_PORT:-8472}:8472"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8472"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Migrated v5.2.2 Onboarding support system and its private log database.
+  onboarding-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: mysql:8.4@sha256:6ea90827b1100f8f2ae306a539f86d2c264a26ed435a2a9f75551dd5c3aeb242
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PSW:?Set DB_ROOT_PSW in .env}
+      MYSQL_DATABASE: ah_onboarding
+      MYSQL_USER: ah-operator
+      MYSQL_PASSWORD: ${DB_AH_OPERATOR_PSW:?Set DB_AH_OPERATOR_PSW in .env}
+    volumes:
+      - onboarding-db:/var/lib/mysql
+      - ./security/x509/db/onboarding-db:/etc/mysql/tls:ro
+      - ./onboarding/create_empty_db.sql:/docker-entrypoint-initdb.d/01-create-db.sql:ro
+      - ./onboarding/create_tables.sql:/docker-entrypoint-initdb.d/02-create-tables.sql:ro
+
+  onboarding:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/Onboarding", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/onboarding.json:/config/config.json:ro
+      - ./security/bundles-go/onboarding:/certs:ro
+      - go-onboarding-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${ONBOARDING_PORT:-7435}:8435"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8435"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+
+  # Demo device of the onboarding procedure (profile demo; run by scripts/smoke-onboarding-procedure.sh). It holds only
+  # the manufacturer bootstrap certificate of Device1 and the cloud CA certificate, and onboards itself and DemoSensor.
+  device-demo:
+    profiles: [demo]
+    build:
+      context: ./device-demo
+    image: arrowhead-device-demo:1.0.0
+    hostname: device-demo
+    environment:
+      CLOUD_COMMON_NAME: GoCloud.Company.arrowhead.eu
+      DEVICE_NAME: Device1
+      SYSTEM_NAME: DemoSensor
+    volumes:
+      - ./security/x509/ca.crt:/certs/ca.crt:ro
+      - ./security/x509/device1-bootstrap.crt:/bootstrap/device1-bootstrap.crt:ro
+      - ./security/x509/device1-bootstrap.key:/bootstrap/device1-bootstrap.key:ro
+    networks: [arrowhead]
+  # v5-native test DataManager: persistent SenML historian and latest-value cache.
+  # Arrowhead 5.2.2 Java DataManager (ah5-support-java-spring/DataManager): dataProxy, dataHistorian and the
+  # native sysMonitor publisher. Replaces the earlier Python test DataManager.
+  datamanager-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    build:
+      context: ./datamanager-java
+      dockerfile: Dockerfile.db
+      additional_contexts:
+        dmsrc: ../ah5-support-java-spring/DataManager
+    image: arrowhead-datamanager-db:5.2.2
+    volumes:
+      - datamanager-db:/var/lib/mysql
+      - ./security/x509/db/datamanager-db:/etc/mysql/tls:ro
+
+  datamanager:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/DataManager", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/datamanager.json:/config/config.json:ro
+      - ./security/bundles-go/datamanager:/certs:ro
+      - go-datamanager-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${DATAMANAGER_PORT:-7461}:8461"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8461"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Arrowhead 5.2.2 TimeManager (ah5-support-java-spring/TimeManager): time service with NTP-based trust and
+  # native sysMonitor (echo degraded while the time is not trusted). Its database holds only the log.
+  timemanager-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: mysql:8.4@sha256:6ea90827b1100f8f2ae306a539f86d2c264a26ed435a2a9f75551dd5c3aeb242
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PSW:?Set DB_ROOT_PSW in .env}
+      MYSQL_DATABASE: ah_timemanager
+      MYSQL_USER: ah-operator
+      MYSQL_PASSWORD: ${DB_AH_OPERATOR_PSW:?Set DB_AH_OPERATOR_PSW in .env}
+    volumes:
+      - timemanager-db:/var/lib/mysql
+      - ./security/x509/db/timemanager-db:/etc/mysql/tls:ro
+      - ../ah5-support-java-spring/TimeManager/src/main/resources/database/create_empty_db.sql:/docker-entrypoint-initdb.d/01-create-db.sql:ro
+
+  timemanager:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/TimeManager", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/timemanager.json:/config/config.json:ro
+      - ./security/bundles-go/timemanager:/certs:ro
+      - go-timemanager-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${TIMEMANAGER_PORT:-7463}:8463"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8463"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Rust TimeManager (ah5-support-rust, image of the Rust candidate cloud, 2026-10-24; make swap-rust-timemanager /
+  # make restore-go-timemanager) in place of the Go TimeManager, which is only stopped (go-timemanager-state stays).
+  # HTTPS only: MQTT consumers reach it through a TestTranslation bridge (make smoke-translation-mqtt). The network
+  # alias keeps https://timemanager:8463; never run both. Same hardening as the Go systems (J3), PEM bundle (J15).
+  timemanager-rust:
+    profiles: ["rust-timemanager"]
+    image: arrowhead-rust-candidate:5.2.2-wi6efg-20261023
+    pull_policy: never
+    # the candidate image holds the core and the support binaries
+    entrypoint: ["/usr/local/bin/arrowhead-support"]
+    command: ["--config", "/run/config.json"]
+    # the candidate image is built for the host (arm64), not DOCKER_PLATFORM
+    restart: unless-stopped
+    user: "65532:65532"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 256m
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    networks:
+      arrowhead:
+        aliases: [timemanager]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-rust/timemanager.json:/run/config.json:ro
+      - ./security/bundles-rust/timemanager:/certs:ro
+      - rust-timemanager-state:/data
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${TIMEMANAGER_PORT:-7463}:8463"
+    healthcheck:
+      test: ["CMD-SHELL", "test \"$$(curl --crlfile /crl/ca.crl --silent --output /dev/null --write-out '%{http_code}' --max-time 5 --cacert /certs/ca.pem --cert /certs/cert.pem --key /certs/key.pem https://localhost:8463/timemanager/monitor/echo)\" = 200"]
+      interval: 15s
+      timeout: 7s
+      retries: 5
+      start_period: 30s
+
+  # Rust DataManager (ah5-support-rust, 2026-10-24; make swap-rust-datamanager / make restore-go-datamanager) in place
+  # of the Go DataManager, which is only stopped (go-datamanager-state, its SenML history, stays; the Rust history starts
+  # empty). Image built from the workspace sources with the dataHistorian dataModels declaration (senml), which the
+  # TranslationManager needs for data model translation. Alias datamanager:8461; never run both.
+  datamanager-rust:
+    profiles: ["rust-datamanager"]
+    image: arrowhead-rust-candidate:5.2.2-gocloud-datamodels-20261024
+    pull_policy: never
+    # the candidate image holds the core and the support binaries
+    entrypoint: ["/usr/local/bin/arrowhead-support"]
+    command: ["--config", "/run/config.json"]
+    # the candidate image is built for the host (arm64), not DOCKER_PLATFORM
+    restart: unless-stopped
+    user: "65532:65532"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 384m
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    networks:
+      arrowhead:
+        aliases: [datamanager]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-rust/datamanager.json:/run/config.json:ro
+      - ./security/bundles-rust/datamanager:/certs:ro
+      - rust-datamanager-state:/data
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${DATAMANAGER_PORT:-7461}:8461"
+    healthcheck:
+      test: ["CMD-SHELL", "test \"$$(curl --crlfile /crl/ca.crl --silent --output /dev/null --write-out '%{http_code}' --max-time 5 --cacert /certs/ca.pem --cert /certs/cert.pem --key /certs/key.pem https://localhost:8461/datamanager/monitor/echo)\" = 200"]
+      interval: 15s
+      timeout: 7s
+      retries: 5
+      start_period: 30s
+
+  # Rust SysMonitor (ah5-support-rust, 2026-10-24; make swap-rust-sysmonitor / make restore-go-sysmonitor) in place of
+  # the Go SysMonitor, which is only stopped (go-sysmonitor-state, its observation history, stays; the Rust history
+  # starts empty). Same AMQP queue (SysMonitor.observations), routing keys and MQTT output topics as the Go SysMonitor,
+  # so the broker ACLs are unchanged; it pins the brokers to AmqpBroker/MQTTBroker.<cloud>. Alias sysmonitor:8475.
+  sysmonitor-rust:
+    profiles: ["rust-sysmonitor"]
+    image: arrowhead-rust-candidate:5.2.2-wi6efg-20261023
+    pull_policy: never
+    # the candidate image holds the core and the support binaries
+    entrypoint: ["/usr/local/bin/arrowhead-support"]
+    command: ["--config", "/run/config.json"]
+    # the candidate image is built for the host (arm64), not DOCKER_PLATFORM
+    restart: unless-stopped
+    user: "65532:65532"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 384m
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    networks:
+      arrowhead:
+        aliases: [sysmonitor]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-rust/sysmonitor.json:/run/config.json:ro
+      - ./security/bundles-rust/sysmonitor:/certs:ro
+      - rust-sysmonitor-state:/data
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${SYSMONITOR_PORT:-8475}:8475"
+    healthcheck:
+      test: ["CMD-SHELL", "test \"$$(curl --crlfile /crl/ca.crl --silent --output /dev/null --write-out '%{http_code}' --max-time 5 --cacert /certs/ca.pem --cert /certs/cert.pem --key /certs/key.pem https://localhost:8475/sysmonitor/monitor/echo)\" = 200"]
+      interval: 15s
+      timeout: 7s
+      retries: 5
+      start_period: 30s
+
+  # Arrowhead 5.2.2 EventHandler (ah5-support-java-spring/EventHandler): eventPublish, eventSubscription,
+  # eventHandlerManagement and native sysMonitor, with its own MySQL schema.
+  eventhandler-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: mysql:8.4@sha256:6ea90827b1100f8f2ae306a539f86d2c264a26ed435a2a9f75551dd5c3aeb242
+    command: ["--innodb-use-native-aio=0", "--ssl-ca=/etc/mysql/tls/ca.crt", "--ssl-cert=/etc/mysql/tls/server.crt", "--ssl-key=/etc/mysql/tls/server.key", "--require-secure-transport=ON"]
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PSW:?Set DB_ROOT_PSW in .env}
+      MYSQL_DATABASE: ah_eventhandler
+      MYSQL_USER: ah-operator
+      MYSQL_PASSWORD: ${DB_AH_OPERATOR_PSW:?Set DB_AH_OPERATOR_PSW in .env}
+    volumes:
+      - eventhandler-db:/var/lib/mysql
+      - ./security/x509/db/eventhandler-db:/etc/mysql/tls:ro
+      - ../ah5-support-java-spring/EventHandler/src/main/resources/database/create_empty_db.sql:/docker-entrypoint-initdb.d/01-create-db.sql:ro
+      - ../ah5-support-java-spring/EventHandler/src/main/resources/database/create_tables.sql:/docker-entrypoint-initdb.d/02-create-tables.sql:ro
+
+  eventhandler:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/EventHandler", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/eventhandler.json:/config/config.json:ro
+      - ./security/bundles-go/eventhandler:/certs:ro
+      - go-eventhandler-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${EVENTHANDLER_PORT:-7455}:8455"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8455"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Arrowhead 5.2.2 PlantDescriptionEngine (ah5-support-java-spring/PlantDescriptionEngine): plant descriptions,
+  # SimpleStore orchestration rules derived from the active description, mismatch alarms from the registry and
+  # sysMonitorHistory, and native sysMonitor.
+  plantdescriptionengine-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: mysql:8.4@sha256:6ea90827b1100f8f2ae306a539f86d2c264a26ed435a2a9f75551dd5c3aeb242
+    command: ["--innodb-use-native-aio=0", "--ssl-ca=/etc/mysql/tls/ca.crt", "--ssl-cert=/etc/mysql/tls/server.crt", "--ssl-key=/etc/mysql/tls/server.key", "--require-secure-transport=ON"]
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PSW:?Set DB_ROOT_PSW in .env}
+      MYSQL_DATABASE: ah_plantdescriptionengine
+      MYSQL_USER: ah-operator
+      MYSQL_PASSWORD: ${DB_AH_OPERATOR_PSW:?Set DB_AH_OPERATOR_PSW in .env}
+    volumes:
+      - plantdescriptionengine-db:/var/lib/mysql
+      - ./security/x509/db/plantdescriptionengine-db:/etc/mysql/tls:ro
+      - ../ah5-support-java-spring/PlantDescriptionEngine/src/main/resources/database/create_empty_db.sql:/docker-entrypoint-initdb.d/01-create-db.sql:ro
+
+  plantdescriptionengine:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/PlantDescriptionEngine", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/plantdescriptionengine.json:/config/config.json:ro
+      - ./security/bundles-go/plantdescriptionengine:/certs:ro
+      - go-plantdescriptionengine-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${PLANTDESCRIPTIONENGINE_PORT:-7432}:8432"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8432"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Arrowhead 5.2.2 Configuration (ah5-support-java-spring/Configuration): per-system configuration files
+  # (configuration, configurationProxy, configurationManagement) and native sysMonitor.
+  configuration-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: mysql:8.4@sha256:6ea90827b1100f8f2ae306a539f86d2c264a26ed435a2a9f75551dd5c3aeb242
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PSW:?Set DB_ROOT_PSW in .env}
+      MYSQL_DATABASE: ah_configuration
+      MYSQL_USER: ah-operator
+      MYSQL_PASSWORD: ${DB_AH_OPERATOR_PSW:?Set DB_AH_OPERATOR_PSW in .env}
+    volumes:
+      - configuration-db:/var/lib/mysql
+      - ./security/x509/db/configuration-db:/etc/mysql/tls:ro
+      - ../ah5-support-java-spring/Configuration/src/main/resources/database/create_empty_db.sql:/docker-entrypoint-initdb.d/01-create-db.sql:ro
+
+  configuration:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/Configuration", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/configuration.json:/config/config.json:ro
+      - ./security/bundles-go/configuration:/certs:ro
+      - go-configuration-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${CONFIGURATION_PORT:-8459}:8459"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8459"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Arrowhead 5.2.2 Choreographer (ah5-support-java-spring/Choreography): workflow plans executed by executor
+  # systems; orchestrates for the executors through DynamicServiceOrchestration push management; native sysMonitor.
+  choreographer-db:
+    profiles: ["java-legacy"] # former MySQL of the Java system; volume kept for rollback
+    <<: *db-common
+    image: mysql:8.4@sha256:6ea90827b1100f8f2ae306a539f86d2c264a26ed435a2a9f75551dd5c3aeb242
+    # Both test clouds run many MySQL servers; native AIO would exhaust the kernel aio-max-nr limit.
+    command: ["--innodb-use-native-aio=0", "--ssl-ca=/etc/mysql/tls/ca.crt", "--ssl-cert=/etc/mysql/tls/server.crt", "--ssl-key=/etc/mysql/tls/server.key", "--require-secure-transport=ON"]
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PSW:?Set DB_ROOT_PSW in .env}
+      MYSQL_DATABASE: ah_choreographer
+      MYSQL_USER: ah-operator
+      MYSQL_PASSWORD: ${DB_AH_OPERATOR_PSW:?Set DB_AH_OPERATOR_PSW in .env}
+    volumes:
+      - choreographer-db:/var/lib/mysql
+      - ./security/x509/db/choreographer-db:/etc/mysql/tls:ro
+      - ../ah5-support-java-spring/Choreography/src/main/resources/database/create_empty_db.sql:/docker-entrypoint-initdb.d/01-create-db.sql:ro
+      - ../ah5-support-java-spring/Choreography/src/main/resources/database/create_tables.sql:/docker-entrypoint-initdb.d/02-create-tables.sql:ro
+
+  choreographer:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/Choreographer", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/choreographer.json:/config/config.json:ro
+      - ./security/bundles-go/choreographer:/certs:ro
+      - go-choreographer-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${CHOREOGRAPHER_PORT:-7457}:8457"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8457"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # X.509/mTLS system that publishes a cryptographically random 0..100 value every 30 seconds.
+  random-data-producer:
+    # Hardening (J3): read-only root filesystem, no capabilities, no privilege gain, bounded memory/processes
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 192m
+    pids_limit: 64
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,mode=1777,size=64m
+    secrets:
+      - { source: AH_PW_RDP, target: identity-password }
+    build:
+      context: ./random-data-producer
+    image: arrowhead-random-data-producer:1.0.0
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    restart: unless-stopped
+    depends_on:
+      datamanager:
+        condition: service_healthy
+      serviceregistry:
+        condition: service_started
+      serviceorchestration-dynamic:
+        condition: service_started
+      consumerauthorization:
+        condition: service_started
+      authentication:
+        condition: service_started
+      amqp-broker:
+        condition: service_healthy
+    environment:
+      # Also publish to the DataManager of the neighbour cloud (ONLY_INTERCLOUD orchestration)
+      INTERCLOUD_ENABLED: "true"
+      PORT: 8500
+      PUBLISH_INTERVAL_SECONDS: 30
+      SERVICE_REGISTRY_URL: https://serviceregistry:8443
+      ORCHESTRATOR_URL: https://serviceorchestration-dynamic:8441
+      AUTHENTICATION_URL: https://authentication:8444
+      # secret as a file (J7)
+      AUTHENTICATION_PASSWORD_FILE: /run/secrets/identity-password
+      ARROWHEAD_SYSTEM_NAME: RandomDataProducer
+      TLS_CA_CERT: /certs/ca.crt
+      TLS_CLIENT_CERT: /certs/random-data-producer.crt
+      TLS_CLIENT_KEY: /certs/random-data-producer.key
+      AMQP_HOST: amqp-broker
+      AMQP_PORT: 5671
+      LOCAL_CLOUD: GoCloud
+    volumes:
+      - ./security/bundles/random-data-producer:/certs:ro
+    networks: [arrowhead]
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${RANDOM_DATA_PRODUCER_PORT:-7500}:8500"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import ssl,urllib.request; c=ssl.create_default_context(cafile='/certs/ca.crt'); c.load_cert_chain('/certs/random-data-producer.crt','/certs/random-data-producer.key'); urllib.request.urlopen('https://random-data-producer:8500/health',context=c,timeout=3)"]
+      interval: 10s
+      timeout: 4s
+      retries: 6
+      start_period: 90s
+
+  # X.509-only MQTT 5 broker for Monitoring and SysMonitor data-plane traffic.
+  mqtt-broker:
+    # Hardening (J3): read-only root filesystem, no capabilities, no privilege gain, bounded memory/processes
+    user: "1883:1883"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 192m
+    pids_limit: 64
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,mode=1777,size=64m
+    image: eclipse-mosquitto:2.0.22@sha256:199ea8ef2e35ec2b1b37e59cfd1dbae538ed4dfa4a2251a121a52215a6248a21
+    # crl-watch.sh keeps crlfile current from the CertificateAuthority's CRL and reloads the broker (H3)
+    entrypoint: ["/mosquitto/config/crl-watch.sh"]
+    command: ["/usr/sbin/mosquitto", "-c", "/mosquitto/config/mosquitto.conf"]
+    restart: unless-stopped
+    volumes:
+      - ./mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mqtt/acl:/mosquitto/config/acl:ro
+      - ./mqtt/crl-watch.sh:/mosquitto/config/crl-watch.sh:ro
+      - ./security/bundles/mqtt-broker:/certs:ro
+      - ./security/crl:/crl:ro
+      - mqtt-data:/mosquitto/data
+    networks: [arrowhead]
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${MQTT_TLS_PORT:-8883}:8883"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "-w", "2", "127.0.0.1", "8883"]
+      interval: 10s
+      timeout: 4s
+      retries: 8
+      start_period: 5s
+
+  # SysMonitor implements the generated SysDD and IDDs: MQTT intake/output, the system-owned
+  # observation history of all monitored microsystems (sysMonitorHistory, SQLite in sysmonitor-data),
+  # durable outbox for sysMonitorData, subscription policy and mTLS management.
+
+  # X.509-only AMQP 0-9-1 broker (RabbitMQ) for the sysMonitor services of all systems. Users are the client
+  # certificate CNs (SASL EXTERNAL); amqp/acl -> amqp/definitions.json (make amqp-acl) sets what each may publish.
+  amqp-broker:
+    # Hardening (J3): read-only root filesystem, no capabilities, no privilege gain, bounded memory/processes
+    user: "100:101"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 512m
+    pids_limit: 1024
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,mode=1777,size=64m
+    image: rabbitmq:4.3.6-alpine@sha256:6931816af1a943f471c038b278835d36692d55dec769232739296bb91b7de0f5
+    hostname: amqp-broker
+    restart: unless-stopped
+    entrypoint: ["/etc/rabbitmq/entrypoint.sh"]
+    environment:
+      # Single node (J10): epmd and the Erlang distribution port listen on loopback only, so no other container can
+      # reach them (the broker's own CLI tools, e.g. the healthcheck, connect locally)
+      ERL_EPMD_ADDRESS: 127.0.0.1
+      # the node name must resolve to loopback for that (the host name amqp-broker resolves to the network address)
+      RABBITMQ_NODENAME: rabbit@localhost
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-kernel inet_dist_use_interface {127,0,0,1}"
+    volumes:
+      - ./amqp/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./amqp/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ./amqp/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./amqp/entrypoint.sh:/etc/rabbitmq/entrypoint.sh:ro
+      - ./amqp/advanced.config:/etc/rabbitmq/advanced.config:ro
+      - ./security/bundles/amqp-broker:/certs:ro
+      - ./security/crl:/crl:ro
+      - amqp-data:/var/lib/rabbitmq
+    networks: [arrowhead]
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${AMQP_TLS_PORT:-5671}:5671"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_port_listener", "5671"]
+      interval: 10s
+      timeout: 8s
+      retries: 12
+      start_period: 20s
+
+  sysmonitor:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/SysMonitor", "-config", "/config/config.json"]
+    environment:
+      # soft Go heap limit below mem_limit: the observation history is ~90 MiB live, so the default GOGC=100
+      # target (2x live) would exceed the 192 MB container limit
+      GOMEMLIMIT: 150MiB
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/sysmonitor.json:/config/config.json:ro
+      - ./security/bundles-go/sysmonitor:/certs:ro
+      - go-sysmonitor-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${SYSMONITOR_PORT:-8475}:8475"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8475"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Arrowhead 5.2.2 Gatekeeper compatibility microsystem. It preserves the
+  # v4.6 GSD/ICN resource paths while using v5 service-operation registration,
+  # independent storage, outsourced Authentication and mandatory mTLS.
+  gatekeeper:
+    <<: *go-system
+    image: arrowhead-go-federation:5.2.2-rust-peer-20261019
+    entrypoint: ["/usr/local/bin/Gatekeeper", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    environment:
+      FEDERATION_PEER_ORGANIZATIONS: RustDev=Lab
+      # end-to-end protected inter-cloud sessions (J5); both clouds must use the same profile, there is no fallback
+      FEDERATION_PROFILE: ah-gt-1
+      RELAY_HOST: arrowhead-relay
+      RELAY_PORT: 8883
+      CONSUMER_AUTHORIZATION_URL: https://consumerauthorization:8445
+      GATETUNNEL_URL: https://gatetunnel:8453
+    volumes:
+      - ./runtime-go/gatekeeper.json:/config/config.json:ro
+      - ./security/bundles-go/gatekeeper:/certs:ro
+      - go-gatekeeper-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${GATEKEEPER_PORT:-8449}:8449"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8449"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # The v5.2.2 successor to the v4.6 Gateway is deliberately named
+  # GateTunnel to distinguish its secured tunnel/session contract.
+  gatetunnel:
+    <<: *go-system
+    image: arrowhead-go-federation:5.2.2-rust-peer-20261019
+    entrypoint: ["/usr/local/bin/GateTunnel", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    environment:
+      FEDERATION_PEER_ORGANIZATIONS: RustDev=Lab
+      # end-to-end protected inter-cloud sessions (J5); both clouds must use the same profile, there is no fallback
+      FEDERATION_PROFILE: ah-gt-1
+      RELAY_HOST: arrowhead-relay
+      RELAY_PORT: 8883
+      ADVERTISED_ADDRESS: gatetunnel
+      MIN_TUNNEL_PORT: 8000
+      MAX_TUNNEL_PORT: 8099
+      NEIGHBOR_CLOUDS: TestCloud,RustDev
+    volumes:
+      - ./runtime-go/gatetunnel.json:/config/config.json:ro
+      - ./security/bundles-go/gatetunnel:/certs:ro
+      - go-gatetunnel-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${GATETUNNEL_PORT:-8453}:8453"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8453"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+
+  # Arrowhead 5.2.2 secure AI experimentation support system.
+  aigym:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/AIGym", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/aigym.json:/config/config.json:ro
+      - ./security/bundles-go/aigym:/certs:ro
+      - go-aigym-state:/state
+      # revocation (J4): the cloud CA's CRL, read on every handshake (crlFile)
+      - ./security/crl:/crl:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${AIGYM_PORT:-8478}:8478"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8478"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # Certificate Authority support system with v5.2.2 discovery and MQTT sysMonitor.
+  certificate-authority:
+    <<: *go-system
+    entrypoint: ["/usr/local/bin/CertificateAuthority", "-config", "/config/config.json"]
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+    volumes:
+      - ./runtime-go/certificate-authority.json:/config/config.json:ro
+      - ./security/bundles-go/certificate-authority:/certs:ro
+      - go-certificate-authority-state:/state
+      # published CRL (crlExportFile), read by the brokers and the relay
+      - ./security/crl:/crl
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${CERTIFICATE_AUTHORITY_PORT:-8448}:8448"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ah-probe", "127.0.0.1:8448"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 60s
+      start_interval: 2s
+
+  # LocalCloudManager microsystem: Arrowhead adapter and Docker collector
+  cloud-monitor-api:
+    # Hardening (J3): read-only root filesystem, no capabilities, no privilege gain, bounded memory/processes
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 256m
+    pids_limit: 128
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,mode=1777,size=64m
+    secrets:
+      - { source: CONSOLE_PASSWORD_HASH, target: console-password-hash }
+      - { source: CONSOLE_PROXY_SECRET, target: console-proxy-secret }
+      - { source: AH_PW_LCM, target: identity-password }
+    build:
+      context: ../ah5-support-java-spring/LocalCloudManager/api
+    image: arrowhead-local-cloud-monitor-api:1.0.0
+    restart: unless-stopped
+    depends_on:
+      serviceregistry:
+        condition: service_started
+      authentication:
+        condition: service_started
+      docker-proxy:
+        condition: service_healthy
+    environment:
+      ORCHESTRATION_PRIORITY_MODE: replace
+      # Secrets as files (J7)
+      AUTHENTICATION_PASSWORD_FILE: /run/secrets/identity-password
+      CONSOLE_PASSWORD_HASH_FILE: /run/secrets/console-password-hash
+      # The console's own host name (J6): its session cookie is not shared with other consoles on 127.0.0.1
+      CONSOLE_ALLOWED_HOSTS: ${CONSOLE_HOST:-gocloud-v53.localhost}
+      # Only requests forwarded by cloud-monitor-ui (which adds this secret) are served (J6)
+      CONSOLE_PROXY_SECRET_FILE: /run/secrets/console-proxy-secret
+      # Revocation (J4): providers' certificates are checked against the cloud CA's CRL
+      TLS_CRL_FILE: /crl/ca.crl
+      SYSMONITOR_LOCAL_CLOUD: GoCloud
+      PORT: 8491
+      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-arrowhead-v53-test-cloud-go}
+      ARROWHEAD_VERSION: ${AH_VERSION:-5.2.2}
+      SERVICE_REGISTRY_URL: https://serviceregistry:8443
+      DATAMANAGER_URL: https://datamanager:8461
+      SYSMONITOR_URL: https://sysmonitor:8475
+      SIMPLE_ORCHESTRATION_URL: https://serviceorchestration-simple:8442
+      AUTHENTICATION_URL: https://authentication:8444
+      ARROWHEAD_SYSTEM_NAME: LocalCloudManager
+      ARROWHEAD_ADMIN_SYSTEM: Sysop
+      # Operator login (salted scrypt hash of CONSOLE_PASSWORD) and the local names the console answers to (H1)
+      DOCKER_API_URL: http://docker-proxy:2375
+      TLS_CA_CERT: /certs/ca.crt
+      TLS_CLIENT_CERT: /certs/local-cloud-manager.crt
+      TLS_CLIENT_KEY: /certs/local-cloud-manager.key
+      MANAGED_SERVICES: serviceregistry,serviceorchestration-dynamic,serviceorchestration-simple,consumerauthorization,authentication,blacklist,translation-manager,test-translation,device-qos-evaluator,onboarding,datamanager,timemanager,eventhandler,plantdescriptionengine,configuration,choreographer,random-data-producer,sysmonitor,aigym,certificate-authority,mqtt-broker,amqp-broker,gatekeeper,gatetunnel
+    volumes:
+      - ./security/bundles/cloud-monitor-api:/certs:ro
+      - ./security/crl:/crl:ro
+    networks: [arrowhead, console-docker, console]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8491/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 4s
+      retries: 6
+      start_period: 10s
+
+  # Whitelisting Docker API proxy for the console (H1): the only container with the Docker socket. It forwards
+  # list, logs and start/stop/restart for this project's containers (lifecycle only for MANAGED_SERVICES), nothing else,
+  # on the internal network console-docker that only cloud-monitor-api joins.
+  docker-proxy:
+    # Hardening (J3): read-only root filesystem, no capabilities, no privilege gain, bounded memory/processes
+    # SOS-8 (2026-11-10): the image's node user, in group 0 for the socket (srw-rw---- root:root); not root
+    user: "1000:0"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 64m
+    pids_limit: 64
+    build:
+      context: ../ah5-support-java-spring/LocalCloudManager/docker-proxy
+    image: arrowhead-console-docker-proxy:1.0.0
+    restart: unless-stopped
+    environment:
+      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-arrowhead-v53-test-cloud-go}
+      MANAGED_SERVICES: serviceregistry,serviceorchestration-dynamic,serviceorchestration-simple,consumerauthorization,authentication,blacklist,translation-manager,device-qos-evaluator,onboarding,datamanager,timemanager,eventhandler,plantdescriptionengine,configuration,choreographer,random-data-producer,sysmonitor,aigym,certificate-authority,mqtt-broker,amqp-broker,gatekeeper,gatetunnel
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks: [console-docker]
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "2375"]
+      interval: 10s
+      timeout: 4s
+      retries: 6
+      start_period: 5s
+
+  cloud-monitor-ui:
+    # Hardening (J3): read-only root filesystem, no capabilities, no privilege gain, bounded memory/processes
+    user: "101:101"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 64m
+    pids_limit: 64
+    tmpfs:
+      - /var/cache/nginx:rw,nosuid,nodev,mode=1777,size=16m
+      - /run:rw,nosuid,nodev,mode=1777,size=1m
+      - /tmp:rw,nosuid,nodev,mode=1777,size=64m
+    build:
+      context: ../ah5-support-java-spring/LocalCloudManager/ui
+    image: arrowhead-local-cloud-monitor-ui:1.0.0
+    restart: unless-stopped
+    depends_on:
+      cloud-monitor-api:
+        condition: service_healthy
+    secrets:
+      - { source: CONSOLE_PROXY_SECRET, target: console-proxy-secret }
+    environment:
+      # Canonical console address (J6): any other host name, e.g. 127.0.0.1, is redirected here
+      CONSOLE_CANONICAL_HOST: ${CONSOLE_HOST:-gocloud-v53.localhost}
+      CONSOLE_CANONICAL_ORIGIN: http://${CONSOLE_HOST:-gocloud-v53.localhost}:${CLOUD_MONITOR_PORT:-7490}
+      CONSOLE_PROXY_SECRET_FILE: /run/secrets/console-proxy-secret
+    # Only the console API is reachable from here, and only the host reaches the UI (J6)
+    networks: [console]
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${CLOUD_MONITOR_PORT:-7490}:8490"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8490/health"]
+      interval: 10s
+      timeout: 4s
+      retries: 6
+      start_period: 10s
+
+networks:
+  # blacklist-java <-> its database only (J1)
+  db-blacklist-java:
+    internal: true
+  # Console API <-> Docker proxy only; internal, so it has no route outside
+  console-docker:
+    internal: true
+  # Console UI <-> console API only (J6); not internal, so the UI can publish its port on the host
+  console: {}
+  arrowhead:
+    name: ${COMPOSE_PROJECT_NAME:-arrowhead-v53-test-cloud-go}-network
+
+volumes:
+  blacklist-java-db:
+  rust-timemanager-state:
+  rust-sysmonitor-state:
+  rust-datamanager-state:
+  go-authentication-state:
+  go-consumerauthorization-state:
+  go-serviceorchestration-dynamic-state:
+  go-serviceorchestration-simple-state:
+  go-blacklist-state:
+  go-translation-manager-state:
+  go-test-translation-state:
+  go-device-qos-evaluator-state:
+  go-onboarding-state:
+  go-datamanager-state:
+  go-timemanager-state:
+  go-eventhandler-state:
+  go-plantdescriptionengine-state:
+  go-configuration-state:
+  go-choreographer-state:
+  go-sysmonitor-state:
+  go-gatekeeper-state:
+  go-gatetunnel-state:
+  go-aigym-state:
+  go-certificate-authority-state:
+  serviceregistry-data:
+  serviceorchestration-dynamic-db:
+  serviceorchestration-simple-db:
+  consumerauthorization-db:
+  authentication-db:
+  blacklist-db:
+  translation-manager-db:
+  device-qos-evaluator-db:
+  onboarding-db:
+  datamanager-db:
+  timemanager-db:
+  eventhandler-db:
+  plantdescriptionengine-db:
+  configuration-db:
+  choreographer-db:
+  gatekeeper-data:
+  gatetunnel-data:
+  sysmonitor-data:
+  certificate-authority-data:
+  mqtt-data:
+  amqp-data:
+
+# Secrets reach the containers only as files under /run/secrets (security finding J7). Each is one file in secrets/
+# (directory 700, files 600), written from .env by scripts/rotate-secrets.sh (generate, rotate or files).
+secrets:
+  # Java Blacklist (blacklist-java, 2026-10-24)
+  AH_DB_ROOT_BLACKLIST: { file: ./secrets/AH_DB_ROOT_BLACKLIST }
+  AH_DB_PW_BLACKLIST: { file: ./secrets/AH_DB_PW_BLACKLIST }
+  AH_STORE_PW_BL: { file: ./secrets/AH_STORE_PW_BL }
+  AH_PW_BL: { file: ./secrets/AH_PW_BL }
+  AH_AUTHENTICATION_SECRET_KEY: { file: ./secrets/AH_AUTHENTICATION_SECRET_KEY }
+  AH_PW_LCM: { file: ./secrets/AH_PW_LCM }
+  AH_PW_RDP: { file: ./secrets/AH_PW_RDP }
+  AH_PW_SR: { file: ./secrets/AH_PW_SR }
+  CONSOLE_PASSWORD_HASH: { file: ./secrets/CONSOLE_PASSWORD_HASH }
+  CONSOLE_PROXY_SECRET: { file: ./secrets/CONSOLE_PROXY_SECRET }

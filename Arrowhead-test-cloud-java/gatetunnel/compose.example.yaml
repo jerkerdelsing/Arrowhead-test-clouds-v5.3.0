@@ -1,0 +1,31 @@
+services:
+  gatetunnel:
+    build: .
+    image: arrowhead-gatetunnel-v5:5.2.2
+    restart: unless-stopped
+    environment:
+      PORT: 8453
+      HEALTH_PORT: 8481
+      MIN_TUNNEL_PORT: 8000
+      MAX_TUNNEL_PORT: 8099
+      DB_PATH: /data/gatetunnel.db
+      SERVICE_REGISTRY_URL: https://registry-bootstrap-proxy:8508
+      AUTHENTICATION_URL: https://authentication:8444
+      AUTHENTICATION_PASSWORD: ${AH_PW_GT:?set the GateTunnel identity password}
+      TLS_CA_CERT: /certs/ca.crt
+      TLS_SERVER_CERT: /certs/gatetunnel.crt
+      TLS_SERVER_KEY: /certs/gatetunnel.key
+    volumes:
+      - gatetunnel-data:/data
+      - ./certs:/certs:ro
+    ports:
+      - "127.0.0.1:8453:8453"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8481/health',timeout=3)"]
+      interval: 10s
+      timeout: 4s
+      retries: 8
+      start_period: 15s
+
+volumes:
+  gatetunnel-data:

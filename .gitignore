@@ -1,0 +1,11 @@
+# Credentials and key material of the test clouds never go into git
+*.key
+*.p12
+*.jks
+*.pfx
+secrets/
+.env
+.env.previous
+.DS_Store
+# per-system credential bundles (keys, passwords, token secrets), like security/bundles/
+**/security/bundles-go/

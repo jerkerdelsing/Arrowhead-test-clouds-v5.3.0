@@ -1,0 +1,28 @@
+{
+  "name": "PlantDescriptionEngine",
+  "listen": ":8432",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/plantdescriptionengine.crt",
+  "privateKey": "/certs/plantdescriptionengine.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/plantdescriptionengine.json",
+  "passwordFile": "/certs/password",
+  "crlFile": "/crl/ca.crl",
+  "upstreams": {
+    "SysMonitor": "https://sysmonitor:8475",
+    "DynamicServiceOrchestration": "https://serviceorchestration-dynamic:8441"
+  },
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "authorizationPolicy": "enforce",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [
+    "LocalCloudManager"
+  ],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "plantdescriptionengine",
+  "advertisePort": 8432
+}

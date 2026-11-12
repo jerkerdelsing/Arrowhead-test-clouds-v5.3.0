@@ -1,0 +1,484 @@
+{
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "arrowhead",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "users": [
+    {
+      "name": "2.5.4.46=sy,CN=RandomDataProducer.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=DataManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=TimeManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Configuration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Choreographer.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=SysMonitor.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=AIGym.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=LocalCloudManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=CertificateAuthority.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=ServiceRegistry.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Authentication.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=ConsumerAuthorization.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=DynamicServiceOrchestration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=SimpleStoreServiceOrchestration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Blacklist.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=TranslationManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=TestTranslation.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=DeviceQoSEvaluator.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Onboarding.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Gatekeeper.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=GateTunnel.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=EventHandler.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=PlantDescriptionEngine.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    }
+  ],
+  "permissions": [
+    {
+      "user": "2.5.4.46=sy,CN=RandomDataProducer.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|RandomDataProducer\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|RandomDataProducer\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|RandomDataProducer\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DataManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|DataManager\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|DataManager\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|DataManager\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TimeManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|TimeManager\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|TimeManager\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|TimeManager\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Configuration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Configuration\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Configuration\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Configuration\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Choreographer.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Choreographer\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Choreographer\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Choreographer\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SysMonitor.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|SysMonitor\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|SysMonitor\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|SysMonitor\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=AIGym.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|AIGym\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|AIGym\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|AIGym\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=LocalCloudManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|LocalCloudManager\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|LocalCloudManager\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|LocalCloudManager\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=CertificateAuthority.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|CertificateAuthority\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|CertificateAuthority\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|CertificateAuthority\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ServiceRegistry.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|ServiceRegistry\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|ServiceRegistry\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|ServiceRegistry\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Authentication.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Authentication\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Authentication\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Authentication\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ConsumerAuthorization.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|ConsumerAuthorization\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|ConsumerAuthorization\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|ConsumerAuthorization\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DynamicServiceOrchestration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|DynamicServiceOrchestration\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|DynamicServiceOrchestration\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|DynamicServiceOrchestration\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SimpleStoreServiceOrchestration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|SimpleStoreServiceOrchestration\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|SimpleStoreServiceOrchestration\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|SimpleStoreServiceOrchestration\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Blacklist.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Blacklist\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Blacklist\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Blacklist\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TranslationManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|TranslationManager\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|TranslationManager\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|TranslationManager\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TestTranslation.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|TestTranslation\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|TestTranslation\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|TestTranslation\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DeviceQoSEvaluator.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|DeviceQoSEvaluator\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|DeviceQoSEvaluator\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|DeviceQoSEvaluator\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Onboarding.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Onboarding\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Onboarding\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Onboarding\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Gatekeeper.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Gatekeeper\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Gatekeeper\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Gatekeeper\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=GateTunnel.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|GateTunnel\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|GateTunnel\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|GateTunnel\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=EventHandler.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|EventHandler\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|EventHandler\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|EventHandler\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=PlantDescriptionEngine.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|PlantDescriptionEngine\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|PlantDescriptionEngine\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|PlantDescriptionEngine\\..*)$"
+    }
+  ],
+  "topic_permissions": [
+    {
+      "user": "2.5.4.46=sy,CN=RandomDataProducer.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.RandomDataProducer\\.randomNumberProducer(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DataManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.DataManager\\.DataManager(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TimeManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.TimeManager\\.TimeManager(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Configuration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.Configuration\\.Configuration(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Choreographer.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.Choreographer\\.Choreographer(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SysMonitor.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.SysMonitor\\.SysMonitor\\.[^.#]+)$",
+      "read": "^(?:GoCloud\\.sysmonitor\\.[^.#]+\\.[^.#]+\\.[^.#]+)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=AIGym.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.AIGym\\.AIGym(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=LocalCloudManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.LocalCloudManager\\.LocalCloudManager(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=CertificateAuthority.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.CertificateAuthority\\.CertificateAuthority(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ServiceRegistry.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.ServiceRegistry\\.ServiceRegistry(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Authentication.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.Authentication\\.Authentication(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ConsumerAuthorization.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.ConsumerAuthorization\\.ConsumerAuthorization(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DynamicServiceOrchestration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.DynamicServiceOrchestration\\.DynamicServiceOrchestration(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SimpleStoreServiceOrchestration.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.SimpleStoreServiceOrchestration\\.SimpleStoreServiceOrchestration(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Blacklist.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.Blacklist\\.Blacklist(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TranslationManager.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.TranslationManager\\.TranslationManager(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TestTranslation.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.TestTranslation\\.TestTranslation(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DeviceQoSEvaluator.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.DeviceQoSEvaluator\\.DeviceQoSEvaluator(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Onboarding.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.Onboarding\\.Onboarding(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Gatekeeper.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.Gatekeeper\\.Gatekeeper(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=GateTunnel.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.GateTunnel\\.GateTunnel(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=EventHandler.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.EventHandler\\.EventHandler(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=PlantDescriptionEngine.GoCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:GoCloud\\.sysmonitor\\.PlantDescriptionEngine\\.PlantDescriptionEngine(?:\\.[^#]+)?)$",
+      "read": "^$"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "role": "onboarding",
+  "name": "Onboarding",
+  "cloudSuffix": "RustCloud.Company.arrowhead.eu",
+  "listen": "0.0.0.0:8435",
+  "certificate": "/run/cert.pem",
+  "privateKey": "/run/key.pem",
+  "ca": "/run/ca.pem",
+  "state": "/data/state.json",
+  "passwordFile": "/run/password",
+  "authenticationUrl": "https://authentication:8444/",
+  "registryUrl": "https://serviceregistry:8443/",
+  "authorizationUrl": "https://consumer-authorization:8445/",
+  "managementWhitelist": [],
+  "register": true,
+  "advertiseAddress": "onboarding",
+  "advertisePort": 8435,
+  "upstreams": {
+    "CertificateAuthority": "https://certificateauthority:8448/",
+    "Blacklist": "https://blacklist:8464/"
+  },
+  "crlFile": "/run/trust/current.crl.pem",
+  "messaging": {
+    "amqpHost": "amqp-broker",
+    "amqpPort": 5671,
+    "amqpIdentity": "AmqpBroker",
+    "mqttHost": "mqtt-broker",
+    "mqttPort": 8883,
+    "mqttIdentity": "MqttBroker",
+    "intervalSeconds": 30,
+    "defaultSubscription": "all",
+    "retentionDays": 30
+  },
+  "bootstrapCa": "/run/manufacturer/manufacturer-ca.pem",
+  "bootstrapCrl": "/run/manufacturer/manufacturer-ca.crl.pem"
+}

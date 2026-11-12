@@ -1,0 +1,5 @@
+user dnQualifier=sy,CN=AIGym.RustCloud.Company.arrowhead.eu
+topic read arrowhead/RustCloud/sysmonitor/data/+/+
+
+user dnQualifier=sy,CN=SysMonitor.RustCloud.Company.arrowhead.eu
+topic write arrowhead/RustCloud/sysmonitor/data/+/+

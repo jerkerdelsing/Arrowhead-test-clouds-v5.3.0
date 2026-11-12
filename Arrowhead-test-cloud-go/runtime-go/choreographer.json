@@ -1,0 +1,28 @@
+{
+  "name": "Choreographer",
+  "listen": ":8457",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/choreographer.crt",
+  "privateKey": "/certs/choreographer.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/choreographer.json",
+  "passwordFile": "/certs/password",
+  "crlFile": "/crl/ca.crl",
+  "upstreams": {
+    "ServiceOrchestration": "https://serviceorchestration-dynamic:8441"
+  },
+  "upstreamSystems": {
+    "ServiceOrchestration": "DynamicServiceOrchestration"
+  },
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "authorizationPolicy": "enforce",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "choreographer",
+  "advertisePort": 8457
+}

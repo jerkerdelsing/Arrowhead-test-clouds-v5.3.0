@@ -1,0 +1,10 @@
+# MQTT access list of the local-cloud broker. The sysMonitor observations of all systems use the AMQP broker
+# (amqp/acl); this broker carries SysMonitor's sysMonitorData output and the other intra-cloud MQTT traffic.
+# Users are full certificate subjects (use_subject_as_username, RFC 2253 order) of system (sy) certificates (M1).
+
+user dnQualifier=sy,CN=SysMonitor.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic write arrowhead/TestCloud/health/mqtt
+topic write arrowhead/TestCloud/sysmonitor/data/+/+
+
+user dnQualifier=sy,CN=AIGym.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE
+topic read arrowhead/TestCloud/sysmonitor/data/+/+

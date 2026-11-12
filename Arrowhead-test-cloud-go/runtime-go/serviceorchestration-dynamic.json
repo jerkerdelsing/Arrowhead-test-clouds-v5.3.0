@@ -1,0 +1,34 @@
+{
+  "name": "DynamicServiceOrchestration",
+  "listen": ":8441",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/serviceorchestration-dynamic.crt",
+  "privateKey": "/certs/serviceorchestration-dynamic.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/serviceorchestration-dynamic.json",
+  "passwordFile": "/certs/password",
+  "gatekeeperURL": "https://gatekeeper:8449",
+  "crlFile": "/crl/ca.crl",
+  "blacklistURL": "https://blacklist:8464",
+  "blacklistExclude": [
+    "ServiceRegistry",
+    "Authentication",
+    "ConsumerAuthorization",
+    "DynamicServiceOrchestration",
+    "SimpleStoreServiceOrchestration",
+    "CertificateAuthority"
+  ],
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "mqttURL": "ssl://mqtt-broker:8883",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [
+    "LocalCloudManager"
+  ],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "serviceorchestration-dynamic",
+  "advertisePort": 8441
+}

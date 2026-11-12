@@ -1,0 +1,80 @@
+# AMQP access list of the local-cloud sysMonitor broker (RabbitMQ, topic exchange "arrowhead").
+# A system is named here by the CN of its client certificate; scripts/generate-amqp-definitions.py turns it into the
+# full subject of its system (sy) certificate, which the broker uses as user name (TLS EXTERNAL authentication, M1).
+#   publish <routing-key pattern>    routing keys the system may publish with
+#   subscribe <binding-key pattern>  binding keys the system may bind its own queues with
+# Patterns use AMQP topic syntax: words separated by ".", "*" = one word, "#" = zero or more words.
+# Routing keys: <Cloud>.sysmonitor.<System>.<serviceInstance>.<observationType>  (sysMonitor)
+# After a change run "make amqp-acl": it regenerates amqp/definitions.json and loads it into the broker.
+
+user RandomDataProducer.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.RandomDataProducer.randomNumberProducer.#
+
+user DataManager.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.DataManager.DataManager.#
+
+user TimeManager.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.TimeManager.TimeManager.#
+
+user Configuration.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.Configuration.Configuration.#
+
+user Choreographer.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.Choreographer.Choreographer.#
+
+user SysMonitor.GoCloud.Company.arrowhead.eu
+subscribe GoCloud.sysmonitor.*.*.*
+publish GoCloud.sysmonitor.SysMonitor.SysMonitor.*
+
+user AIGym.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.AIGym.AIGym.#
+
+user LocalCloudManager.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.LocalCloudManager.LocalCloudManager.#
+
+user CertificateAuthority.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.CertificateAuthority.CertificateAuthority.#
+
+# Native sysMonitor publishers: each system may write only below its own topic.
+
+user ServiceRegistry.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.ServiceRegistry.ServiceRegistry.#
+
+user Authentication.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.Authentication.Authentication.#
+
+user ConsumerAuthorization.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.ConsumerAuthorization.ConsumerAuthorization.#
+
+user DynamicServiceOrchestration.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.DynamicServiceOrchestration.DynamicServiceOrchestration.#
+
+user SimpleStoreServiceOrchestration.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.SimpleStoreServiceOrchestration.SimpleStoreServiceOrchestration.#
+
+user Blacklist.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.Blacklist.Blacklist.#
+
+user TranslationManager.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.TranslationManager.TranslationManager.#
+
+user TestTranslation.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.TestTranslation.TestTranslation.#
+
+user DeviceQoSEvaluator.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.DeviceQoSEvaluator.DeviceQoSEvaluator.#
+
+user Onboarding.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.Onboarding.Onboarding.#
+
+user Gatekeeper.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.Gatekeeper.Gatekeeper.#
+
+user GateTunnel.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.GateTunnel.GateTunnel.#
+
+user EventHandler.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.EventHandler.EventHandler.#
+
+user PlantDescriptionEngine.GoCloud.Company.arrowhead.eu
+publish GoCloud.sysmonitor.PlantDescriptionEngine.PlantDescriptionEngine.#

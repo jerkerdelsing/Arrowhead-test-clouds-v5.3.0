@@ -1,0 +1,26 @@
+{
+  "name": "TestTranslation",
+  "listen": ":8466",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/test-translation.crt",
+  "privateKey": "/certs/test-translation.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/test-translation.json",
+  "passwordFile": "/certs/password",
+  "crlFile": "/crl/ca.crl",
+  "upstreams": {
+    "TranslationManager": "https://translation-manager:8465"
+  },
+  "mqttURL": "ssl://mqtt-broker:8883",
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "authorizationPolicy": "enforce",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "test-translation",
+  "advertisePort": 8466
+}

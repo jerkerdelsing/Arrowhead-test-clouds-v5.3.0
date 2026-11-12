@@ -1,0 +1,54 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.77kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/rust:1.99-trixie@sha256:8a4e90c7946b74626488b1446f712c0fe0ed1a596cbd3d871684bc9c5433ae07
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
+#3 DONE 0.0s
+
+#4 [stage-1 1/3] FROM docker.io/library/debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
+#4 resolve docker.io/library/debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2 0.0s done
+#4 DONE 0.0s
+
+#5 [build 1/4] FROM docker.io/library/rust:1.99-trixie@sha256:8a4e90c7946b74626488b1446f712c0fe0ed1a596cbd3d871684bc9c5433ae07
+#5 resolve docker.io/library/rust:1.99-trixie@sha256:8a4e90c7946b74626488b1446f712c0fe0ed1a596cbd3d871684bc9c5433ae07 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61.68kB 0.0s done
+#6 DONE 0.0s
+
+#7 [build 2/4] WORKDIR /src
+#7 CACHED
+
+#8 [build 3/4] COPY . .
+#8 DONE 0.1s
+
+#9 [build 4/4] RUN --mount=type=cache,target=/usr/local/cargo/registry     --mount=type=cache,target=/usr/local/cargo/git     --mount=type=cache,target=/src/target     cargo build --release --locked --bin arrowhead-core --bin arrowhead-support --bin RandomDataProducer       --bin LocalCloudManager --bin localcloudmanager-docker-proxy  && mkdir /out && cd /src/target/release  && cp arrowhead-core arrowhead-support RandomDataProducer LocalCloudManager localcloudmanager-docker-proxy /out/
+#9 0.209    Compiling arrowhead-localcloudmanager-rust v5.2.2 (/src/ah5-LocalCloudManager-rust)
+#9 12.57     Finished `release` profile [optimized] target(s) in 12.43s
+#9 DONE 12.7s
+
+#10 [stage-1 2/3] RUN apt-get update && apt-get -y upgrade && apt-get install -y --no-install-recommends curl ca-certificates libssl3t64  && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [stage-1 3/3] COPY --from=build /out/ /usr/local/bin/
+#11 DONE 0.1s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 1.5s done
+#12 exporting manifest sha256:9171904359a5ed14a2259ee2acea4a08307c238ebb54cf505fb0dc3a103ec795 0.0s done
+#12 exporting config sha256:00a3af66a3930801e4ceabed3c04d865293044ea21e710bac89b981afb4a7c01 done
+#12 exporting attestation manifest sha256:d0c4f0dde36803e5440f50f4220140cb4be5a935feb04aefdc68e377bf2d2dd8 0.0s done
+#12 exporting manifest list sha256:578bec693970cd1ccded6099ece4cb14a6f0126bda5bd7508f61b7de2f0e3f9f done
+#12 naming to docker.io/arrowhead-rust-v530/rust-systems:20261112-v530 done
+#12 unpacking to docker.io/arrowhead-rust-v530/rust-systems:20261112-v530
+#12 unpacking to docker.io/arrowhead-rust-v530/rust-systems:20261112-v530 0.3s done
+#12 DONE 1.9s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/ccqga1fkab48sriuh37zmv8pz

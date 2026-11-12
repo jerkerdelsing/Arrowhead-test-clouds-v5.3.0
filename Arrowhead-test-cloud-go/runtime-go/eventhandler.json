@@ -1,0 +1,22 @@
+{
+  "name": "EventHandler",
+  "listen": ":8455",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/eventhandler.crt",
+  "privateKey": "/certs/eventhandler.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/eventhandler.json",
+  "passwordFile": "/certs/password",
+  "crlFile": "/crl/ca.crl",
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "authorizationPolicy": "enforce",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "eventhandler",
+  "advertisePort": 8455
+}

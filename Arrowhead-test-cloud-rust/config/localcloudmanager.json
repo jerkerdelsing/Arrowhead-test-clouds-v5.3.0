@@ -1,0 +1,56 @@
+{
+  "cloudSuffix": "RustCloud.Company.arrowhead.eu",
+  "project": "arrowhead-v530-test-cloud-rust",
+  "listen": "0.0.0.0:8480",
+  "consoleListen": "0.0.0.0:8490",
+  "certificate": "/run/cert.pem",
+  "privateKey": "/run/key.pem",
+  "ca": "/run/ca.pem",
+  "passwordFile": "/run/password",
+  "consoleHashFile": "/run/console.hash",
+  "consoleOrigins": [
+    "https://rustcloud-v530.localhost:6490"
+  ],
+  "consoleClients": [
+    "console-proxy"
+  ],
+  "upstreams": {
+    "ServiceRegistry": "https://serviceregistry:8443/",
+    "Authentication": "https://authentication:8444/",
+    "ConsumerAuthorization": "https://consumer-authorization:8445/",
+    "DynamicServiceOrchestration": "https://serviceorchestration-dynamic:8441/",
+    "SimpleStoreServiceOrchestration": "https://serviceorchestration-simple:8442/",
+    "AIGym": "https://aigym:8478/",
+    "Blacklist": "https://blacklist:8464/",
+    "CertificateAuthority": "https://certificateauthority:8448/",
+    "Choreographer": "https://choreographer:8457/",
+    "Configuration": "https://configuration:8459/",
+    "DataManager": "https://datamanager:8461/",
+    "DeviceQoSEvaluator": "https://deviceqosevaluator:8472/",
+    "EventHandler": "https://eventhandler:8455/",
+    "Gatekeeper": "https://gatekeeper:8449/",
+    "GateTunnel": "https://gatetunnel:8453/",
+    "Onboarding": "https://onboarding:8435/",
+    "PlantDescriptionEngine": "https://plantdescriptionengine:8432/",
+    "SysMonitor": "https://sysmonitor:8475/",
+    "TimeManager": "https://timemanager:8463/",
+    "TranslationManager": "https://translationmanager:8465/",
+    "RandomDataProducer": "https://random-data-producer:8500/"
+  },
+  "dockerUrl": "http://manager-docker-proxy:8080/",
+  "dockerTokenFile": "/run/gateway-token",
+  "advertiseAddress": "localcloudmanager",
+  "advertisePort": 8480,
+  "crlFile": "/run/trust/current.crl.pem",
+  "messaging": {
+    "amqpHost": "amqp-broker",
+    "amqpPort": 5671,
+    "amqpIdentity": "AmqpBroker",
+    "mqttHost": "mqtt-broker",
+    "mqttPort": 8883,
+    "mqttIdentity": "MqttBroker",
+    "intervalSeconds": 30,
+    "defaultSubscription": "all",
+    "retentionDays": 30
+  }
+}

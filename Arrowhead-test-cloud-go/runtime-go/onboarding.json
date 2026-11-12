@@ -1,0 +1,26 @@
+{
+  "name": "Onboarding",
+  "listen": ":8435",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/onboarding.crt",
+  "privateKey": "/certs/onboarding.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/onboarding.json",
+  "passwordFile": "/certs/password",
+  "crlFile": "/crl/ca.crl",
+  "upstreams": {
+    "CertificateAuthority": "https://certificate-authority:8448"
+  },
+  "clientCA": "/certs/manufacturer-ca.crt",
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "authorizationPolicy": "enforce",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "onboarding",
+  "advertisePort": 8435
+}

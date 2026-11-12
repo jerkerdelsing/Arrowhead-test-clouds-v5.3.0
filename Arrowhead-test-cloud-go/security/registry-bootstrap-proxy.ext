@@ -1,0 +1,6 @@
+basicConstraints=critical,CA:FALSE
+keyUsage=critical,digitalSignature,keyEncipherment
+extendedKeyUsage=serverAuth
+subjectAltName=DNS:registry-bootstrap-proxy
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer

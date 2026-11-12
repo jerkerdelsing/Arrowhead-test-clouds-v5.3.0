@@ -1,0 +1,2480 @@
+{
+ "name": "arrowhead-v52-test-cloud-go",
+ "services": {
+  "amqp-broker": {
+   "image": "rabbitmq:4.3.7-alpine@sha256:68fd0566c1c5a5aef2d7b3ad55af8be503a767c1ff8646d7088c8c7946270cf9",
+   "platform": "linux/arm64",
+   "entrypoint": [
+    "/etc/rabbitmq/entrypoint.sh"
+   ],
+   "environment": {
+    "ERL_EPMD_ADDRESS": "127.0.0.1",
+    "RABBITMQ_NODENAME": "rabbit@localhost",
+    "RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS": "-kernel inet_dist_use_interface {127,0,0,1}"
+   },
+   "user": "100:101",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 536870912,
+   "pids_limit": 1024,
+   "tmpfs": [
+    "/tmp:rw,nosuid,nodev,mode=1777,size=64m"
+   ],
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 5671,
+     "published": "6671",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "rabbitmq-diagnostics",
+     "-q",
+     "check_port_listener",
+     "5671"
+    ],
+    "interval": "10000ms",
+    "timeout": "8000ms",
+    "start_period": "20000ms",
+    "retries": 12
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles/amqp-broker",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/amqp/advanced.config",
+     "target": "/etc/rabbitmq/advanced.config",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/amqp/definitions.json",
+     "target": "/etc/rabbitmq/definitions.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/amqp/enabled_plugins",
+     "target": "/etc/rabbitmq/enabled_plugins",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/amqp/entrypoint.sh",
+     "target": "/etc/rabbitmq/entrypoint.sh",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/amqp/rabbitmq.conf",
+     "target": "/etc/rabbitmq/rabbitmq.conf",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_amqp-data",
+     "target": "/var/lib/rabbitmq"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "amqp-broker"
+     ]
+    }
+   }
+  },
+  "mqtt-broker": {
+   "image": "eclipse-mosquitto:2.0.22@sha256:81a6193ae693942a3231cd3ac52875b02b7e3a19da671b2fb4b55cc874c5b279",
+   "platform": "linux/arm64",
+   "entrypoint": [
+    "/mosquitto/config/crl-watch.sh"
+   ],
+   "command": [
+    "/usr/sbin/mosquitto",
+    "-c",
+    "/mosquitto/config/mosquitto.conf"
+   ],
+   "user": "1883:1883",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 64,
+   "tmpfs": [
+    "/tmp:rw,nosuid,nodev,mode=1777,size=64m"
+   ],
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8883,
+     "published": "9883",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "nc",
+     "-z",
+     "-w",
+     "2",
+     "127.0.0.1",
+     "8883"
+    ],
+    "interval": "10000ms",
+    "timeout": "4000ms",
+    "start_period": "5000ms",
+    "retries": 8
+   },
+   "volumes": [
+    {
+     "type": "volume",
+     "source": "5dfd42ac0f3ab582610ce5b9292e64fe496fb7e64b6468ab50fc48aeb1cc86f8",
+     "target": "/mosquitto/log"
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles/mqtt-broker",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/mqtt/acl",
+     "target": "/mosquitto/config/acl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/mqtt/crl-watch.sh",
+     "target": "/mosquitto/config/crl-watch.sh",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/mqtt/mosquitto.conf",
+     "target": "/mosquitto/config/mosquitto.conf",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_mqtt-data",
+     "target": "/mosquitto/data"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "mqtt-broker"
+     ]
+    }
+   }
+  },
+  "blacklist": {
+   "image": "arrowhead-test-redeploy/ah5-blacklist-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/Blacklist",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8464,
+     "published": "9464",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8464"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/blacklist",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/blacklist.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-blacklist-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "blacklist"
+     ]
+    }
+   }
+  },
+  "serviceregistry": {
+   "image": "arrowhead-test-redeploy/serviceregistry:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/ServiceRegistry",
+    "-config",
+    "/config/application.properties"
+   ],
+   "environment": {
+    "MQTT_API_ENABLED": "true",
+    "SERVER_COMMON_NAME": "ServiceRegistry.GoCloud.Company.arrowhead.eu",
+    "AUTHENTICATOR_PASSWORD_FILE": "/run/secrets/identity-password",
+    "SYSMONITOR_ENABLED": "true",
+    "SERVER_SSL_CERT_FILE": "/certs/serviceregistry.crt",
+    "AUTHENTICATOR_SECRET_KEY_FILE": "/run/secrets/authentication-secret-key",
+    "DOMAIN_NAME": "serviceregistry",
+    "AUTHENTICATION_POLICY": "outsourced",
+    "SYSMONITOR_SSL_KEY_FILE": "/certs/serviceregistry.key",
+    "BLACKLIST_CHECK_EXCLUDE_LIST": "ServiceRegistry,Authentication,ConsumerAuthorization,DynamicServiceOrchestration,SimpleStoreServiceOrchestration,CertificateAuthority",
+    "SYSMONITOR_SSL_CA_FILE": "/certs/ca.crt",
+    "MQTT_BROKER_ADDRESS": "mqtt-broker",
+    "ENABLE_BLACKLIST_FILTER": "true",
+    "FORCE_BLACKLIST_FILTER": "true",
+    "DATA_FILE": "/data/serviceregistry.json",
+    "SERVER_SSL_TRUST_FILE": "/certs/ca.crt",
+    "MANAGEMENT_POLICY": "whitelist",
+    "SERVER_SSL_CRL_FILE": "/crl/ca.crl",
+    "SERVER_SSL_ENABLED": "true",
+    "MANAGEMENT_WHITELIST": "Authentication,LocalCloudManager,DynamicServiceOrchestration,DeviceQoSEvaluator,PlantDescriptionEngine,Onboarding",
+    "SYSMONITOR_SSL_CERT_FILE": "/certs/serviceregistry.crt",
+    "SERVER_SSL_CLIENT_AUTH": "need",
+    "MQTT_BROKER_PORT": "8883",
+    "SERVER_SSL_KEY_FILE": "/certs/serviceregistry.key",
+    "SYSMONITOR_LOCAL_CLOUD": "GoCloud"
+   },
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 134217728,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8443,
+     "published": "9443",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_serviceregistry-data",
+     "target": "/data"
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/secrets/AH_AUTHENTICATION_SECRET_KEY",
+     "target": "/run/secrets/authentication-secret-key",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/secrets/AH_PW_SR",
+     "target": "/run/secrets/identity-password",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles/serviceregistry",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime/ServiceRegistry-go/application.properties",
+     "target": "/config/application.properties",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "serviceregistry"
+     ]
+    }
+   }
+  },
+  "authentication": {
+   "image": "arrowhead-test-redeploy/authentication:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/Authentication",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8444,
+     "published": "9444",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8444"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/authentication.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-authentication-state",
+     "target": "/state"
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/authentication",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "authentication"
+     ]
+    }
+   }
+  },
+  "consumerauthorization": {
+   "image": "arrowhead-test-redeploy/consumer-authorization:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/ConsumerAuthorization",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8445,
+     "published": "9445",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8445"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-consumerauthorization-state",
+     "target": "/state"
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/consumerauthorization",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/consumerauthorization.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "consumerauthorization"
+     ]
+    }
+   }
+  },
+  "serviceorchestration-simple": {
+   "image": "arrowhead-test-redeploy/serviceorchestration-simple:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/SimpleStoreServiceOrchestration",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8442,
+     "published": "9442",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8442"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/serviceorchestration-simple",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/serviceorchestration-simple.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-serviceorchestration-simple-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "serviceorchestration-simple"
+     ]
+    }
+   }
+  },
+  "serviceorchestration-dynamic": {
+   "image": "arrowhead-test-redeploy/serviceorchestration-dynamic:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/DynamicServiceOrchestration",
+    "-config",
+    "/config/config.json"
+   ],
+   "environment": {
+    "GOMEMLIMIT": "150MiB"
+   },
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 268435456,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8441,
+     "published": "9441",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8441"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/serviceorchestration-dynamic",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/serviceorchestration-dynamic.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-serviceorchestration-dynamic-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "serviceorchestration-dynamic"
+     ]
+    }
+   }
+  },
+  "certificate-authority": {
+   "image": "arrowhead-test-redeploy/ah5-certificateauthority-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/CertificateAuthority",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8448,
+     "published": "9448",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8448"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/certificate-authority",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/certificate-authority.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     }
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-certificate-authority-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "certificate-authority"
+     ]
+    }
+   }
+  },
+  "gatetunnel": {
+   "image": "arrowhead-test-redeploy/ah5-gatetunnel-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/GateTunnel",
+    "-config",
+    "/config/config.json"
+   ],
+   "environment": {
+    "FEDERATION_PEER_ORGANIZATIONS": "RustDev=Lab",
+    "RELAY_HOST": "arrowhead-relay",
+    "NEIGHBOR_CLOUDS": "TestCloud,RustDev",
+    "ADVERTISED_ADDRESS": "gatetunnel",
+    "FEDERATION_PROFILE": "ah-gt-1",
+    "MIN_TUNNEL_PORT": "8000",
+    "RELAY_PORT": "8883",
+    "MAX_TUNNEL_PORT": "8099",
+    "RELAY_CRL_FILES": "/peer-crl/org/org-ca.crl,/peer-crl/TestCloud/ca.crl,/peer-crl/RustDev/current.crl.pem"
+   },
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8453,
+     "published": "9453",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8453"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/gatetunnel.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-relay/security/org-public",
+     "target": "/peer-crl/org",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-java/security/crl",
+     "target": "/peer-crl/TestCloud",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-rust/candidate-native/trust",
+     "target": "/peer-crl/RustDev",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-gatetunnel-state",
+     "target": "/state"
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/gatetunnel",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "gatetunnel"
+     ]
+    }
+   }
+  },
+  "gatekeeper": {
+   "image": "arrowhead-test-redeploy/ah5-gatekeeper-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/Gatekeeper",
+    "-config",
+    "/config/config.json"
+   ],
+   "environment": {
+    "GATETUNNEL_URL": "https://gatetunnel:8453",
+    "RELAY_HOST": "arrowhead-relay",
+    "RELAY_PORT": "8883",
+    "CONSUMER_AUTHORIZATION_URL": "https://consumerauthorization:8445",
+    "FEDERATION_FOREIGN_TARGETS": "",
+    "FEDERATION_PEER_ORGANIZATIONS": "RustDev=Lab",
+    "FEDERATION_PROFILE": "ah-gt-1"
+   },
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8449,
+     "published": "9449",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8449"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-gatekeeper-state",
+     "target": "/state"
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/gatekeeper.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/gatekeeper",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "gatekeeper"
+     ]
+    }
+   }
+  },
+  "eventhandler": {
+   "image": "arrowhead-test-redeploy/ah5-eventhandler-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/EventHandler",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8455,
+     "published": "9455",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8455"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/eventhandler",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/eventhandler.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-eventhandler-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "eventhandler"
+     ]
+    }
+   }
+  },
+  "datamanager": {
+   "image": "arrowhead-test-redeploy/ah5-datamanager-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/DataManager",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8461,
+     "published": "9461",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8461"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/datamanager.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-datamanager-state",
+     "target": "/state"
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/datamanager",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "datamanager"
+     ]
+    }
+   }
+  },
+  "sysmonitor": {
+   "image": "arrowhead-test-redeploy/ah5-sysmonitor-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/SysMonitor",
+    "-config",
+    "/config/config.json"
+   ],
+   "environment": {
+    "GOMEMLIMIT": "150MiB"
+   },
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8475,
+     "published": "9475",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8475"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-sysmonitor-state",
+     "target": "/state"
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/sysmonitor",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/sysmonitor.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "sysmonitor"
+     ]
+    }
+   }
+  },
+  "timemanager": {
+   "image": "arrowhead-test-redeploy/ah5-timemanager-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/TimeManager",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8463,
+     "published": "9463",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8463"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/timemanager.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-timemanager-state",
+     "target": "/state"
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/timemanager",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "timemanager"
+     ]
+    }
+   }
+  },
+  "configuration": {
+   "image": "arrowhead-test-redeploy/ah5-configuration-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/Configuration",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8459,
+     "published": "9459",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8459"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/configuration",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/configuration.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-configuration-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "configuration"
+     ]
+    }
+   }
+  },
+  "translation-manager": {
+   "image": "arrowhead-test-redeploy/ah5-translationmanager-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/TranslationManager",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8465,
+     "published": "9465",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8465"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/translation-manager",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/translation-manager.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-translation-manager-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "translation-manager"
+     ]
+    }
+   }
+  },
+  "test-translation": {
+   "image": "arrowhead-test-redeploy/ah5-testtranslation-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/TestTranslation",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8466,
+     "published": "9466",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8466"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/test-translation",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/test-translation.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-test-translation-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "test-translation"
+     ]
+    }
+   }
+  },
+  "plantdescriptionengine": {
+   "image": "arrowhead-test-redeploy/ah5-plantdescriptionengine-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/PlantDescriptionEngine",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8432,
+     "published": "9432",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8432"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/plantdescriptionengine",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/plantdescriptionengine.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-plantdescriptionengine-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "plantdescriptionengine"
+     ]
+    }
+   }
+  },
+  "choreographer": {
+   "image": "arrowhead-test-redeploy/ah5-choreographer-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/Choreographer",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8457,
+     "published": "9457",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8457"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/choreographer",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/choreographer.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-choreographer-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "choreographer"
+     ]
+    }
+   }
+  },
+  "device-qos-evaluator": {
+   "image": "arrowhead-test-redeploy/ah5-deviceqosevaluator-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/DeviceQoSEvaluator",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8472,
+     "published": "9472",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8472"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-device-qos-evaluator-state",
+     "target": "/state"
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/device-qos-evaluator",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/device-qos-evaluator.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "device-qos-evaluator"
+     ]
+    }
+   }
+  },
+  "onboarding": {
+   "image": "arrowhead-test-redeploy/ah5-onboarding-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/Onboarding",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8435,
+     "published": "9435",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8435"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/onboarding",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/onboarding.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-onboarding-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "onboarding"
+     ]
+    }
+   }
+  },
+  "aigym": {
+   "image": "arrowhead-test-redeploy/ah5-aigym-go:20261110-sos16",
+   "platform": "linux/amd64",
+   "entrypoint": [
+    "/usr/local/bin/AIGym",
+    "-config",
+    "/config/config.json"
+   ],
+   "user": "65532:65532",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 128,
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8478,
+     "published": "9478",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "/usr/local/bin/ah-probe",
+     "127.0.0.1:8478"
+    ],
+    "interval": "30000ms",
+    "timeout": "4000ms",
+    "start_period": "60000ms",
+    "start_interval": "2000ms",
+    "retries": 3
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles-go/aigym",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/runtime-go/aigym.json",
+     "target": "/config/config.json",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/host_mnt/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "volume",
+     "source": "arrowhead-v52-test-cloud-go_go-aigym-state",
+     "target": "/state"
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "aigym"
+     ]
+    }
+   }
+  },
+  "random-data-producer": {
+   "image": "arrowhead-random-data-producer:1.0.0-sos16",
+   "platform": "linux/amd64",
+   "command": [
+    "python",
+    "src/producer.py"
+   ],
+   "environment": {
+    "TLS_CLIENT_KEY": "/certs/random-data-producer.key",
+    "SERVICE_REGISTRY_URL": "https://serviceregistry:8443",
+    "AMQP_PORT": "5671",
+    "ORCHESTRATOR_URL": "https://serviceorchestration-dynamic:8441",
+    "PUBLISH_INTERVAL_SECONDS": "30",
+    "PORT": "8500",
+    "LOCAL_CLOUD": "GoCloud",
+    "AUTHENTICATION_PASSWORD_FILE": "/run/secrets/identity-password",
+    "INTERCLOUD_ENABLED": "true",
+    "TLS_CLIENT_CERT": "/certs/random-data-producer.crt",
+    "AMQP_HOST": "amqp-broker",
+    "AUTHENTICATION_URL": "https://authentication:8444",
+    "ARROWHEAD_SYSTEM_NAME": "RandomDataProducer",
+    "TLS_CA_CERT": "/certs/ca.crt"
+   },
+   "user": "10001:10001",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 201326592,
+   "pids_limit": 64,
+   "tmpfs": [
+    "/tmp:rw,nosuid,nodev,mode=1777,size=64m"
+   ],
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8500,
+     "published": "9500",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "python",
+     "-c",
+     "import ssl,urllib.request; c=ssl.create_default_context(cafile='/certs/ca.crt'); c.load_cert_chain('/certs/random-data-producer.crt','/certs/random-data-producer.key'); urllib.request.urlopen('https://random-data-producer:8500/health',context=c,timeout=3)"
+    ],
+    "interval": "10000ms",
+    "timeout": "4000ms",
+    "start_period": "90000ms",
+    "retries": 6
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles/random-data-producer",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/secrets/AH_PW_RDP",
+     "target": "/run/secrets/identity-password",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "random-data-producer"
+     ]
+    }
+   }
+  },
+  "docker-proxy": {
+   "image": "arrowhead-console-docker-proxy:1.0.0-sos16",
+   "platform": "linux/arm64",
+   "entrypoint": [
+    "docker-entrypoint.sh"
+   ],
+   "command": [
+    "node",
+    "src/proxy.js"
+   ],
+   "environment": {
+    "MANAGED_SERVICES": "serviceregistry,serviceorchestration-dynamic,serviceorchestration-simple,consumerauthorization,authentication,blacklist,translation-manager,device-qos-evaluator,onboarding,datamanager,timemanager,eventhandler,plantdescriptionengine,configuration,choreographer,random-data-producer,sysmonitor,aigym,certificate-authority,mqtt-broker,amqp-broker,gatekeeper,gatetunnel",
+    "COMPOSE_PROJECT_NAME": "arrowhead-v52-test-cloud-go"
+   },
+   "user": "1000:0",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 67108864,
+   "pids_limit": 64,
+   "restart": "unless-stopped",
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "nc",
+     "-z",
+     "127.0.0.1",
+     "2375"
+    ],
+    "interval": "10000ms",
+    "timeout": "4000ms",
+    "start_period": "5000ms",
+    "retries": 6
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/var/run/docker.sock",
+     "target": "/var/run/docker.sock",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n1": {
+     "aliases": [
+      "docker-proxy"
+     ]
+    }
+   }
+  },
+  "cloud-monitor-api": {
+   "image": "arrowhead-local-cloud-monitor-api:1.0.0-sos16",
+   "platform": "linux/arm64",
+   "entrypoint": [
+    "docker-entrypoint.sh"
+   ],
+   "command": [
+    "node",
+    "src/server.js"
+   ],
+   "environment": {
+    "ARROWHEAD_VERSION": "5.2.2",
+    "PORT": "8491",
+    "ORCHESTRATION_PRIORITY_MODE": "replace",
+    "COMPOSE_PROJECT_NAME": "arrowhead-v52-test-cloud-go",
+    "DATAMANAGER_URL": "https://datamanager:8461",
+    "CONSOLE_PROXY_SECRET_FILE": "/run/secrets/console-proxy-secret",
+    "TLS_CLIENT_KEY": "/certs/local-cloud-manager.key",
+    "SERVICE_REGISTRY_URL": "https://serviceregistry:8443",
+    "ARROWHEAD_ADMIN_SYSTEM": "Sysop",
+    "AUTHENTICATION_URL": "https://authentication:8444",
+    "CONSOLE_PASSWORD_HASH_FILE": "/run/secrets/console-password-hash",
+    "ARROWHEAD_SYSTEM_NAME": "LocalCloudManager",
+    "TLS_CLIENT_CERT": "/certs/local-cloud-manager.crt",
+    "DOCKER_API_URL": "http://docker-proxy:2375",
+    "SYSMONITOR_URL": "https://sysmonitor:8475",
+    "SIMPLE_ORCHESTRATION_URL": "https://serviceorchestration-simple:8442",
+    "SYSMONITOR_LOCAL_CLOUD": "GoCloud",
+    "MANAGED_SERVICES": "serviceregistry,serviceorchestration-dynamic,serviceorchestration-simple,consumerauthorization,authentication,blacklist,translation-manager,test-translation,device-qos-evaluator,onboarding,datamanager,timemanager,eventhandler,plantdescriptionengine,configuration,choreographer,random-data-producer,sysmonitor,aigym,certificate-authority,mqtt-broker,amqp-broker,gatekeeper,gatetunnel",
+    "TLS_CRL_FILE": "/crl/ca.crl",
+    "TLS_CA_CERT": "/certs/ca.crt",
+    "AUTHENTICATION_PASSWORD_FILE": "/run/secrets/identity-password",
+    "CONSOLE_ALLOWED_HOSTS": "gocloud.localhost"
+   },
+   "user": "node",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 268435456,
+   "pids_limit": 128,
+   "tmpfs": [
+    "/tmp:rw,nosuid,nodev,mode=1777,size=64m"
+   ],
+   "restart": "unless-stopped",
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "node",
+     "-e",
+     "fetch('http://127.0.0.1:8491/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+    ],
+    "interval": "10000ms",
+    "timeout": "4000ms",
+    "start_period": "10000ms",
+    "retries": 6
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/bundles/cloud-monitor-api",
+     "target": "/certs",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/security/crl",
+     "target": "/crl",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/secrets/CONSOLE_PASSWORD_HASH",
+     "target": "/run/secrets/console-password-hash",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/secrets/CONSOLE_PROXY_SECRET",
+     "target": "/run/secrets/console-proxy-secret",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    },
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/secrets/AH_PW_LCM",
+     "target": "/run/secrets/identity-password",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n0": {
+     "aliases": [
+      "cloud-monitor-api"
+     ]
+    },
+    "n2": {
+     "aliases": [
+      "cloud-monitor-api"
+     ]
+    },
+    "n1": {
+     "aliases": [
+      "cloud-monitor-api"
+     ]
+    }
+   }
+  },
+  "cloud-monitor-ui": {
+   "image": "arrowhead-local-cloud-monitor-ui:1.0.0-sos16",
+   "platform": "linux/arm64",
+   "entrypoint": [
+    "/docker-entrypoint.sh"
+   ],
+   "command": [
+    "nginx",
+    "-g",
+    "daemon off;"
+   ],
+   "environment": {
+    "CONSOLE_PROXY_SECRET_FILE": "/run/secrets/console-proxy-secret",
+    "CONSOLE_CANONICAL_HOST": "gocloud.localhost",
+    "CONSOLE_CANONICAL_ORIGIN": "http://gocloud.localhost:9490"
+   },
+   "user": "101:101",
+   "read_only": true,
+   "cap_drop": [
+    "ALL"
+   ],
+   "security_opt": [
+    "no-new-privileges:true"
+   ],
+   "mem_limit": 67108864,
+   "pids_limit": 64,
+   "tmpfs": [
+    "/run:rw,nosuid,nodev,mode=1777,size=1m",
+    "/tmp:rw,nosuid,nodev,mode=1777,size=64m",
+    "/var/cache/nginx:rw,nosuid,nodev,mode=1777,size=16m"
+   ],
+   "stop_signal": "SIGQUIT",
+   "restart": "unless-stopped",
+   "ports": [
+    {
+     "target": 8490,
+     "published": "9490",
+     "protocol": "tcp",
+     "host_ip": "127.0.0.1"
+    }
+   ],
+   "healthcheck": {
+    "test": [
+     "CMD",
+     "wget",
+     "-q",
+     "--spider",
+     "http://127.0.0.1:8490/health"
+    ],
+    "interval": "10000ms",
+    "timeout": "4000ms",
+    "start_period": "10000ms",
+    "retries": 6
+   },
+   "volumes": [
+    {
+     "type": "bind",
+     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/OLD/Arrowhead/Arrowhead-test-cloud-go/secrets/CONSOLE_PROXY_SECRET",
+     "target": "/run/secrets/console-proxy-secret",
+     "bind": {
+      "create_host_path": false
+     },
+     "read_only": true
+    }
+   ],
+   "networks": {
+    "n2": {
+     "aliases": [
+      "cloud-monitor-ui"
+     ]
+    }
+   }
+  }
+ },
+ "networks": {
+  "n0": {
+   "name": "arrowhead-v52-test-cloud-go-network",
+   "external": true
+  },
+  "n1": {
+   "name": "arrowhead-v52-test-cloud-go_console-docker",
+   "external": true
+  },
+  "n2": {
+   "name": "arrowhead-v52-test-cloud-go_console",
+   "external": true
+  }
+ },
+ "volumes": {
+  "arrowhead-v52-test-cloud-go_amqp-data": {
+   "name": "arrowhead-v52-test-cloud-go_amqp-data",
+   "external": true
+  },
+  "5dfd42ac0f3ab582610ce5b9292e64fe496fb7e64b6468ab50fc48aeb1cc86f8": {
+   "name": "5dfd42ac0f3ab582610ce5b9292e64fe496fb7e64b6468ab50fc48aeb1cc86f8",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_mqtt-data": {
+   "name": "arrowhead-v52-test-cloud-go_mqtt-data",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-blacklist-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-blacklist-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_serviceregistry-data": {
+   "name": "arrowhead-v52-test-cloud-go_serviceregistry-data",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-authentication-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-authentication-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-consumerauthorization-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-consumerauthorization-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-serviceorchestration-simple-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-serviceorchestration-simple-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-serviceorchestration-dynamic-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-serviceorchestration-dynamic-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-certificate-authority-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-certificate-authority-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-gatetunnel-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-gatetunnel-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-gatekeeper-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-gatekeeper-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-eventhandler-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-eventhandler-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-datamanager-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-datamanager-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-sysmonitor-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-sysmonitor-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-timemanager-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-timemanager-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-configuration-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-configuration-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-translation-manager-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-translation-manager-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-test-translation-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-test-translation-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-plantdescriptionengine-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-plantdescriptionengine-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-choreographer-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-choreographer-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-device-qos-evaluator-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-device-qos-evaluator-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-onboarding-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-onboarding-state",
+   "external": true
+  },
+  "arrowhead-v52-test-cloud-go_go-aigym-state": {
+   "name": "arrowhead-v52-test-cloud-go_go-aigym-state",
+   "external": true
+  }
+ }
+}

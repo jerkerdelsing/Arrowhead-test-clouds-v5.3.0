@@ -1,0 +1,32 @@
+{
+  "name": "SysMonitor",
+  "listen": ":8475",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/sysmonitor.crt",
+  "privateKey": "/certs/sysmonitor.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/sysmonitor.json",
+  "passwordFile": "/certs/password",
+  "crlFile": "/crl/ca.crl",
+  "upstreams": {
+    "ServiceOrchestration": "https://serviceorchestration-dynamic:8441"
+  },
+  "upstreamSystems": {
+    "ServiceOrchestration": "DynamicServiceOrchestration"
+  },
+  "mqttURL": "ssl://mqtt-broker:8883",
+  "defaultSubscription": "all",
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "authorizationPolicy": "enforce",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [
+    "LocalCloudManager"
+  ],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "sysmonitor",
+  "advertisePort": 8475
+}

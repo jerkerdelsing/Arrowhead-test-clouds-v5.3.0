@@ -1,0 +1,12 @@
+# Upstream Arrowhead 5.2.2 database image rebuilt on MySQL 8.4 LTS (security finding J8): the AITIA images ship MySQL
+# 8.1.0, an end-of-life innovation release. Only their schema scripts (init.sql, db-scripts) are taken over; they run on an empty volume
+# only. Existing 8.1 data directories are upgraded in place by mysqld 8.4 at first start (supported 8.1 -> 8.4 path).
+ARG AITIA_DB_IMAGE
+FROM ${AITIA_DB_IMAGE} AS aitia
+
+FROM mysql:8.4.11@sha256:24989179f58856db763f418010c1169fecc944e3ec1ea7e921572d83eb070f70
+COPY --from=aitia /docker-entrypoint-initdb.d/init.sql /docker-entrypoint-initdb.d/init.sql
+# init.sql sources ../db-scripts/*.sql relative to the AITIA image's working directory /db-scripts: without them an
+# empty volume cannot be initialized (2026-10-24)
+COPY --from=aitia /db-scripts /db-scripts
+WORKDIR /db-scripts

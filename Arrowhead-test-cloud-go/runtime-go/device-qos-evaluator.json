@@ -1,0 +1,32 @@
+{
+  "name": "DeviceQoSEvaluator",
+  "listen": ":8472",
+  "cloudSuffix": "GoCloud.Company.arrowhead.eu",
+  "certificate": "/certs/device-qos-evaluator.crt",
+  "privateKey": "/certs/device-qos-evaluator.key",
+  "ca": "/certs/ca.crt",
+  "state": "/state/device-qos-evaluator.json",
+  "passwordFile": "/certs/password",
+  "crlFile": "/crl/ca.crl",
+  "blacklistURL": "https://blacklist:8464",
+  "blacklistExclude": [
+    "ServiceRegistry",
+    "Authentication",
+    "ConsumerAuthorization",
+    "DynamicServiceOrchestration",
+    "SimpleStoreServiceOrchestration",
+    "CertificateAuthority"
+  ],
+  "qosMeasurement": true,
+  "monitorEnabled": true,
+  "amqpURL": "amqps://amqp-broker:5671",
+  "authorizationPolicy": "enforce",
+  "authenticationURL": "https://authentication:8444",
+  "serviceRegistryURL": "https://serviceregistry:8443",
+  "authorizationURL": "https://consumerauthorization:8445",
+  "managementWhitelist": [],
+  "managementPolicy": "authorization",
+  "register": true,
+  "advertiseAddress": "device-qos-evaluator",
+  "advertisePort": 8472
+}

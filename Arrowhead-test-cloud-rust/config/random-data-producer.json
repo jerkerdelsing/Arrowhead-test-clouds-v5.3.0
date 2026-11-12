@@ -1,0 +1,30 @@
+{
+  "name": "RandomDataProducer",
+  "cloudSuffix": "RustCloud.Company.arrowhead.eu",
+  "listen": "0.0.0.0:8500",
+  "certificate": "/run/cert.pem",
+  "privateKey": "/run/key.pem",
+  "ca": "/run/ca.pem",
+  "crlFile": "/run/trust/current.crl.pem",
+  "passwordFile": "/run/password",
+  "state": "/data/state.json",
+  "authenticationUrl": "https://authentication:8444/",
+  "registryUrl": "https://serviceregistry:8443/",
+  "authorizationUrl": "https://consumer-authorization:8445/",
+  "orchestratorUrl": "https://serviceorchestration-dynamic:8441/",
+  "advertiseAddress": "random-data-producer",
+  "advertisePort": 8500,
+  "intervalSeconds": 30,
+  "intercloudEnabled": false,
+  "messaging": {
+    "amqpHost": "amqp-broker",
+    "amqpPort": 5671,
+    "amqpIdentity": "AmqpBroker",
+    "mqttHost": "mqtt-broker",
+    "mqttPort": 8883,
+    "mqttIdentity": "MqttBroker",
+    "intervalSeconds": 30,
+    "defaultSubscription": "all",
+    "retentionDays": 30
+  }
+}

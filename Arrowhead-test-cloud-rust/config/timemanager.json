@@ -1,0 +1,31 @@
+{
+  "role": "timemanager",
+  "name": "TimeManager",
+  "cloudSuffix": "RustCloud.Company.arrowhead.eu",
+  "listen": "0.0.0.0:8463",
+  "certificate": "/run/cert.pem",
+  "privateKey": "/run/key.pem",
+  "ca": "/run/ca.pem",
+  "state": "/data/state.json",
+  "passwordFile": "/run/password",
+  "authenticationUrl": "https://authentication:8444/",
+  "registryUrl": "https://serviceregistry:8443/",
+  "authorizationUrl": "https://consumer-authorization:8445/",
+  "managementWhitelist": [],
+  "register": true,
+  "advertiseAddress": "timemanager",
+  "advertisePort": 8463,
+  "upstreams": {},
+  "crlFile": "/run/trust/current.crl.pem",
+  "messaging": {
+    "amqpHost": "amqp-broker",
+    "amqpPort": 5671,
+    "amqpIdentity": "AmqpBroker",
+    "mqttHost": "mqtt-broker",
+    "mqttPort": 8883,
+    "mqttIdentity": "MqttBroker",
+    "intervalSeconds": 30,
+    "defaultSubscription": "all",
+    "retentionDays": 30
+  }
+}

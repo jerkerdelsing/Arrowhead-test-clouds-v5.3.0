@@ -1,0 +1,524 @@
+{
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "arrowhead",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "users": [
+    {
+      "name": "2.5.4.46=sy,CN=RandomDataProducer.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=DataManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=GraphDBManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=TimeManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Configuration.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Choreographer.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=SysMonitor.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=AIGym.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=LocalCloudManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=CertificateAuthority.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=ServiceRegistry.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Authentication.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=ConsumerAuthorization.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=DynamicServiceOrchestration.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=SimpleStoreServiceOrchestration.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Blacklist.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=TranslationManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=DeviceQoSEvaluator.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Onboarding.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Gatekeeper.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=GateTunnel.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=EventHandler.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=PlantDescriptionEngine.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=LocalCloudConfigurator.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=SoLocalCloudConfigurator.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    }
+  ],
+  "permissions": [
+    {
+      "user": "2.5.4.46=sy,CN=RandomDataProducer.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|RandomDataProducer\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|RandomDataProducer\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|RandomDataProducer\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DataManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|DataManager\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|DataManager\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|DataManager\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=GraphDBManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|GraphDBManager\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|GraphDBManager\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|GraphDBManager\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TimeManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|TimeManager\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|TimeManager\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|TimeManager\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Configuration.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Configuration\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Configuration\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Configuration\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Choreographer.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Choreographer\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Choreographer\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Choreographer\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SysMonitor.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|SysMonitor\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|SysMonitor\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|SysMonitor\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=AIGym.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|AIGym\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|AIGym\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|AIGym\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=LocalCloudManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|LocalCloudManager\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|LocalCloudManager\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|LocalCloudManager\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=CertificateAuthority.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|CertificateAuthority\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|CertificateAuthority\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|CertificateAuthority\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ServiceRegistry.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|ServiceRegistry\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|ServiceRegistry\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|ServiceRegistry\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Authentication.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Authentication\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Authentication\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Authentication\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ConsumerAuthorization.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|ConsumerAuthorization\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|ConsumerAuthorization\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|ConsumerAuthorization\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DynamicServiceOrchestration.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|DynamicServiceOrchestration\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|DynamicServiceOrchestration\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|DynamicServiceOrchestration\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SimpleStoreServiceOrchestration.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|SimpleStoreServiceOrchestration\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|SimpleStoreServiceOrchestration\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|SimpleStoreServiceOrchestration\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Blacklist.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Blacklist\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Blacklist\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Blacklist\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TranslationManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|TranslationManager\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|TranslationManager\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|TranslationManager\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DeviceQoSEvaluator.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|DeviceQoSEvaluator\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|DeviceQoSEvaluator\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|DeviceQoSEvaluator\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Onboarding.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Onboarding\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Onboarding\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Onboarding\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Gatekeeper.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|Gatekeeper\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|Gatekeeper\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|Gatekeeper\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=GateTunnel.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|GateTunnel\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|GateTunnel\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|GateTunnel\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=EventHandler.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|EventHandler\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|EventHandler\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|EventHandler\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=PlantDescriptionEngine.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|PlantDescriptionEngine\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|PlantDescriptionEngine\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|PlantDescriptionEngine\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=LocalCloudConfigurator.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|LocalCloudConfigurator\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|LocalCloudConfigurator\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|LocalCloudConfigurator\\..*)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SoLocalCloudConfigurator.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "configure": "^(?:amq\\.gen-.*|SoLocalCloudConfigurator\\..*)$",
+      "write": "^(?:arrowhead|amq\\.gen-.*|SoLocalCloudConfigurator\\..*)$",
+      "read": "^(?:arrowhead|amq\\.gen-.*|SoLocalCloudConfigurator\\..*)$"
+    }
+  ],
+  "topic_permissions": [
+    {
+      "user": "2.5.4.46=sy,CN=RandomDataProducer.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.RandomDataProducer\\.randomNumberProducer(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DataManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.DataManager\\.DataManager(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=GraphDBManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.GraphDBManager\\.GraphDBManager(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TimeManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.TimeManager\\.TimeManager(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Configuration.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.Configuration\\.Configuration(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Choreographer.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.Choreographer\\.Choreographer(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SysMonitor.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.SysMonitor\\.SysMonitor\\.[^.#]+)$",
+      "read": "^(?:TestCloud\\.sysmonitor\\.[^.#]+\\.[^.#]+\\.[^.#]+)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=AIGym.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.AIGym\\.aiGym\\.[^.#]+)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=LocalCloudManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.LocalCloudManager\\.LocalCloudManager(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=CertificateAuthority.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.CertificateAuthority\\.certificateAuthority\\.[^.#]+)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ServiceRegistry.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.ServiceRegistry\\.ServiceRegistry(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Authentication.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.Authentication\\.Authentication(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ConsumerAuthorization.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.ConsumerAuthorization\\.ConsumerAuthorization(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DynamicServiceOrchestration.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.DynamicServiceOrchestration\\.DynamicServiceOrchestration(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SimpleStoreServiceOrchestration.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.SimpleStoreServiceOrchestration\\.SimpleStoreServiceOrchestration(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Blacklist.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.Blacklist\\.Blacklist(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TranslationManager.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.TranslationManager\\.TranslationManager(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DeviceQoSEvaluator.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.DeviceQoSEvaluator\\.DeviceQoSEvaluator(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Onboarding.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.Onboarding\\.Onboarding(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Gatekeeper.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.Gatekeeper\\.Gatekeeper(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=GateTunnel.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.GateTunnel\\.GateTunnel(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=EventHandler.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.EventHandler\\.EventHandler(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=PlantDescriptionEngine.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.PlantDescriptionEngine\\.PlantDescriptionEngine(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=LocalCloudConfigurator.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.LocalCloudConfigurator\\.LocalCloudConfigurator(?:\\.[^#]+)?)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SoLocalCloudConfigurator.TestCloud.Company.arrowhead.eu,OU=Arrowhead Systems,O=Company,C=SE",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^(?:TestCloud\\.sysmonitor\\.SoLocalCloudConfigurator\\.SoLocalCloudConfigurator(?:\\.[^#]+)?)$",
+      "read": "^$"
+    }
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "cloud": "TestCloud",
+  "composeProject": "arrowhead-v53-test-cloud",
+  "colony": "arrowhead-java-localcloud",
+  "executorType": "arrowhead-java-cloud-executor",
+  "defaults": [
+    "serviceregistry",
+    "authentication",
+    "consumerauthorization",
+    "serviceorchestration-dynamic"
+  ],
+  "smoke": [
+    "verify-localcloud"
+  ],
+  "systems": [
+    {
+      "id": "serviceregistry",
+      "name": "ServiceRegistry",
+      "kind": "core",
+      "services": [
+        "serviceregistry-db",
+        "serviceregistry"
+      ],
+      "requires": [
+        "amqp-broker"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": true,
+      "internalAssets": [
+        "serviceregistry-db"
+      ]
+    },
+    {
+      "id": "serviceorchestration-dynamic",
+      "name": "DynamicServiceOrchestration",
+      "kind": "core",
+      "services": [
+        "serviceorchestration-dynamic-db",
+        "serviceorchestration-dynamic"
+      ],
+      "requires": [
+        "amqp-broker",
+        "authentication",
+        "consumerauthorization",
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": true,
+      "internalAssets": [
+        "serviceorchestration-dynamic-db"
+      ]
+    },
+    {
+      "id": "serviceorchestration-simple",
+      "name": "SimpleOrchestration",
+      "kind": "core",
+      "services": [
+        "serviceorchestration-simple-db",
+        "serviceorchestration-simple"
+      ],
+      "requires": [
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": false,
+      "internalAssets": [
+        "serviceorchestration-simple-db"
+      ]
+    },
+    {
+      "id": "consumerauthorization",
+      "name": "ConsumerAuthorization",
+      "kind": "core",
+      "services": [
+        "consumerauthorization-db",
+        "consumerauthorization"
+      ],
+      "requires": [
+        "amqp-broker",
+        "authentication",
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": true,
+      "internalAssets": [
+        "consumerauthorization-db"
+      ]
+    },
+    {
+      "id": "authentication",
+      "name": "Authentication",
+      "kind": "core",
+      "services": [
+        "authentication-db",
+        "authentication"
+      ],
+      "requires": [
+        "amqp-broker",
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": true,
+      "internalAssets": [
+        "authentication-db"
+      ]
+    },
+    {
+      "id": "blacklist",
+      "name": "Blacklist",
+      "kind": "support",
+      "services": [
+        "blacklist-db",
+        "blacklist"
+      ],
+      "requires": [
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": false,
+      "internalAssets": [
+        "blacklist-db"
+      ]
+    },
+    {
+      "id": "translation-manager",
+      "name": "TranslationManager",
+      "kind": "support",
+      "services": [
+        "translation-manager-db",
+        "translation-manager"
+      ],
+      "requires": [
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": false,
+      "internalAssets": [
+        "translation-manager-db"
+      ]
+    },
+    {
+      "id": "device-qos-evaluator",
+      "name": "DeviceQoSEvaluator",
+      "kind": "support",
+      "services": [
+        "device-qos-evaluator-db",
+        "device-qos-evaluator"
+      ],
+      "requires": [
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": false,
+      "internalAssets": [
+        "device-qos-evaluator-db"
+      ]
+    },
+    {
+      "id": "onboarding",
+      "name": "Onboarding",
+      "kind": "support",
+      "services": [
+        "onboarding-db",
+        "onboarding"
+      ],
+      "requires": [
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [
+        "configure-onboarding-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": [
+        "onboarding-db"
+      ]
+    },
+    {
+      "id": "device-demo",
+      "name": "DeviceDemo",
+      "kind": "application",
+      "services": [
+        "device-demo"
+      ],
+      "requires": [],
+      "provision": [],
+      "policies": [],
+      "protected": false,
+      "internalAssets": []
+    },
+    {
+      "id": "datamanager",
+      "name": "DataManager",
+      "kind": "support",
+      "services": [
+        "datamanager-db",
+        "datamanager"
+      ],
+      "requires": [
+        "amqp-broker",
+        "consumerauthorization"
+      ],
+      "provision": [],
+      "policies": [
+        "configure-datamanager-policies.sh",
+        "configure-datamanager-monitoring-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": [
+        "datamanager-db"
+      ]
+    },
+    {
+      "id": "timemanager",
+      "name": "TimeManager",
+      "kind": "support",
+      "services": [
+        "timemanager-db",
+        "timemanager"
+      ],
+      "requires": [
+        "amqp-broker",
+        "consumerauthorization"
+      ],
+      "provision": [
+        "provision-timemanager-identity.sh"
+      ],
+      "policies": [
+        "configure-timemanager-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": [
+        "timemanager-db"
+      ]
+    },
+    {
+      "id": "eventhandler",
+      "name": "EventHandler",
+      "kind": "support",
+      "services": [
+        "eventhandler-db",
+        "eventhandler"
+      ],
+      "requires": [
+        "amqp-broker",
+        "consumerauthorization"
+      ],
+      "provision": [],
+      "policies": [
+        "configure-eventhandler-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": [
+        "eventhandler-db"
+      ]
+    },
+    {
+      "id": "plantdescriptionengine",
+      "name": "PlantDescriptionEngine",
+      "kind": "support",
+      "services": [
+        "plantdescriptionengine-db",
+        "plantdescriptionengine"
+      ],
+      "requires": [
+        "amqp-broker",
+        "consumerauthorization"
+      ],
+      "provision": [
+        "provision-plantdescriptionengine-identity.sh"
+      ],
+      "policies": [
+        "configure-plantdescriptionengine-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": [
+        "plantdescriptionengine-db"
+      ]
+    },
+    {
+      "id": "configuration",
+      "name": "Configuration",
+      "kind": "support",
+      "services": [
+        "configuration-db",
+        "configuration"
+      ],
+      "requires": [
+        "amqp-broker"
+      ],
+      "provision": [
+        "provision-configuration-identity.sh"
+      ],
+      "policies": [
+        "configure-configuration-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": [
+        "configuration-db"
+      ]
+    },
+    {
+      "id": "choreographer",
+      "name": "Choreographer",
+      "kind": "support",
+      "services": [
+        "choreographer-db",
+        "choreographer"
+      ],
+      "requires": [
+        "amqp-broker"
+      ],
+      "provision": [
+        "provision-choreographer-identity.sh"
+      ],
+      "policies": [
+        "configure-choreographer-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": [
+        "choreographer-db"
+      ]
+    },
+    {
+      "id": "graphdbmanager",
+      "name": "GraphDBManager",
+      "kind": "support",
+      "services": [
+        "graphdbmanager-graphdb",
+        "graphdbmanager"
+      ],
+      "requires": [
+        "amqp-broker",
+        "consumerauthorization"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": false,
+      "internalAssets": [
+        "graphdbmanager-graphdb"
+      ]
+    },
+    {
+      "id": "random-data-producer",
+      "name": "RandomDataProducer",
+      "kind": "application",
+      "services": [
+        "random-data-producer"
+      ],
+      "requires": [
+        "amqp-broker",
+        "authentication",
+        "consumerauthorization",
+        "datamanager",
+        "serviceorchestration-dynamic",
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [
+        "configure-random-producer-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": []
+    },
+    {
+      "id": "mqtt-broker",
+      "name": "MQTT broker",
+      "kind": "infrastructure",
+      "services": [
+        "mqtt-broker"
+      ],
+      "requires": [],
+      "provision": [],
+      "policies": [],
+      "protected": false,
+      "internalAssets": []
+    },
+    {
+      "id": "amqp-broker",
+      "name": "AMQP broker",
+      "kind": "infrastructure",
+      "services": [
+        "amqp-broker"
+      ],
+      "requires": [],
+      "provision": [],
+      "policies": [],
+      "protected": false,
+      "internalAssets": []
+    },
+    {
+      "id": "sysmonitor",
+      "name": "SysMonitor",
+      "kind": "support",
+      "services": [
+        "sysmonitor"
+      ],
+      "requires": [
+        "amqp-broker",
+        "authentication",
+        "consumerauthorization",
+        "mqtt-broker",
+        "serviceorchestration-dynamic",
+        "serviceregistry"
+      ],
+      "provision": [
+        "provision-sysmonitor-identity.sh"
+      ],
+      "policies": [
+        "configure-sysmonitor-policy.sh",
+        "configure-all-sysmonitor-policies.sh"
+      ],
+      "protected": false,
+      "internalAssets": []
+    },
+    {
+      "id": "gatekeeper",
+      "name": "Gatekeeper",
+      "kind": "support",
+      "services": [
+        "gatekeeper"
+      ],
+      "requires": [
+        "authentication",
+        "serviceregistry"
+      ],
+      "provision": [
+        "provision-gatekeeper-identity.sh"
+      ],
+      "policies": [
+        "configure-gatekeeper-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": []
+    },
+    {
+      "id": "gatetunnel",
+      "name": "GateTunnel",
+      "kind": "support",
+      "services": [
+        "gatetunnel"
+      ],
+      "requires": [
+        "authentication",
+        "serviceregistry",
+        "gatekeeper"
+      ],
+      "provision": [
+        "provision-gatetunnel-identity.sh"
+      ],
+      "policies": [
+        "configure-gatetunnel-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": []
+    },
+    {
+      "id": "aigym",
+      "name": "AIGym",
+      "kind": "support",
+      "services": [
+        "aigym"
+      ],
+      "requires": [
+        "amqp-broker",
+        "authentication",
+        "consumerauthorization",
+        "mqtt-broker",
+        "serviceorchestration-dynamic",
+        "serviceregistry",
+        "sysmonitor",
+        "datamanager"
+      ],
+      "provision": [
+        "provision-aigym-identity.sh"
+      ],
+      "policies": [
+        "configure-aigym-policy.sh"
+      ],
+      "protected": false,
+      "internalAssets": []
+    },
+    {
+      "id": "certificate-authority",
+      "name": "CertificateAuthority",
+      "kind": "support",
+      "services": [
+        "certificate-authority"
+      ],
+      "requires": [
+        "amqp-broker",
+        "serviceregistry"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": false,
+      "internalAssets": []
+    },
+    {
+      "id": "docker-proxy",
+      "name": "Console Docker proxy",
+      "kind": "infrastructure",
+      "services": [
+        "docker-proxy"
+      ],
+      "requires": [],
+      "provision": [],
+      "policies": [],
+      "protected": true,
+      "internalAssets": []
+    },
+    {
+      "id": "localcloudmanager",
+      "name": "LocalCloudManager",
+      "kind": "support",
+      "services": [
+        "cloud-monitor-api",
+        "cloud-monitor-ui"
+      ],
+      "requires": [
+        "serviceregistry",
+        "authentication",
+        "docker-proxy"
+      ],
+      "provision": [],
+      "policies": [],
+      "protected": true,
+      "internalAssets": []
+    }
+  ]
+}

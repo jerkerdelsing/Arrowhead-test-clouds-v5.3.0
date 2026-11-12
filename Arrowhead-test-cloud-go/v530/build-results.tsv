@@ -1,0 +1,24 @@
+image	primary folder	commit	result	seconds
+arrowhead-go-v530/ah5-aigym-go:20261111-v530	ah5-AIGym-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	2
+arrowhead-go-v530/ah5-blacklist-go:20261111-v530	ah5-Blacklist-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-certificateauthority-go:20261111-v530	ah5-CertificateAuthority-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-choreographer-go:20261111-v530	ah5-Choreographer-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-configuration-go:20261111-v530	ah5-Configuration-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-datamanager-go:20261111-v530	ah5-DataManager-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-deviceqosevaluator-go:20261111-v530	ah5-DeviceQoSEvaluator-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-eventhandler-go:20261111-v530	ah5-EventHandler-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-gatekeeper-go:20261111-v530	ah5-Gatekeeper-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	2
+arrowhead-go-v530/ah5-gatetunnel-go:20261111-v530	ah5-GateTunnel-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-onboarding-go:20261111-v530	ah5-Onboarding-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	2
+arrowhead-go-v530/ah5-plantdescriptionengine-go:20261111-v530	ah5-PlantDescriptionEngine-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	2
+arrowhead-go-v530/ah5-sysmonitor-go:20261111-v530	ah5-SysMonitor-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	0
+arrowhead-go-v530/ah5-timemanager-go:20261111-v530	ah5-TimeManager-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-translationmanager-go:20261111-v530	ah5-TranslationManager-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-testtranslation-go:20261111-v530	ah5-TestTranslation-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-localcloudmanager-go:20261111-v530	ah5-LocalCloudManager-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/authentication:20261111-v530	ah5-core-go/authentication	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/consumer-authorization:20261111-v530	ah5-core-go/consumer-authorization	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/serviceorchestration-dynamic:20261111-v530	ah5-core-go/serviceorchestration-dynamic	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/serviceorchestration-simple:20261111-v530	ah5-core-go/serviceorchestration-simple	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/serviceregistry:20261111-v530	ah5-core-go/serviceregistry	018af5d422541f1aa5163ed3d0b9ca40ed1dea95	PASS	1
+arrowhead-go-v530/ah5-localcloudmanager-go:20261111-v530	ah5-LocalCloudManager-go	018af5d422541f1aa5163ed3d0b9ca40ed1dea95+3-uncommitted	PASS	4

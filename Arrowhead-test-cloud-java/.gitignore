@@ -1,0 +1,11 @@
+.env
+security/x509/
+security/bundles/
+runtime/**
+!runtime/**/
+!runtime/**/.gitkeep
+*.log
+.DS_Store
+security/crl/
+.env.previous
+/secrets/

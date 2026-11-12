@@ -1,0 +1,4 @@
+basicConstraints=critical,CA:FALSE
+keyUsage=critical,digitalSignature,keyEncipherment
+extendedKeyUsage=serverAuth,clientAuth
+subjectAltName=DNS:certificate-authority,DNS:localhost,IP:127.0.0.1

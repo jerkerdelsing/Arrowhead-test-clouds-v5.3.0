@@ -1,0 +1,609 @@
+{
+  "time": "2026-11-12T07:22:39.858280+00:00",
+  "project": "arrowhead-v530-test-cloud-rust",
+  "passed": 150,
+  "failed": 0,
+  "error": null,
+  "checks": [
+    {
+      "test": "operator and test identities log in",
+      "passed": true
+    },
+    {
+      "test": "serviceregistry certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "serviceregistry echo content",
+      "passed": true
+    },
+    {
+      "test": "serviceregistry authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "serviceregistry implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "serviceregistry rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "serviceregistry rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "authentication certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "authentication echo content",
+      "passed": true
+    },
+    {
+      "test": "authentication authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "authentication implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "authentication rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "authentication rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "consumer-authorization certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "consumer-authorization echo content",
+      "passed": true
+    },
+    {
+      "test": "consumer-authorization authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "consumer-authorization implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "consumer-authorization rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "consumer-authorization rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "serviceorchestration-dynamic authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "serviceorchestration-dynamic implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "serviceorchestration-dynamic rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "serviceorchestration-dynamic rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "serviceorchestration-simple authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "serviceorchestration-simple implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "serviceorchestration-simple rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "serviceorchestration-simple rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "aigym certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "aigym echo content",
+      "passed": true
+    },
+    {
+      "test": "aigym authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "aigym implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "aigym rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "aigym rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "blacklist certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "blacklist echo content",
+      "passed": true
+    },
+    {
+      "test": "blacklist authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "blacklist implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "blacklist rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "blacklist rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "certificateauthority certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "certificateauthority echo content",
+      "passed": true
+    },
+    {
+      "test": "certificateauthority authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "certificateauthority implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "certificateauthority rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "certificateauthority rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "choreographer certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "choreographer echo content",
+      "passed": true
+    },
+    {
+      "test": "choreographer authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "choreographer implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "choreographer rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "choreographer rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "configuration certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "configuration echo content",
+      "passed": true
+    },
+    {
+      "test": "configuration authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "configuration implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "configuration rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "configuration rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "datamanager certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "datamanager echo content",
+      "passed": true
+    },
+    {
+      "test": "datamanager authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "datamanager implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "datamanager rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "datamanager rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "deviceqosevaluator certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "deviceqosevaluator echo content",
+      "passed": true
+    },
+    {
+      "test": "deviceqosevaluator authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "deviceqosevaluator implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "deviceqosevaluator rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "deviceqosevaluator rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "eventhandler certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "eventhandler echo content",
+      "passed": true
+    },
+    {
+      "test": "eventhandler authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "eventhandler implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "eventhandler rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "eventhandler rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "gatekeeper certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "gatekeeper echo content",
+      "passed": true
+    },
+    {
+      "test": "gatekeeper authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "gatekeeper implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "gatekeeper rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "gatekeeper rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "gatetunnel certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "gatetunnel echo content",
+      "passed": true
+    },
+    {
+      "test": "gatetunnel authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "gatetunnel implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "gatetunnel rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "gatetunnel rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "onboarding certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "onboarding echo content",
+      "passed": true
+    },
+    {
+      "test": "onboarding authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "onboarding implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "onboarding rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "onboarding rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "plantdescriptionengine certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "plantdescriptionengine echo content",
+      "passed": true
+    },
+    {
+      "test": "plantdescriptionengine authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "plantdescriptionengine implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "plantdescriptionengine rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "plantdescriptionengine rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "sysmonitor certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "sysmonitor echo content",
+      "passed": true
+    },
+    {
+      "test": "sysmonitor authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "sysmonitor implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "sysmonitor rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "sysmonitor rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "timemanager certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "timemanager echo content",
+      "passed": true
+    },
+    {
+      "test": "timemanager authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "timemanager implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "timemanager rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "timemanager rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "translationmanager certificate echo (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "translationmanager echo content",
+      "passed": true
+    },
+    {
+      "test": "translationmanager authenticated management (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "translationmanager implementation is Rust",
+      "passed": true
+    },
+    {
+      "test": "translationmanager rejects declared identity (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "translationmanager rejects missing client certificate",
+      "passed": true
+    },
+    {
+      "test": "ordinary identity denied registry management (HTTP 403, expected 403)",
+      "passed": true
+    },
+    {
+      "test": "identity token bound to its certificate (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "all 22 systems registered (missing: [])",
+      "passed": true
+    },
+    {
+      "test": "TestProvider system registered (from an earlier run)",
+      "passed": true
+    },
+    {
+      "test": "provider service registration (HTTP 201, expected 201)",
+      "passed": true
+    },
+    {
+      "test": "discovery before authorization (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "unauthorized service hidden",
+      "passed": true
+    },
+    {
+      "test": "grant consumer authorization (HTTP 201, expected 201)",
+      "passed": true
+    },
+    {
+      "test": "authorized discovery (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "authorized service found",
+      "passed": true
+    },
+    {
+      "test": "dynamic orchestration (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "dynamic orchestration selects TestProvider",
+      "passed": true
+    },
+    {
+      "test": "simple-store rule (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "simple orchestration (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "simple orchestration selects the stored instance",
+      "passed": true
+    },
+    {
+      "test": "blacklist create (HTTP 201, expected 201)",
+      "passed": true
+    },
+    {
+      "test": "blacklist query (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "blacklist record stored",
+      "passed": true
+    },
+    {
+      "test": "configuration store (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "configuration read (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "configuration round trip",
+      "passed": true
+    },
+    {
+      "test": "gatekeeper status (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "gatekeeper federation is off (no relay configured)",
+      "passed": true
+    },
+    {
+      "test": "gatetunnel status (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "gatetunnel federation is off (no relay configured)",
+      "passed": true
+    },
+    {
+      "test": "onboarding refuses the operator certificate on the device step (HTTP 403, expected 403)",
+      "passed": true
+    },
+    {
+      "test": "sysmonitor reconciles authorised providers (HTTP 202, expected 202)",
+      "passed": true
+    },
+    {
+      "test": "RandomDataProducer data in the DataManager historian (HTTP 200)",
+      "passed": true
+    },
+    {
+      "test": "localcloudmanager /localcloud/management/status as sysop (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "localcloudmanager /localcloud/management/systems as sysop (HTTP 200, expected 200)",
+      "passed": true
+    },
+    {
+      "test": "localcloudmanager /localcloud/management/status as test-consumer (HTTP 403, expected 403)",
+      "passed": true
+    },
+    {
+      "test": "localcloudmanager /localcloud/management/status as sysop without token (HTTP 401, expected 401)",
+      "passed": true
+    },
+    {
+      "test": "localcloudmanager /localcloud/monitor/echo as sysop without token (HTTP 200, expected 200)",
+      "passed": true
+    }
+  ]
+}

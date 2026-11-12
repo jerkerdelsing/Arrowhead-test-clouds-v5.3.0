@@ -1,0 +1,86 @@
+# AMQP access list of the local-cloud sysMonitor broker (RabbitMQ, topic exchange "arrowhead").
+# A system is named here by the CN of its client certificate; scripts/generate-amqp-definitions.py turns it into the
+# full subject of its system (sy) certificate, which the broker uses as user name (TLS EXTERNAL authentication, M1).
+#   publish <routing-key pattern>    routing keys the system may publish with
+#   subscribe <binding-key pattern>  binding keys the system may bind its own queues with
+# Patterns use AMQP topic syntax: words separated by ".", "*" = one word, "#" = zero or more words.
+# Routing keys: <Cloud>.sysmonitor.<System>.<serviceInstance>.<observationType>  (sysMonitor)
+# After a change run "make amqp-acl": it regenerates amqp/definitions.json and loads it into the broker.
+
+user RandomDataProducer.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.RandomDataProducer.randomNumberProducer.#
+
+user DataManager.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.DataManager.DataManager.#
+
+user GraphDBManager.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.GraphDBManager.GraphDBManager.#
+
+user TimeManager.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.TimeManager.TimeManager.#
+
+user Configuration.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.Configuration.Configuration.#
+
+user Choreographer.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.Choreographer.Choreographer.#
+
+user SysMonitor.TestCloud.Company.arrowhead.eu
+subscribe TestCloud.sysmonitor.*.*.*
+publish TestCloud.sysmonitor.SysMonitor.SysMonitor.*
+
+user AIGym.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.AIGym.aiGym.*
+
+user LocalCloudManager.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.LocalCloudManager.LocalCloudManager.#
+
+user CertificateAuthority.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.CertificateAuthority.certificateAuthority.*
+
+# Native sysMonitor publishers: each system may write only below its own topic.
+
+user ServiceRegistry.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.ServiceRegistry.ServiceRegistry.#
+
+user Authentication.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.Authentication.Authentication.#
+
+user ConsumerAuthorization.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.ConsumerAuthorization.ConsumerAuthorization.#
+
+user DynamicServiceOrchestration.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.DynamicServiceOrchestration.DynamicServiceOrchestration.#
+
+user SimpleStoreServiceOrchestration.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.SimpleStoreServiceOrchestration.SimpleStoreServiceOrchestration.#
+
+user Blacklist.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.Blacklist.Blacklist.#
+
+user TranslationManager.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.TranslationManager.TranslationManager.#
+
+user DeviceQoSEvaluator.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.DeviceQoSEvaluator.DeviceQoSEvaluator.#
+
+user Onboarding.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.Onboarding.Onboarding.#
+
+user Gatekeeper.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.Gatekeeper.Gatekeeper.#
+
+user GateTunnel.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.GateTunnel.GateTunnel.#
+
+user EventHandler.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.EventHandler.EventHandler.#
+
+user PlantDescriptionEngine.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.PlantDescriptionEngine.PlantDescriptionEngine.#
+
+user LocalCloudConfigurator.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.LocalCloudConfigurator.LocalCloudConfigurator.#
+
+user SoLocalCloudConfigurator.TestCloud.Company.arrowhead.eu
+publish TestCloud.sysmonitor.SoLocalCloudConfigurator.SoLocalCloudConfigurator.#

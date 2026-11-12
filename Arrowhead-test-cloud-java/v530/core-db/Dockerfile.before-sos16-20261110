@@ -1,0 +1,12 @@
+# Core database image from the primary source: Eclipse-Arrowhead-java/ah5-core-java-spring/<module>/src/main/resources/
+# database on MySQL 8.4 LTS. Build context: ah5-core-java-spring. Replaces the earlier AITIA-derived images, whose
+# init.sql grants to an 'ah-operator' user that is not created here and therefore fails on an empty volume
+# (MySQL 8.4: ERROR 1410, found in the fresh rebuild of 2026-11-09). The test cloud's own init hooks (system user
+# password from the cloud secret, AMQP interface templates, DSO plant rules) stay mounted by compose.yaml.
+FROM mysql:8.4.11@sha256:24989179f58856db763f418010c1169fecc944e3ec1ea7e921572d83eb070f70
+ARG MODULE
+COPY ${MODULE}/src/main/resources/database/ /db-scripts/
+RUN mv /db-scripts/create_empty_db.sql /docker-entrypoint-initdb.d/init.sql \
+ && sed -i -E 's/^(source[[:space:]]+)([^[:space:]]+)/\1..\/db-scripts\/\2/' /docker-entrypoint-initdb.d/init.sql \
+ && chmod -R a+rX /db-scripts /docker-entrypoint-initdb.d
+WORKDIR /db-scripts

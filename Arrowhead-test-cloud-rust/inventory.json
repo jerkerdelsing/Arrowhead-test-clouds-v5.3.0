@@ -1,0 +1,200 @@
+{
+  "project": "arrowhead-v530-test-cloud-rust",
+  "cloud": "RustCloud",
+  "suffix": "RustCloud.Company.arrowhead.eu",
+  "keychainService": "arrowhead-console-arrowhead-v530-test-cloud-rust",
+  "systems": [
+    {
+      "role": "serviceregistry",
+      "name": "ServiceRegistry",
+      "port": 8443,
+      "hostPort": 6443,
+      "echo": "/serviceregistry/monitor/echo",
+      "management": "/serviceregistry/general/mgmt/get-config"
+    },
+    {
+      "role": "authentication",
+      "name": "Authentication",
+      "port": 8444,
+      "hostPort": 6444,
+      "echo": "/authentication/monitor/echo",
+      "management": "/authentication/general/mgmt/get-config"
+    },
+    {
+      "role": "consumer-authorization",
+      "name": "ConsumerAuthorization",
+      "port": 8445,
+      "hostPort": 6445,
+      "echo": "/consumerauthorization/monitor/echo",
+      "management": "/consumerauthorization/general/mgmt/get-config"
+    },
+    {
+      "role": "serviceorchestration-dynamic",
+      "name": "DynamicServiceOrchestration",
+      "port": 8441,
+      "hostPort": 6441,
+      "echo": null,
+      "management": "/serviceorchestration/general/mgmt/get-config"
+    },
+    {
+      "role": "serviceorchestration-simple",
+      "name": "SimpleStoreServiceOrchestration",
+      "port": 8442,
+      "hostPort": 6442,
+      "echo": null,
+      "management": "/serviceorchestration/general/mgmt/get-config"
+    },
+    {
+      "role": "aigym",
+      "name": "AIGym",
+      "port": 8478,
+      "hostPort": 6478,
+      "echo": "/aigym/monitor/echo",
+      "management": "/aigym/general/mgmt/get-config"
+    },
+    {
+      "role": "blacklist",
+      "name": "Blacklist",
+      "port": 8464,
+      "hostPort": 6464,
+      "echo": "/blacklist/monitor/echo",
+      "management": "/blacklist/general/mgmt/get-config"
+    },
+    {
+      "role": "certificateauthority",
+      "name": "CertificateAuthority",
+      "port": 8448,
+      "hostPort": 6448,
+      "echo": "/certificate-authority/monitor/echo",
+      "management": "/certificate-authority/general/mgmt/get-config"
+    },
+    {
+      "role": "choreographer",
+      "name": "Choreographer",
+      "port": 8457,
+      "hostPort": 6457,
+      "echo": "/choreographer/monitor/echo",
+      "management": "/choreographer/general/mgmt/get-config"
+    },
+    {
+      "role": "configuration",
+      "name": "Configuration",
+      "port": 8459,
+      "hostPort": 6459,
+      "echo": "/configuration/monitor/echo",
+      "management": "/configuration/general/mgmt/get-config"
+    },
+    {
+      "role": "datamanager",
+      "name": "DataManager",
+      "port": 8461,
+      "hostPort": 6461,
+      "echo": "/datamanager/monitor/echo",
+      "management": "/datamanager/general/mgmt/get-config"
+    },
+    {
+      "role": "deviceqosevaluator",
+      "name": "DeviceQoSEvaluator",
+      "port": 8472,
+      "hostPort": 6472,
+      "echo": "/deviceqosevaluator/monitor/echo",
+      "management": "/deviceqosevaluator/general/mgmt/get-config"
+    },
+    {
+      "role": "eventhandler",
+      "name": "EventHandler",
+      "port": 8455,
+      "hostPort": 6455,
+      "echo": "/eventhandler/monitor/echo",
+      "management": "/eventhandler/general/mgmt/get-config"
+    },
+    {
+      "role": "gatekeeper",
+      "name": "Gatekeeper",
+      "port": 8449,
+      "hostPort": 6449,
+      "echo": "/gatekeeper/monitor/echo",
+      "management": "/gatekeeper/general/mgmt/get-config"
+    },
+    {
+      "role": "gatetunnel",
+      "name": "GateTunnel",
+      "port": 8453,
+      "hostPort": 6453,
+      "echo": "/gatetunnel/monitor/echo",
+      "management": "/gatetunnel/general/mgmt/get-config"
+    },
+    {
+      "role": "onboarding",
+      "name": "Onboarding",
+      "port": 8435,
+      "hostPort": 6435,
+      "echo": "/onboarding/monitor/echo",
+      "management": "/onboarding/general/mgmt/get-config"
+    },
+    {
+      "role": "plantdescriptionengine",
+      "name": "PlantDescriptionEngine",
+      "port": 8432,
+      "hostPort": 6432,
+      "echo": "/plantdescriptionengine/monitor/echo",
+      "management": "/plantdescriptionengine/general/mgmt/get-config"
+    },
+    {
+      "role": "sysmonitor",
+      "name": "SysMonitor",
+      "port": 8475,
+      "hostPort": 6475,
+      "echo": "/sysmonitor/monitor/echo",
+      "management": "/sysmonitor/general/mgmt/get-config"
+    },
+    {
+      "role": "timemanager",
+      "name": "TimeManager",
+      "port": 8463,
+      "hostPort": 6463,
+      "echo": "/timemanager/monitor/echo",
+      "management": "/timemanager/general/mgmt/get-config"
+    },
+    {
+      "role": "translationmanager",
+      "name": "TranslationManager",
+      "port": 8465,
+      "hostPort": 6465,
+      "echo": "/translation/monitor/echo",
+      "management": "/translation/general/mgmt/get-config"
+    },
+    {
+      "role": "localcloudmanager",
+      "name": "LocalCloudManager",
+      "port": 8480,
+      "hostPort": 6480,
+      "echo": null,
+      "management": null,
+      "consoleHost": "rustcloud-v530.localhost",
+      "consolePort": 6490
+    },
+    {
+      "role": "random-data-producer",
+      "name": "RandomDataProducer",
+      "port": 8500,
+      "hostPort": 6500,
+      "echo": null,
+      "management": null
+    },
+    {
+      "role": "amqp-broker",
+      "name": "AmqpBroker",
+      "port": 5671,
+      "hostPort": 6571,
+      "broker": true
+    },
+    {
+      "role": "mqtt-broker",
+      "name": "MqttBroker",
+      "port": 8883,
+      "hostPort": 6883,
+      "broker": true
+    }
+  ]
+}

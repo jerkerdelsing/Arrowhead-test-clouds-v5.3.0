@@ -1,0 +1,6 @@
+basicConstraints=critical,CA:FALSE
+keyUsage=critical,digitalSignature,keyEncipherment
+extendedKeyUsage=serverAuth
+subjectAltName=DNS:authentication-registry-mtls
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer

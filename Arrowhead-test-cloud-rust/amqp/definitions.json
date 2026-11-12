@@ -1,0 +1,464 @@
+{
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "arrowhead",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "users": [
+    {
+      "name": "2.5.4.46=sy,CN=ServiceRegistry.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Authentication.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=ConsumerAuthorization.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=DynamicServiceOrchestration.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=SimpleStoreServiceOrchestration.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=AIGym.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Blacklist.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=CertificateAuthority.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Choreographer.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Configuration.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=DataManager.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=DeviceQoSEvaluator.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=EventHandler.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Gatekeeper.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=GateTunnel.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=Onboarding.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=PlantDescriptionEngine.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=SysMonitor.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=TimeManager.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=TranslationManager.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=LocalCloudManager.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "2.5.4.46=sy,CN=RandomDataProducer.RustCloud.Company.arrowhead.eu",
+      "password_hash": "",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    }
+  ],
+  "permissions": [
+    {
+      "user": "2.5.4.46=sy,CN=ServiceRegistry.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Authentication.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ConsumerAuthorization.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DynamicServiceOrchestration.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SimpleStoreServiceOrchestration.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=AIGym.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Blacklist.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=CertificateAuthority.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Choreographer.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Configuration.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DataManager.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DeviceQoSEvaluator.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=EventHandler.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Gatekeeper.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=GateTunnel.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Onboarding.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=PlantDescriptionEngine.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SysMonitor.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^SysMonitor\\.observations$",
+      "write": "^(arrowhead|SysMonitor\\.observations)$",
+      "read": "^(arrowhead|SysMonitor\\.observations)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TimeManager.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TranslationManager.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=LocalCloudManager.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=RandomDataProducer.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^arrowhead$",
+      "read": "^$"
+    }
+  ],
+  "topic_permissions": [
+    {
+      "user": "2.5.4.46=sy,CN=ServiceRegistry.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.ServiceRegistry\\.ServiceRegistry\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Authentication.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.Authentication\\.Authentication\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=ConsumerAuthorization.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.ConsumerAuthorization\\.ConsumerAuthorization\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DynamicServiceOrchestration.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.DynamicServiceOrchestration\\.DynamicServiceOrchestration\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SimpleStoreServiceOrchestration.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.SimpleStoreServiceOrchestration\\.SimpleStoreServiceOrchestration\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=AIGym.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.AIGym\\.AIGym\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Blacklist.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.Blacklist\\.Blacklist\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=CertificateAuthority.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.CertificateAuthority\\.CertificateAuthority\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Choreographer.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.Choreographer\\.Choreographer\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Configuration.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.Configuration\\.Configuration\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DataManager.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.DataManager\\.DataManager\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=DeviceQoSEvaluator.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.DeviceQoSEvaluator\\.DeviceQoSEvaluator\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=EventHandler.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.EventHandler\\.EventHandler\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Gatekeeper.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.Gatekeeper\\.Gatekeeper\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=GateTunnel.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.GateTunnel\\.GateTunnel\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=Onboarding.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.Onboarding\\.Onboarding\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=PlantDescriptionEngine.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.PlantDescriptionEngine\\.PlantDescriptionEngine\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=SysMonitor.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.SysMonitor\\.SysMonitor\\.(echo|power|status)$",
+      "read": "^RustCloud\\.sysmonitor\\.[A-Za-z][A-Za-z0-9_]*\\.[A-Za-z][A-Za-z0-9_]*\\.(echo|power|status)$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TimeManager.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.TimeManager\\.TimeManager\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=TranslationManager.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.TranslationManager\\.TranslationManager\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=LocalCloudManager.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.LocalCloudManager\\.LocalCloudManager\\.(echo|power|status)$",
+      "read": "^$"
+    },
+    {
+      "user": "2.5.4.46=sy,CN=RandomDataProducer.RustCloud.Company.arrowhead.eu",
+      "vhost": "/",
+      "exchange": "arrowhead",
+      "write": "^RustCloud\\.sysmonitor\\.RandomDataProducer\\.RandomDataProducer\\.(echo|power|status)$",
+      "read": "^$"
+    }
+  ]
+}

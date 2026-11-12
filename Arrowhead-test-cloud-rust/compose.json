@@ -1,0 +1,3382 @@
+{
+  "name": "arrowhead-v530-test-cloud-rust",
+  "services": {
+    "serviceregistry": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-core"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/serviceregistry/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/serviceregistry/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/serviceregistry/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/serviceregistry.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/serviceregistry",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8443/serviceregistry/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "authentication": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-core"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "512m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/authentication/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/authentication/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/authentication/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/authentication.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/authentication",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/serviceregistry/password",
+          "target": "/run/bootstrap/serviceregistry",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/authentication/password",
+          "target": "/run/bootstrap/authentication",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/consumer-authorization/password",
+          "target": "/run/bootstrap/consumer-authorization",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/serviceorchestration-dynamic/password",
+          "target": "/run/bootstrap/serviceorchestration-dynamic",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/serviceorchestration-simple/password",
+          "target": "/run/bootstrap/serviceorchestration-simple",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/aigym/password",
+          "target": "/run/bootstrap/aigym",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/blacklist/password",
+          "target": "/run/bootstrap/blacklist",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/certificateauthority/password",
+          "target": "/run/bootstrap/certificateauthority",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/choreographer/password",
+          "target": "/run/bootstrap/choreographer",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/configuration/password",
+          "target": "/run/bootstrap/configuration",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/datamanager/password",
+          "target": "/run/bootstrap/datamanager",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/deviceqosevaluator/password",
+          "target": "/run/bootstrap/deviceqosevaluator",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/eventhandler/password",
+          "target": "/run/bootstrap/eventhandler",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/gatekeeper/password",
+          "target": "/run/bootstrap/gatekeeper",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/gatetunnel/password",
+          "target": "/run/bootstrap/gatetunnel",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/onboarding/password",
+          "target": "/run/bootstrap/onboarding",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/plantdescriptionengine/password",
+          "target": "/run/bootstrap/plantdescriptionengine",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/sysmonitor/password",
+          "target": "/run/bootstrap/sysmonitor",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/timemanager/password",
+          "target": "/run/bootstrap/timemanager",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/translationmanager/password",
+          "target": "/run/bootstrap/translationmanager",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/localcloudmanager/password",
+          "target": "/run/bootstrap/localcloudmanager",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/random-data-producer/password",
+          "target": "/run/bootstrap/random-data-producer",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/sysop/password",
+          "target": "/run/bootstrap/sysop",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/test-provider/password",
+          "target": "/run/bootstrap/test-provider",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/test-consumer/password",
+          "target": "/run/bootstrap/test-consumer",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8444/authentication/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "consumer-authorization": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-core"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/consumer-authorization/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/consumer-authorization/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/consumer-authorization/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/consumer-authorization.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/consumer-authorization",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/token-secret",
+          "target": "/run/token-secret",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8445/consumerauthorization/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "serviceorchestration-dynamic": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-core"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/serviceorchestration-dynamic/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/serviceorchestration-dynamic/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/serviceorchestration-dynamic/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/serviceorchestration-dynamic.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/serviceorchestration-dynamic",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8441/serviceorchestration/general/mgmt/get-config)\" = \"401\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "serviceorchestration-simple": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-core"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/serviceorchestration-simple/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/serviceorchestration-simple/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/serviceorchestration-simple/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/serviceorchestration-simple.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/serviceorchestration-simple",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8442/serviceorchestration/general/mgmt/get-config)\" = \"401\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "aigym": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/aigym/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/aigym/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/aigym/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/aigym.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/aigym",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8478/aigym/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "blacklist": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/blacklist/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/blacklist/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/blacklist/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/blacklist.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/blacklist",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8464/blacklist/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "certificateauthority": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/certificateauthority/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/certificateauthority/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/certificateauthority/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/certificateauthority.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/certificateauthority",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.key",
+          "target": "/run/ca-signing.key",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8448/certificate-authority/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "choreographer": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/choreographer/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/choreographer/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/choreographer/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/choreographer.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/choreographer",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8457/choreographer/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "configuration": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/configuration/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/configuration/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/configuration/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/configuration.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/configuration",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8459/configuration/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "datamanager": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/datamanager/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/datamanager/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/datamanager/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/datamanager.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/datamanager",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8461/datamanager/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "deviceqosevaluator": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/deviceqosevaluator/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/deviceqosevaluator/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/deviceqosevaluator/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/deviceqosevaluator.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/deviceqosevaluator",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8472/deviceqosevaluator/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "eventhandler": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/eventhandler/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/eventhandler/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/eventhandler/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/eventhandler.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/eventhandler",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8455/eventhandler/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "gatekeeper": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/gatekeeper/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/gatekeeper/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/gatekeeper/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/gatekeeper.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/gatekeeper",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8449/gatekeeper/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "gatetunnel": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "512m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/gatetunnel/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/gatetunnel/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/gatetunnel/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/gatetunnel.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/gatetunnel",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8453/gatetunnel/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "onboarding": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/onboarding/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/onboarding/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/onboarding/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/onboarding.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/onboarding",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/manufacturer/public",
+          "target": "/run/manufacturer",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8435/onboarding/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "plantdescriptionengine": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/plantdescriptionengine/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/plantdescriptionengine/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/plantdescriptionengine/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/plantdescriptionengine.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/plantdescriptionengine",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8432/plantdescriptionengine/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "sysmonitor": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/sysmonitor/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/sysmonitor/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/sysmonitor/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/sysmonitor.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/sysmonitor",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8475/sysmonitor/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "timemanager": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/timemanager/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/timemanager/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/timemanager/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/timemanager.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/timemanager",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8463/timemanager/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "translationmanager": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/arrowhead-support"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/translationmanager/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/translationmanager/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/translationmanager/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/translationmanager.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/translationmanager",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8465/translation/monitor/echo)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "random-data-producer": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/RandomDataProducer"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "45s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/random-data-producer/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/random-data-producer/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/random-data-producer/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/random-data-producer.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/random-data-producer",
+          "target": "/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl --crlfile /run/trust/current.crl.pem --silent --output /dev/null --write-out \"%{http_code}\" --max-time 5 --cacert /run/ca.pem --cert /run/cert.pem --key /run/key.pem https://localhost:8500/health)\" = \"200\""
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "120s",
+        "start_interval": "2s"
+      }
+    },
+    "localcloudmanager": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/LocalCloudManager"
+      ],
+      "command": [
+        "--config",
+        "/run/config.json"
+      ],
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 128,
+      "mem_limit": "256m",
+      "cpus": 1,
+      "stop_grace_period": "20s",
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=16m"
+      ],
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "networks": {
+        "arrowhead": {},
+        "manager-control": {},
+        "console": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/localcloudmanager/cert.pem",
+          "target": "/run/cert.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/localcloudmanager/key.pem",
+          "target": "/run/key.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/localcloudmanager/password",
+          "target": "/run/password",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./config/localcloudmanager.json",
+          "target": "/run/config.json",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/localcloudmanager/console.hash",
+          "target": "/run/console.hash",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/localcloudmanager/docker-token",
+          "target": "/run/gateway-token",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "depends_on": {
+        "manager-docker-proxy": {
+          "condition": "service_healthy"
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "curl",
+          "--crlfile",
+          "/run/trust/current.crl.pem",
+          "--fail",
+          "--silent",
+          "--max-time",
+          "5",
+          "--cacert",
+          "/run/ca.pem",
+          "https://localhost:8490/health"
+        ],
+        "interval": "15s",
+        "timeout": "7s",
+        "retries": 5,
+        "start_period": "60s",
+        "start_interval": "2s"
+      }
+    },
+    "manager-docker-proxy": {
+      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "entrypoint": [
+        "/usr/local/bin/localcloudmanager-docker-proxy"
+      ],
+      "user": "501:0",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 64,
+      "mem_limit": "64m",
+      "cpus": 1,
+      "labels": {
+        "eu.arrowhead.primary-source": "Eclipse-Arrowhead-rust"
+      },
+      "environment": {
+        "CANDIDATE_PROJECT": "arrowhead-v530-test-cloud-rust",
+        "DOCKER_SOCKET": "/var/run/docker.sock",
+        "GATEWAY_TOKEN_FILE": "/run/gateway-token"
+      },
+      "networks": {
+        "manager-control": {}
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/localcloudmanager/docker-token",
+          "target": "/run/gateway-token",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/var/run/docker.sock",
+          "target": "/var/run/docker.sock",
+          "read_only": true
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "test \"$$(curl -s -o /dev/null -w \"%{http_code}\" --max-time 3 http://127.0.0.1:8080/containers)\" = \"401\""
+        ],
+        "interval": "15s",
+        "timeout": "5s",
+        "retries": 5,
+        "start_period": "10s"
+      }
+    },
+    "amqp-broker": {
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "tmpfs": [
+        "/tmp:rw,nosuid,nodev,size=64m"
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/amqp-broker",
+          "target": "/run/broker",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./amqp",
+          "target": "/etc/rabbitmq",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/amqp-broker",
+          "target": "/var/lib/rabbitmq",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "image": "rabbitmq:4.3.7-alpine@sha256:68fd0566c1c5a5aef2d7b3ad55af8be503a767c1ff8646d7088c8c7946270cf9",
+      "hostname": "amqp-broker",
+      "entrypoint": [
+        "/etc/rabbitmq/entrypoint.sh"
+      ],
+      "pids_limit": 512,
+      "mem_limit": "512m",
+      "cpus": 2,
+      "environment": {
+        "ERL_EPMD_ADDRESS": "127.0.0.1",
+        "RABBITMQ_NODENAME": "rabbit@localhost",
+        "RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS": "-kernel inet_dist_use_interface {127,0,0,1} +S 2:2 +A 4"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "rabbitmq-diagnostics",
+          "-q",
+          "check_port_listener",
+          "5671"
+        ],
+        "interval": "10s",
+        "timeout": "8s",
+        "retries": 12,
+        "start_period": "30s"
+      }
+    },
+    "mqtt-broker": {
+      "user": "501:20",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "networks": {
+        "arrowhead": {}
+      },
+      "tmpfs": [
+        "/tmp:rw,nosuid,nodev,size=64m"
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./secrets/mqtt-broker",
+          "target": "/run/broker",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./secrets/ca.pem",
+          "target": "/run/ca.pem",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./trust",
+          "target": "/run/trust",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./mqtt",
+          "target": "/mosquitto/config",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "./state/mqtt-broker",
+          "target": "/mosquitto/data",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "image": "eclipse-mosquitto:2.0.22@sha256:81a6193ae693942a3231cd3ac52875b02b7e3a19da671b2fb4b55cc874c5b279",
+      "entrypoint": [
+        "/mosquitto/config/entrypoint.sh"
+      ],
+      "pids_limit": 64,
+      "mem_limit": "192m",
+      "cpus": 1,
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "nc",
+          "-z",
+          "-w",
+          "2",
+          "127.0.0.1",
+          "8883"
+        ],
+        "interval": "10s",
+        "timeout": "4s",
+        "retries": 8,
+        "start_period": "5s"
+      }
+    },
+    "edge": {
+      "image": "nginx:1.31.8-alpine@sha256:713fc2ebfd92e8217db451477182ee91944b123d2b1ee9fd5a8c6e91ca6c3a11",
+      "entrypoint": [
+        "nginx",
+        "-g",
+        "daemon off;"
+      ],
+      "user": "101:101",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 64,
+      "mem_limit": "64m",
+      "cpus": 1,
+      "tmpfs": [
+        "/tmp:rw,nosuid,nodev,mode=1777,size=8m"
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./edge/nginx.conf",
+          "target": "/etc/nginx/nginx.conf",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "networks": {
+        "arrowhead": {},
+        "edge": {}
+      },
+      "ports": [
+        {
+          "target": 6443,
+          "published": "6443",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6444,
+          "published": "6444",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6445,
+          "published": "6445",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6441,
+          "published": "6441",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6442,
+          "published": "6442",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6478,
+          "published": "6478",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6464,
+          "published": "6464",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6448,
+          "published": "6448",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6457,
+          "published": "6457",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6459,
+          "published": "6459",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6461,
+          "published": "6461",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6472,
+          "published": "6472",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6455,
+          "published": "6455",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6449,
+          "published": "6449",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6453,
+          "published": "6453",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6435,
+          "published": "6435",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6432,
+          "published": "6432",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6475,
+          "published": "6475",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6463,
+          "published": "6463",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6465,
+          "published": "6465",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6480,
+          "published": "6480",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6500,
+          "published": "6500",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6571,
+          "published": "6571",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 6883,
+          "published": "6883",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "nc -z 127.0.0.1 6443 && nc -z 127.0.0.1 6444"
+        ],
+        "interval": "15s",
+        "timeout": "5s",
+        "retries": 5,
+        "start_period": "10s"
+      }
+    },
+    "console-proxy": {
+      "image": "nginx:1.31.8-alpine@sha256:713fc2ebfd92e8217db451477182ee91944b123d2b1ee9fd5a8c6e91ca6c3a11",
+      "entrypoint": [
+        "nginx",
+        "-g",
+        "daemon off;"
+      ],
+      "user": "101:101",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "restart": "unless-stopped",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "pids_limit": 64,
+      "mem_limit": "64m",
+      "cpus": 1,
+      "tmpfs": [
+        "/tmp:rw,nosuid,nodev,mode=1777,size=8m"
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "./edge/console.conf",
+          "target": "/etc/nginx/nginx.conf",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "networks": {
+        "console": {
+          "ipv4_address": "10.241.2.10"
+        }
+      },
+      "ports": [
+        {
+          "target": 8490,
+          "published": "6490",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        }
+      ],
+      "depends_on": {
+        "localcloudmanager": {
+          "condition": "service_healthy"
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "nc",
+          "-z",
+          "127.0.0.1",
+          "8490"
+        ],
+        "interval": "15s",
+        "timeout": "5s",
+        "retries": 5,
+        "start_period": "10s"
+      }
+    }
+  },
+  "networks": {
+    "arrowhead": {
+      "name": "arrowhead-v530-test-cloud-rust_arrowhead",
+      "ipam": {
+        "config": [
+          {
+            "subnet": "10.241.0.0/24"
+          }
+        ]
+      },
+      "internal": true
+    },
+    "manager-control": {
+      "name": "arrowhead-v530-test-cloud-rust_manager-control",
+      "ipam": {
+        "config": [
+          {
+            "subnet": "10.241.1.0/28"
+          }
+        ]
+      },
+      "internal": true
+    },
+    "console": {
+      "name": "arrowhead-v530-test-cloud-rust_console",
+      "ipam": {
+        "config": [
+          {
+            "subnet": "10.241.2.0/28"
+          }
+        ]
+      }
+    },
+    "edge": {
+      "name": "arrowhead-v530-test-cloud-rust_edge",
+      "ipam": {
+        "config": [
+          {
+            "subnet": "10.241.3.0/28"
+          }
+        ]
+      }
+    }
+  }
+}

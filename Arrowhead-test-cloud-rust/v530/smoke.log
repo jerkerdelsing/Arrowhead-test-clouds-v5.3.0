@@ -1,0 +1,151 @@
+PASS operator and test identities log in
+PASS serviceregistry certificate echo (HTTP 200, expected 200)
+PASS serviceregistry echo content
+PASS serviceregistry authenticated management (HTTP 200, expected 200)
+PASS serviceregistry implementation is Rust
+PASS serviceregistry rejects declared identity (HTTP 401, expected 401)
+PASS serviceregistry rejects missing client certificate
+PASS authentication certificate echo (HTTP 200, expected 200)
+PASS authentication echo content
+PASS authentication authenticated management (HTTP 200, expected 200)
+PASS authentication implementation is Rust
+PASS authentication rejects declared identity (HTTP 401, expected 401)
+PASS authentication rejects missing client certificate
+PASS consumer-authorization certificate echo (HTTP 200, expected 200)
+PASS consumer-authorization echo content
+PASS consumer-authorization authenticated management (HTTP 200, expected 200)
+PASS consumer-authorization implementation is Rust
+PASS consumer-authorization rejects declared identity (HTTP 401, expected 401)
+PASS consumer-authorization rejects missing client certificate
+PASS serviceorchestration-dynamic authenticated management (HTTP 200, expected 200)
+PASS serviceorchestration-dynamic implementation is Rust
+PASS serviceorchestration-dynamic rejects declared identity (HTTP 401, expected 401)
+PASS serviceorchestration-dynamic rejects missing client certificate
+PASS serviceorchestration-simple authenticated management (HTTP 200, expected 200)
+PASS serviceorchestration-simple implementation is Rust
+PASS serviceorchestration-simple rejects declared identity (HTTP 401, expected 401)
+PASS serviceorchestration-simple rejects missing client certificate
+PASS aigym certificate echo (HTTP 200, expected 200)
+PASS aigym echo content
+PASS aigym authenticated management (HTTP 200, expected 200)
+PASS aigym implementation is Rust
+PASS aigym rejects declared identity (HTTP 401, expected 401)
+PASS aigym rejects missing client certificate
+PASS blacklist certificate echo (HTTP 200, expected 200)
+PASS blacklist echo content
+PASS blacklist authenticated management (HTTP 200, expected 200)
+PASS blacklist implementation is Rust
+PASS blacklist rejects declared identity (HTTP 401, expected 401)
+PASS blacklist rejects missing client certificate
+PASS certificateauthority certificate echo (HTTP 200, expected 200)
+PASS certificateauthority echo content
+PASS certificateauthority authenticated management (HTTP 200, expected 200)
+PASS certificateauthority implementation is Rust
+PASS certificateauthority rejects declared identity (HTTP 401, expected 401)
+PASS certificateauthority rejects missing client certificate
+PASS choreographer certificate echo (HTTP 200, expected 200)
+PASS choreographer echo content
+PASS choreographer authenticated management (HTTP 200, expected 200)
+PASS choreographer implementation is Rust
+PASS choreographer rejects declared identity (HTTP 401, expected 401)
+PASS choreographer rejects missing client certificate
+PASS configuration certificate echo (HTTP 200, expected 200)
+PASS configuration echo content
+PASS configuration authenticated management (HTTP 200, expected 200)
+PASS configuration implementation is Rust
+PASS configuration rejects declared identity (HTTP 401, expected 401)
+PASS configuration rejects missing client certificate
+PASS datamanager certificate echo (HTTP 200, expected 200)
+PASS datamanager echo content
+PASS datamanager authenticated management (HTTP 200, expected 200)
+PASS datamanager implementation is Rust
+PASS datamanager rejects declared identity (HTTP 401, expected 401)
+PASS datamanager rejects missing client certificate
+PASS deviceqosevaluator certificate echo (HTTP 200, expected 200)
+PASS deviceqosevaluator echo content
+PASS deviceqosevaluator authenticated management (HTTP 200, expected 200)
+PASS deviceqosevaluator implementation is Rust
+PASS deviceqosevaluator rejects declared identity (HTTP 401, expected 401)
+PASS deviceqosevaluator rejects missing client certificate
+PASS eventhandler certificate echo (HTTP 200, expected 200)
+PASS eventhandler echo content
+PASS eventhandler authenticated management (HTTP 200, expected 200)
+PASS eventhandler implementation is Rust
+PASS eventhandler rejects declared identity (HTTP 401, expected 401)
+PASS eventhandler rejects missing client certificate
+PASS gatekeeper certificate echo (HTTP 200, expected 200)
+PASS gatekeeper echo content
+PASS gatekeeper authenticated management (HTTP 200, expected 200)
+PASS gatekeeper implementation is Rust
+PASS gatekeeper rejects declared identity (HTTP 401, expected 401)
+PASS gatekeeper rejects missing client certificate
+PASS gatetunnel certificate echo (HTTP 200, expected 200)
+PASS gatetunnel echo content
+PASS gatetunnel authenticated management (HTTP 200, expected 200)
+PASS gatetunnel implementation is Rust
+PASS gatetunnel rejects declared identity (HTTP 401, expected 401)
+PASS gatetunnel rejects missing client certificate
+PASS onboarding certificate echo (HTTP 200, expected 200)
+PASS onboarding echo content
+PASS onboarding authenticated management (HTTP 200, expected 200)
+PASS onboarding implementation is Rust
+PASS onboarding rejects declared identity (HTTP 401, expected 401)
+PASS onboarding rejects missing client certificate
+PASS plantdescriptionengine certificate echo (HTTP 200, expected 200)
+PASS plantdescriptionengine echo content
+PASS plantdescriptionengine authenticated management (HTTP 200, expected 200)
+PASS plantdescriptionengine implementation is Rust
+PASS plantdescriptionengine rejects declared identity (HTTP 401, expected 401)
+PASS plantdescriptionengine rejects missing client certificate
+PASS sysmonitor certificate echo (HTTP 200, expected 200)
+PASS sysmonitor echo content
+PASS sysmonitor authenticated management (HTTP 200, expected 200)
+PASS sysmonitor implementation is Rust
+PASS sysmonitor rejects declared identity (HTTP 401, expected 401)
+PASS sysmonitor rejects missing client certificate
+PASS timemanager certificate echo (HTTP 200, expected 200)
+PASS timemanager echo content
+PASS timemanager authenticated management (HTTP 200, expected 200)
+PASS timemanager implementation is Rust
+PASS timemanager rejects declared identity (HTTP 401, expected 401)
+PASS timemanager rejects missing client certificate
+PASS translationmanager certificate echo (HTTP 200, expected 200)
+PASS translationmanager echo content
+PASS translationmanager authenticated management (HTTP 200, expected 200)
+PASS translationmanager implementation is Rust
+PASS translationmanager rejects declared identity (HTTP 401, expected 401)
+PASS translationmanager rejects missing client certificate
+PASS ordinary identity denied registry management (HTTP 403, expected 403)
+PASS identity token bound to its certificate (HTTP 401, expected 401)
+PASS all 22 systems registered (missing: [])
+PASS TestProvider system registered (from an earlier run)
+PASS provider service registration (HTTP 201, expected 201)
+PASS discovery before authorization (HTTP 200, expected 200)
+PASS unauthorized service hidden
+PASS grant consumer authorization (HTTP 201, expected 201)
+PASS authorized discovery (HTTP 200, expected 200)
+PASS authorized service found
+PASS dynamic orchestration (HTTP 200, expected 200)
+PASS dynamic orchestration selects TestProvider
+PASS simple-store rule (HTTP 200, expected 200)
+PASS simple orchestration (HTTP 200, expected 200)
+PASS simple orchestration selects the stored instance
+PASS blacklist create (HTTP 201, expected 201)
+PASS blacklist query (HTTP 200, expected 200)
+PASS blacklist record stored
+PASS configuration store (HTTP 200, expected 200)
+PASS configuration read (HTTP 200, expected 200)
+PASS configuration round trip
+PASS gatekeeper status (HTTP 200, expected 200)
+PASS gatekeeper federation is off (no relay configured)
+PASS gatetunnel status (HTTP 200, expected 200)
+PASS gatetunnel federation is off (no relay configured)
+PASS onboarding refuses the operator certificate on the device step (HTTP 403, expected 403)
+PASS sysmonitor reconciles authorised providers (HTTP 202, expected 202)
+PASS RandomDataProducer data in the DataManager historian (HTTP 200)
+PASS localcloudmanager /localcloud/management/status as sysop (HTTP 200, expected 200)
+PASS localcloudmanager /localcloud/management/systems as sysop (HTTP 200, expected 200)
+PASS localcloudmanager /localcloud/management/status as test-consumer (HTTP 403, expected 403)
+PASS localcloudmanager /localcloud/management/status as sysop without token (HTTP 401, expected 401)
+PASS localcloudmanager /localcloud/monitor/echo as sysop without token (HTTP 200, expected 200)
+smoke: 150 passed, 0 failed
