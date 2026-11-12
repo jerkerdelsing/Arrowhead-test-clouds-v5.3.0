@@ -79,7 +79,7 @@ def main() -> None:
                 dockerfile = next(p for p in (pathlib.Path(tmp) / "ah5-core-java-spring" / module / "docker").glob("Dockerfile-*")
                                   if not p.name.endswith("-DB"))
                 native = f"{REGISTRY}/{module}-java-native:{TAG}"
-                r = build(native, pathlib.Path(tmp), dockerfile, args, logs / f"{module}-java-native.log", ["--build-arg", "AH_VERSION=5.2.2"])
+                r = build(native, pathlib.Path(tmp), dockerfile, args, logs / f"{module}-java-native.log", ["--build-arg", "AH_VERSION=5.3.0"])
                 results[native] = r | {"source": str(PRIMARY / "ah5-core-java-spring" / module)}
                 print(r["result"], native, flush=True)
                 # read-only test-cloud adapter on top of the primary build
