@@ -54,6 +54,32 @@ Then the LocalCloudConfigurator host worker: a `LocalCloudConfiguratorWorker` ce
 `~/.local/share/JavaLocalCloudConfigurator/certs` (the 5.2 cloud's worker credentials are kept as `*.before-v530`), and
 `install-direct.py --cloud-dir <this folder> --compose-file <this folder>/compose.yaml --crl-file security/crl/ca.crl --catalog v530/localcloud-catalog/javacloud.json`.
 
+## Release 5.3.0 images (2026-11-12)
+
+The cloud now runs the qualified 5.3.0 release images of `Eclipse-Arrowhead-java` (commit `02b4b4e2`,
+`verification/release-5.3.0/manifest.json`) instead of images built here, under the tag `20261112-r530`
+(`TAG` in `generate.py`). The `20261111-v530` images are kept; set `TAG` back, run `generate.py` and `deploy.sh up` to
+return to them (the previous compose file is `compose.yaml.before-r530-20261112`).
+
+```sh
+python3 v530/use-release-images.py ../../Eclipse-Arrowhead-java/verification/release-5.3.0/manifest.json 20261112-r530
+python3 v530/generate.py && ./v530/deploy.sh up
+```
+
+`use-release-images.py` tags the support images of the manifest under this cloud's names, builds `core-adapter/` on
+the release core images and `core-db/` from the manifest commit, and writes `release-images.json`. All 47 containers
+of these images run the image IDs recorded there (checked after deployment). The brokers and RandomDataProducer are
+unchanged.
+
+- First `deploy.sh up`: LocalCloudManager and EventHandler exited at startup with "Invalid authorization header";
+  both started on the next attempt, and the second `deploy.sh up` completed. Cause: at startup the common library
+  logs in from the main thread and from its scheduled login job at nearly the same time (the job's `synchronized`
+  does not cover both, as Quartz creates a job instance per run); the second token supersedes the first one while
+  the registration call is under way. A known, intermittent defect of `ah5-common-java-spring`, not of these images.
+- `scripts/smoke-test.sh`: 14/14 OK.
+- `scripts/smoke-security.sh`: passed, 194 checks, 0 failures; the relay checks are skipped without federation. Every
+  check of the run on the `20261111-v530` images passes again; the 8 additional ones are the SoLC checks added since.
+
 ## Results (2026-11-11)
 
 - `build.py`: 50 images PASS. 23 of the 24 Maven builds reused Docker's layer cache from the 2026-11-10 SOS-16
