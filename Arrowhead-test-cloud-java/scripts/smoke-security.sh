@@ -21,6 +21,7 @@
 #   J23 Sysop is the only sysop identity; LocalCloudManager relies on explicit grants
 #   LC  localCloudConfiguration is granted to LocalCloudManager only; LocalCloudConfigurator may verify its consumers
 #   SoLC soLocalCloudConfiguration is granted to LocalCloudManager only; SoLocalCloudConfigurator only reads designs
+#   QE  qualityEvaluation is granted to DynamicServiceOrchestration only and enforced by DeviceQoSEvaluator
 #   J3  every container non-root (the Docker proxy too since SOS-8, 2026-11-10), read-only root filesystem, no capabilities, memory and
 #       PID limits; writable host mounts only the CA's /crl and the proxy's Docker socket
 #   J7  secrets only as files: none in a container's configuration or in its PID 1 environment, owner-only secret
@@ -389,6 +390,28 @@ for target in $FILTERED; do check "blacklisted SmokeClient refused at port ${tar
 check "remove SmokeClient from the blacklist" 200 "$(blacklist_call -X DELETE "$BLACKLIST_URL/remove?names=SmokeClient")"
 for target in $FILTERED; do check "SmokeClient served again at port ${target%%/*}" served "$(served "$(smoke_echo "$target")")"; done
 trap - EXIT
+
+echo "== QE qualityEvaluation is decided by ConsumerAuthorization"
+# since release 5.3.0 DeviceQoSEvaluator asks ConsumerAuthorization for every qualityEvaluation call; only the dynamic
+# orchestrator (QoS requirements) is granted it (configure-deviceqosevaluator-policy.sh)
+check "DynamicServiceOrchestration granted qualityEvaluation filter and sort" 2 \
+  "$(grant_check DeviceQoSEvaluator DynamicServiceOrchestration qualityEvaluation filter sort)"
+check "another system (SmokeClient) granted no qualityEvaluation operation" 0 "$(grant_check DeviceQoSEvaluator SmokeClient qualityEvaluation filter sort)"
+check "DeviceQoSEvaluator may verify its consumers" 1 "$(grant_check ConsumerAuthorization DeviceQoSEvaluator authorization verify)"
+qe_call() {  # qe_call <operation> -> HTTP status of an authenticated SmokeClient call
+  code --cacert "$CERT_DIR/ca.crt" --cert "$CERT_DIR/smoke-client.crt" --key "$CERT_DIR/smoke-client.key" \
+    -H "Authorization: Bearer IDENTITY-TOKEN//$smoke_echo_token" -H 'Content-Type: application/json' \
+    --data '{"providers":["SmokeClient"],"configuration":{}}' \
+    "https://127.0.0.1:$(env_value DEVICE_QOS_EVALUATOR_PORT 8472)/deviceqosevaluator/qualityevaluation/$1"
+}
+past_filter() { case "$1" in 401|403|000) echo "$1" ;; *) echo passed ;; esac; }
+check "SmokeClient without a grant refused at qualityEvaluation filter" 403 "$(qe_call filter)"
+# a temporary grant lets SmokeClient through (sort only: the refusal of filter above is cached for 30 s)
+DEVICEQOSEVALUATOR_QUALITY_EVALUATION_CONSUMERS='["DynamicServiceOrchestration","SmokeClient"]' \
+  ./scripts/configure-deviceqosevaluator-policy.sh >/dev/null
+check "SmokeClient with a grant passes the authorization filter at sort" passed "$(past_filter "$(qe_call sort)")"
+./scripts/configure-deviceqosevaluator-policy.sh >/dev/null
+check "SmokeClient's temporary grant removed again" 0 "$(grant_check DeviceQoSEvaluator SmokeClient qualityEvaluation filter sort)"
 
 echo "== J9 reserved service definitions"
 smoke_token=$(curl -fsS --max-time 15 --cacert "$CERT_DIR/ca.crt" --cert "$CERT_DIR/smoke-client.crt" --key "$CERT_DIR/smoke-client.key" \

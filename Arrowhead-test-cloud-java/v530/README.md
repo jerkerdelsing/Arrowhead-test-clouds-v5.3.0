@@ -56,9 +56,9 @@ Then the LocalCloudConfigurator host worker: a `LocalCloudConfiguratorWorker` ce
 
 ## Release 5.3.0 images (2026-11-12)
 
-The cloud now runs the qualified 5.3.0 release images of `Eclipse-Arrowhead-java` (commit `b7c685e7` since
-2026-11-13, before `4ac53157`, `f1103ac9`, `d25225ae` and `02b4b4e2`; `verification/release-5.3.0/manifest.json`) instead of
-images built here, under the tag `20261113-r530e` (before `20261113-r530d`, `20261113-r530c`, `20261113-r530`, `20261112-r530`)
+The cloud now runs the qualified 5.3.0 release images of `Eclipse-Arrowhead-java` (commit `7c6ac61c` since
+2026-11-13, before `b7c685e7`, `4ac53157`, `f1103ac9`, `d25225ae` and `02b4b4e2`; `verification/release-5.3.0/manifest.json`) instead of
+images built here, under the tag `20261113-r530f` (before `20261113-r530e`, `20261113-r530d`, `20261113-r530c`, `20261113-r530`, `20261112-r530`)
 (`TAG` in `generate.py`). The `20261111-v530` images are kept; set `TAG` back, run `generate.py` and `deploy.sh up` to
 return to them (the previous compose file is `compose.yaml.before-r530-20261112`).
 
@@ -129,6 +129,21 @@ library's HTTP client reuse a resolved host name for at most 10 s (before: the D
   while Blacklist was starting, and none in the following eight minutes. On `20261113-r530d` the same procedure gave
   failures until about 4.5 minutes after Blacklist was ready.
 - `scripts/smoke-test.sh`: 14/14 OK. `scripts/smoke-security.sh`: passed, 194 checks, 0 failures, relay checks skipped.
+
+**2026-11-13, qualityEvaluation authorization (`20261113-r530f`).** `Eclipse-Arrowhead-java` `7c6ac61c` makes
+DeviceQoSEvaluator ask ConsumerAuthorization about every `qualityEvaluation` call (filter, sort); before, any
+authenticated system could call it. `scripts/configure-deviceqosevaluator-policy.sh` (run by `deploy.sh up` and
+`make up`) grants it to DynamicServiceOrchestration only; set `DEVICEQOSEVALUATOR_QUALITY_EVALUATION_CONSUMERS` (a JSON
+list) to change that. Redeployed with `use-release-images.py <manifest> 20261113-r530f`; the previous compose file is
+`compose.yaml.before-r530f-20261113`.
+
+- `deploy.sh up` completed on the first attempt. All 47 containers run the image IDs of `release-images.json`.
+- DeviceQoSEvaluator logs `DeviceQoSEvaluatorAuthorizationFilter is active`.
+- `scripts/smoke-test.sh`: 14/14 OK. `scripts/smoke-security.sh`: passed, 200 checks, 0 failures, relay checks
+  skipped. The new QE section checks the policy, a 403 for SmokeClient without a grant, a pass with a temporary
+  grant, and that the grant is removed again.
+- The orchestrator here runs with `enable.qos=false`, so an orchestration with QoS requirements
+  (DynamicServiceOrchestration → DeviceQoSEvaluator) was not exercised end to end.
 
 ## Results (2026-11-11)
 

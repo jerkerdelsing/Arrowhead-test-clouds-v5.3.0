@@ -37,7 +37,7 @@ up)
   $C up -d --no-build --pull never --wait --wait-timeout 600 $($C config --services | grep -v '^random-data-producer$')
   for s in gatekeeper gatetunnel sysmonitor; do ./scripts/configure-$s-policy.sh; done
   ./scripts/configure-all-sysmonitor-policies.sh
-  for s in timemanager eventhandler plantdescriptionengine configuration choreographer; do ./scripts/configure-$s-policy.sh; done
+  for s in timemanager deviceqosevaluator eventhandler plantdescriptionengine configuration choreographer; do ./scripts/configure-$s-policy.sh; done
   ./scripts/migrate-onboarding-db.sh
   for s in onboarding aigym datamanager-monitoring; do ./scripts/configure-$s-policy.sh; done
   ./scripts/configure-graphdbmanager-policies.sh

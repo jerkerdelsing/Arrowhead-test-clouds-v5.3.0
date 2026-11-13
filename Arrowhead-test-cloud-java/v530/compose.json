@@ -16,7 +16,7 @@
         "ORGANIZATION": "Company",
         "SERVICE_REGISTRY_URL": "https://serviceregistry:8443"
       },
-      "image": "arrowhead-java-v530/ah5-aigym-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-aigym-java-spring:20261113-r530f",
       "mem_limit": "536870912",
       "networks": {
         "arrowhead": {
@@ -273,7 +273,7 @@
         "SPRING_DATASOURCE_URL": "jdbc:mariadb://authentication-db:3306/ah_authentication?sslMode=verify-full&serverSslCert=/etc/arrowhead/db-tls/ca.crt",
         "SYSMONITOR_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/authentication-java:20261113-r530e",
+      "image": "arrowhead-java-v530/authentication-java:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": null,
@@ -369,7 +369,7 @@
         "retries": 15,
         "start_period": "20s"
       },
-      "image": "arrowhead-java-v530/authentication-db:20261113-r530e",
+      "image": "arrowhead-java-v530/authentication-db:20261113-r530f",
       "mem_limit": "805306368",
       "networks": {
         "db-authentication": null
@@ -452,7 +452,7 @@
         "MANAGEMENT_POLICY": "authorization",
         "MANAGEMENT_WHITELIST": "DynamicServiceOrchestration,TranslationManager"
       },
-      "image": "arrowhead-java-v530/ah5-blacklist-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-blacklist-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -563,7 +563,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-blacklist-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-blacklist-java-spring-db:20261113-r530f",
       "networks": {
         "db-blacklist-db": null
       },
@@ -674,7 +674,7 @@
         "SERVICE_REGISTRY_PORT": "8443",
         "SYSMONITOR_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/ah5-certificateauthority-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-certificateauthority-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -804,7 +804,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-certificateauthority-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-certificateauthority-java-spring-db:20261113-r530f",
       "networks": {
         "db-certificate-authority-db": null
       },
@@ -915,7 +915,7 @@
         "MANAGEMENT_POLICY": "sysop-only",
         "ORCHESTRATION_TIMEOUT": "30"
       },
-      "image": "arrowhead-java-v530/ah5-choreographer-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-choreographer-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -1026,7 +1026,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-choreographer-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-choreographer-java-spring-db:20261113-r530f",
       "networks": {
         "db-choreographer-db": null
       },
@@ -1146,7 +1146,7 @@
         "SYSMONITOR_ENABLED": "true",
         "ARROWHEAD_ADMIN_SYSTEM": "Sysop"
       },
-      "image": "arrowhead-java-v530/ah5-localcloudmanager-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-localcloudmanager-java-spring:20261113-r530f",
       "mem_limit": "805306368",
       "networks": {
         "arrowhead": {
@@ -1258,7 +1258,7 @@
         "SERVICE_AUTHORIZATION_ENABLED": "true",
         "CONFIGURATION_MAX_SIZE": "1048576"
       },
-      "image": "arrowhead-java-v530/ah5-configuration-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-configuration-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -1369,7 +1369,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-configuration-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-configuration-java-spring-db:20261113-r530f",
       "networks": {
         "db-configuration-db": null
       },
@@ -1489,7 +1489,7 @@
         "SPRING_DATASOURCE_URL": "jdbc:mariadb://consumerauthorization-db:3306/ah_consumer_authorization?sslMode=verify-full&serverSslCert=/etc/arrowhead/db-tls/ca.crt",
         "SYSMONITOR_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/consumer-authorization-java:20261113-r530e",
+      "image": "arrowhead-java-v530/consumer-authorization-java:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": null,
@@ -1593,7 +1593,7 @@
         "retries": 15,
         "start_period": "20s"
       },
-      "image": "arrowhead-java-v530/consumer-authorization-db:20261113-r530e",
+      "image": "arrowhead-java-v530/consumer-authorization-db:20261113-r530f",
       "mem_limit": "805306368",
       "networks": {
         "db-consumerauthorization": null
@@ -1687,7 +1687,7 @@
         "SYSMONITOR_ENABLED": "true",
         "SERVICE_AUTHORIZATION_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/ah5-datamanager-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-datamanager-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -1798,7 +1798,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-datamanager-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-datamanager-java-spring-db:20261113-r530f",
       "networks": {
         "db-datamanager-db": null
       },
@@ -1908,7 +1908,7 @@
         "ENABLE_BLACKLIST_FILTER": "true",
         "FORCE_BLACKLIST_FILTER": "true"
       },
-      "image": "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -2019,7 +2019,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring-db:20261113-r530f",
       "networks": {
         "db-device-qos-evaluator-db": null
       },
@@ -2105,7 +2105,7 @@
         "COMPOSE_PROJECT_NAME": "arrowhead-v53-test-cloud",
         "MANAGED_SERVICES": "serviceregistry,serviceorchestration-dynamic,serviceorchestration-simple,consumerauthorization,authentication,blacklist,translation-manager,device-qos-evaluator,onboarding,datamanager,graphdbmanager,timemanager,eventhandler,plantdescriptionengine,configuration,choreographer,random-data-producer,sysmonitor,aigym,certificate-authority,mqtt-broker,amqp-broker,gatekeeper,gatetunnel"
       },
-      "image": "arrowhead-java-v530/ah5-localcloudmanager-java-spring-docker-proxy:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-localcloudmanager-java-spring-docker-proxy:20261113-r530f",
       "mem_limit": "201326592",
       "networks": {
         "console-docker": null
@@ -2173,7 +2173,7 @@
         "MANAGEMENT_POLICY": "sysop-only",
         "SERVICE_AUTHORIZATION_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/ah5-eventhandler-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-eventhandler-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -2284,7 +2284,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-eventhandler-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-eventhandler-java-spring-db:20261113-r530f",
       "networks": {
         "db-eventhandler-db": null
       },
@@ -2404,7 +2404,7 @@
         "SYSMONITOR_ENABLED": "true",
         "GATEKEEPER_RELAY_ENABLED": "false"
       },
-      "image": "arrowhead-java-v530/ah5-gatekeeper-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-gatekeeper-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -2554,7 +2554,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-gatekeeper-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-gatekeeper-java-spring-db:20261113-r530f",
       "networks": {
         "db-gatekeeper-db": null
       },
@@ -2681,7 +2681,7 @@
         "SESSION_MAX_AGE_SECONDS": "43200",
         "SYSMONITOR_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/ah5-gatetunnel-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-gatetunnel-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -2831,7 +2831,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-gatetunnel-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-gatetunnel-java-spring-db:20261113-r530f",
       "networks": {
         "db-gatetunnel-db": null
       },
@@ -2947,7 +2947,7 @@
         "SYSMONITOR_ENABLED": "true",
         "SERVICE_AUTHORIZATION_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/ah5-graphdbmanager-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-graphdbmanager-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -3036,7 +3036,7 @@
         "GRAPHDB_USER": "graphdbmanager",
         "GRAPHDB_USER_PASSWORD_FILE": "/run/secrets/graphdb-password"
       },
-      "image": "arrowhead-java-v530/ah5-graphdbmanager-java-spring-graphdb:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-graphdbmanager-java-spring-graphdb:20261113-r530f",
       "mem_limit": "1610612736",
       "networks": {
         "db-graphdbmanager-graphdb": null
@@ -3109,7 +3109,7 @@
       "extra_hosts": [
         "host.docker.internal=host-gateway"
       ],
-      "image": "arrowhead-java-v530/ah5-localcloudconfigurator-java:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-localcloudconfigurator-java:20261113-r530f",
       "mem_limit": "805306368",
       "networks": {
         "arrowhead": {
@@ -3229,7 +3229,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-localcloudconfigurator-java-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-localcloudconfigurator-java-db:20261113-r530f",
       "networks": {
         "db-localcloudconfigurator-db": null
       },
@@ -3430,7 +3430,7 @@
         "SYSMONITOR_ENABLED": "true",
         "ARROWHEAD_SSL_CRL_FILE": "/crl/ca.crl,/crl-manufacturer/manufacturer-ca.crl"
       },
-      "image": "arrowhead-java-v530/ah5-onboarding-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-onboarding-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -3550,7 +3550,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-onboarding-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-onboarding-java-spring-db:20261113-r530f",
       "networks": {
         "db-onboarding-db": null
       },
@@ -3667,7 +3667,7 @@
         "SERVICE_AUTHORIZATION_ENABLED": "true",
         "PLANT_ALARM_IGNORED_SYSTEMS": "ServiceRegistry,DynamicServiceOrchestration,SimpleStoreServiceOrchestration,ConsumerAuthorization,Authentication,Blacklist,DeviceQoSEvaluator,TranslationManager,SysMonitor,LocalCloudManager,PlantDescriptionEngine,Sysop"
       },
-      "image": "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -3778,7 +3778,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring-db:20261113-r530f",
       "networks": {
         "db-plantdescriptionengine-db": null
       },
@@ -3999,7 +3999,7 @@
         "SPRING_DATASOURCE_URL": "jdbc:mariadb://serviceorchestration-dynamic-db:3306/ah_serviceorchestration_dynamic?sslMode=verify-full&serverSslCert=/etc/arrowhead/db-tls/ca.crt",
         "SYSMONITOR_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/serviceorchestration-dynamic-java:20261113-r530e",
+      "image": "arrowhead-java-v530/serviceorchestration-dynamic-java:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": null,
@@ -4095,7 +4095,7 @@
         "retries": 15,
         "start_period": "20s"
       },
-      "image": "arrowhead-java-v530/serviceorchestration-dynamic-db:20261113-r530e",
+      "image": "arrowhead-java-v530/serviceorchestration-dynamic-db:20261113-r530f",
       "mem_limit": "805306368",
       "networks": {
         "db-serviceorchestration-dynamic": null
@@ -4203,7 +4203,7 @@
         "SPRING_DATASOURCE_URL": "jdbc:mariadb://serviceorchestration-simple-db:3306/ah_serviceorchestration_simple?sslMode=verify-full&serverSslCert=/etc/arrowhead/db-tls/ca.crt",
         "SYSMONITOR_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/serviceorchestration-simple-java:20261113-r530e",
+      "image": "arrowhead-java-v530/serviceorchestration-simple-java:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": null,
@@ -4299,7 +4299,7 @@
         "retries": 15,
         "start_period": "20s"
       },
-      "image": "arrowhead-java-v530/serviceorchestration-simple-db:20261113-r530e",
+      "image": "arrowhead-java-v530/serviceorchestration-simple-db:20261113-r530f",
       "mem_limit": "805306368",
       "networks": {
         "db-serviceorchestration-simple": null
@@ -4411,7 +4411,7 @@
         "interval": "10s",
         "retries": 12
       },
-      "image": "arrowhead-java-v530/serviceregistry-java:20261113-r530e",
+      "image": "arrowhead-java-v530/serviceregistry-java:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": null,
@@ -4511,7 +4511,7 @@
         "retries": 15,
         "start_period": "20s"
       },
-      "image": "arrowhead-java-v530/serviceregistry-db:20261113-r530e",
+      "image": "arrowhead-java-v530/serviceregistry-db:20261113-r530f",
       "mem_limit": "805306368",
       "networks": {
         "db-serviceregistry": null
@@ -4602,11 +4602,11 @@
         "SERVICE_REGISTRY_ADDRESS": "serviceregistry",
         "SERVICE_REGISTRY_PORT": "8443",
         "SOLC_API_WHITELIST": "",
-        "SOLC_SOURCE_COMMIT": "b7c685e7865204f4334b53f4971ce08ba9511011",
+        "SOLC_SOURCE_COMMIT": "7c6ac61c29ed4714897cc7a420308dd21e732792",
         "SOLC_SOURCE_REPOSITORY": "https://github.com/jerkerdelsing/Eclipse-Arrowhead-Java-v5.3.0.git",
         "SYSMONITOR_ENABLED": "true"
       },
-      "image": "arrowhead-java-v530/ah5-solocalcloudconfigurator-java:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-solocalcloudconfigurator-java:20261113-r530f",
       "mem_limit": "805306368",
       "networks": {
         "arrowhead": {
@@ -4718,7 +4718,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-solocalcloudconfigurator-java-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-solocalcloudconfigurator-java-db:20261113-r530f",
       "networks": {
         "db-solocalcloudconfigurator-db": null
       },
@@ -4849,7 +4849,7 @@
         "SYSMONITOR_PRUNE_INTERVAL_SECONDS": "3600",
         "SYSMONITOR_RETENTION_DAYS": "30"
       },
-      "image": "arrowhead-java-v530/ah5-sysmonitor-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-sysmonitor-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -4961,7 +4961,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-sysmonitor-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-sysmonitor-java-spring-db:20261113-r530f",
       "networks": {
         "db-sysmonitor-db": null
       },
@@ -5078,7 +5078,7 @@
         "NTP_SERVER_LIST": "pool.ntp.org,time.cloudflare.com",
         "TIME_TIMEZONE": "Europe/Stockholm"
       },
-      "image": "arrowhead-java-v530/ah5-timemanager-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-timemanager-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -5189,7 +5189,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-timemanager-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-timemanager-java-spring-db:20261113-r530f",
       "networks": {
         "db-timemanager-db": null
       },
@@ -5299,7 +5299,7 @@
         "ENABLE_BLACKLIST_FILTER": "true",
         "FORCE_BLACKLIST_FILTER": "true"
       },
-      "image": "arrowhead-java-v530/ah5-translationmanager-java-spring:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-translationmanager-java-spring:20261113-r530f",
       "mem_limit": "1073741824",
       "networks": {
         "arrowhead": {
@@ -5410,7 +5410,7 @@
         "interval": "5s",
         "retries": 30
       },
-      "image": "arrowhead-java-v530/ah5-translationmanager-java-spring-db:20261113-r530e",
+      "image": "arrowhead-java-v530/ah5-translationmanager-java-spring-db:20261113-r530f",
       "networks": {
         "db-translation-manager-db": null
       },

@@ -6,7 +6,7 @@ DATAMANAGER_JAR := $(DATAMANAGER_SRC)/target/arrowhead-datamanager-5.2.2.jar
 GRAPHDBMANAGER_SRC := ../../Eclipse-Arrowhead/ah5-GraphDBManager-java-spring
 GRAPHDBMANAGER_JAR := $(GRAPHDBMANAGER_SRC)/target/arrowhead-graphdbmanager-5.2.2.jar
 
-.PHONY: jars init validate pull up up-simple up-auth up-monitor up-orchestration-manager up-onboarding up-datamanager up-graphdbmanager up-random-producer up-sysmonitor up-timemanager up-eventhandler up-plantdescriptionengine up-configuration up-choreographer up-aigym up-all status smoke smoke-graphdbmanager smoke-aigym smoke-onboarding smoke-all configure-orchestration-security-policies configure-orchestration-dependency-policies configure-gatekeeper-policy configure-gatetunnel-policy configure-sysmonitor-policy configure-all-sysmonitor-policies configure-aigym-policy configure-timemanager-policy configure-eventhandler-policy configure-plantdescriptionengine-policy configure-configuration-policy configure-choreographer-policy configure-datamanager-monitoring-policy configure-graphdbmanager-policies configure-localcloudconfigurator-policy intercloud logs down clean amqp-acl smoke-onboarding-procedure secrets rotate-secrets console-password smoke-security
+.PHONY: jars init validate pull up up-simple up-auth up-monitor up-orchestration-manager up-onboarding up-datamanager up-graphdbmanager up-random-producer up-sysmonitor up-timemanager up-eventhandler up-plantdescriptionengine up-configuration up-choreographer up-aigym up-all status smoke smoke-graphdbmanager smoke-aigym smoke-onboarding smoke-all configure-orchestration-security-policies configure-orchestration-dependency-policies configure-gatekeeper-policy configure-gatetunnel-policy configure-sysmonitor-policy configure-all-sysmonitor-policies configure-aigym-policy configure-timemanager-policy configure-deviceqosevaluator-policy configure-eventhandler-policy configure-plantdescriptionengine-policy configure-configuration-policy configure-choreographer-policy configure-datamanager-monitoring-policy configure-graphdbmanager-policies configure-localcloudconfigurator-policy intercloud logs down clean amqp-acl smoke-onboarding-procedure secrets rotate-secrets console-password smoke-security
 
 init:
 	@./scripts/init.sh
@@ -81,6 +81,7 @@ up: $(DATAMANAGER_JAR) | $(JAVA_JARS)
 	@./scripts/configure-sysmonitor-policy.sh
 	@./scripts/configure-all-sysmonitor-policies.sh
 	@./scripts/configure-timemanager-policy.sh
+	@./scripts/configure-deviceqosevaluator-policy.sh
 	@./scripts/configure-eventhandler-policy.sh
 	@./scripts/configure-plantdescriptionengine-policy.sh
 	@./scripts/configure-configuration-policy.sh
@@ -257,6 +258,9 @@ configure-all-sysmonitor-policies:
 
 configure-timemanager-policy:
 	@./scripts/configure-timemanager-policy.sh
+
+configure-deviceqosevaluator-policy:
+	@./scripts/configure-deviceqosevaluator-policy.sh
 
 configure-eventhandler-policy:
 	@./scripts/configure-eventhandler-policy.sh
