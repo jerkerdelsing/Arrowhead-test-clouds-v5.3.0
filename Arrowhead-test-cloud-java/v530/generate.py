@@ -22,7 +22,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 PRIMARY = ROOT.parents[1] / "Eclipse-Arrowhead-java"
 # v5.3.0 (2026-11-11): every image built from the primary source Eclipse-Arrowhead-java at its current main
-TAG = "20261113-r530d"
+TAG = "20261113-r530e"
 REGISTRY = "arrowhead-java-v530"
 PROJECT = "arrowhead-v53-test-cloud"
 X509, STORES, BUNDLES, CRL = ROOT / "security/x509", ROOT / "security/primary-stores", ROOT / "security/bundles", ROOT / "security/crl"
