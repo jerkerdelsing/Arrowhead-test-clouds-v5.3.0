@@ -56,9 +56,9 @@ Then the LocalCloudConfigurator host worker: a `LocalCloudConfiguratorWorker` ce
 
 ## Release 5.3.0 images (2026-11-12)
 
-The cloud now runs the qualified 5.3.0 release images of `Eclipse-Arrowhead-java` (commit `f1103ac9` since
-2026-11-13, before `d25225ae` and `02b4b4e2`; `verification/release-5.3.0/manifest.json`) instead of images built
-here, under the tag `20261113-r530c` (before `20261113-r530`, `20261112-r530`)
+The cloud now runs the qualified 5.3.0 release images of `Eclipse-Arrowhead-java` (commit `4ac53157` since
+2026-11-13, before `f1103ac9`, `d25225ae` and `02b4b4e2`; `verification/release-5.3.0/manifest.json`) instead of
+images built here, under the tag `20261113-r530d` (before `20261113-r530c`, `20261113-r530`, `20261112-r530`)
 (`TAG` in `generate.py`). The `20261111-v530` images are kept; set `TAG` back, run `generate.py` and `deploy.sh up` to
 return to them (the previous compose file is `compose.yaml.before-r530-20261112`).
 
@@ -104,6 +104,18 @@ file is `compose.yaml.before-r530c-20261113`.
   MySQL 8.1 since 2026-11-11, were upgraded in place by MySQL 8.4.13 on first start; data and passwords kept.
 - `deploy.sh up` completed on the first attempt; no container logged "Invalid authorization header".
 - All 47 containers run the image IDs of `release-images.json`.
+- `scripts/smoke-test.sh`: 14/14 OK. `scripts/smoke-security.sh`: passed, 194 checks, 0 failures, relay checks skipped.
+
+**2026-11-13, core images non-root (`20261113-r530d`).** `Eclipse-Arrowhead-java` `4ac53157` makes the five core
+application images run as UID/GID 10001 (Compose already ran them as 10001); `core-adapter/Dockerfile` now switches
+back to that user after its root-only adjustments. Redeployed with `use-release-images.py <manifest> 20261113-r530d`;
+the previous compose file is `compose.yaml.before-r530d-20261113`.
+
+- The first two `deploy.sh up` runs stopped: DataManager exited at start-up with "Blacklist system is not available".
+  ServiceRegistry's calls to the recreated Blacklist failed without opening a connection from 14:35:53 to 14:45:09 UTC
+  (Docker's DNS TTL is 600 s) while Blacklist was up and reachable; afterwards the third `deploy.sh up` completed. See
+  "stale host-name cache" in the release qualification record. Not caused by the user change.
+- All 47 containers run the image IDs of `release-images.json`; the core images and processes are 10001.
 - `scripts/smoke-test.sh`: 14/14 OK. `scripts/smoke-security.sh`: passed, 194 checks, 0 failures, relay checks skipped.
 
 ## Results (2026-11-11)

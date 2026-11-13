@@ -14,3 +14,4 @@ RUN set -e; \
     rm -rf /app/config/certificte /app/config/certificate; mkdir -p /app/config/certificate /app/logs; \
     sed -i -E 's#(<Property name="LOG_DIR">)[^<]*#\1/app/logs#; s#size="100MB"#size="10MB"#; s#max="10"#max="2"#' /app/config/log4j2.xml; \
     chmod -R a+rX /app
+USER 10001:10001
