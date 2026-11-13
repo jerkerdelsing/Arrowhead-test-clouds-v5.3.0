@@ -1,247 +1,247 @@
 {
-  "manifestCommit": "d25225ae268d33a16626b1dbcd11e10700bf3a66",
+  "manifestCommit": "f1103ac9cfe2e891dad4b13257e36f6b4f801e75",
   "release": "5.3.0",
-  "tag": "20261113-r530",
+  "tag": "20261113-r530c",
   "images": {
-    "arrowhead-java-v530/ah5-aigym-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-aigym-java-spring:20261113-r530c": {
       "from": "arrowhead-aigym-standalone:5.3.0",
-      "imageId": "sha256:a4e36250604b4cfdf182de1d209208e92d13c5dfbfb95e30c48320fb9b74feff",
+      "imageId": "sha256:cb8974a5a9ccc8b8a882c28ed15844cba9d46923365fdce879519a3ee86cba2a",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-blacklist-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-blacklist-java-spring-db:20261113-r530c": {
       "from": "arrowhead-blacklist-standalone-db:5.3.0",
-      "imageId": "sha256:cf62bce849cefa677301237b4bdbcafaafa39ea1f16cd4a66fb85ea93261d8fb",
+      "imageId": "sha256:21fef3067916a4f56cae57e3ab129d7bd224b5563b08496f37c63afded3cbab8",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-blacklist-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-blacklist-java-spring:20261113-r530c": {
       "from": "arrowhead-blacklist-standalone:5.3.0",
-      "imageId": "sha256:fc1c8aa941b02ad85665bb6af127daa0e91721fd30461aee5655f79b6a22f6ab",
+      "imageId": "sha256:a4ee036c88a43c62bbb01f79a21fcee467038025145c3eec75e6423f2edf15c5",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-certificateauthority-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-certificateauthority-java-spring-db:20261113-r530c": {
       "from": "arrowhead-certificate-authority-standalone-db:5.3.0",
-      "imageId": "sha256:14fd6062c491a167e2e5a1a7ed9e36eca8508321649093ae25640933bbd7798d",
+      "imageId": "sha256:aa9e26b201e183b6d47293f20e2d0c246c42584a71777163800c46b35d17df87",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-certificateauthority-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-certificateauthority-java-spring:20261113-r530c": {
       "from": "arrowhead-certificate-authority-standalone:5.3.0",
-      "imageId": "sha256:8aa6c0b31d9188118af3d8d5dbb26c005ff6c5ab33ca8ebcd5d1734e6304d9ff",
+      "imageId": "sha256:e46fdb4349daad18c21d55a07afa096892dd517c7dff96fc8142cc39c583fd52",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-choreographer-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-choreographer-java-spring-db:20261113-r530c": {
       "from": "arrowhead-choreographer-standalone-db:5.3.0",
-      "imageId": "sha256:4a32d9db870d21696a7e48e42cd2fbba3fddcec4f494f2613e27e39c289f9700",
+      "imageId": "sha256:5595272b626af69536e86b456b3eb23e13eaddf6ea91ecc574ab2a714bf40a2c",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-choreographer-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-choreographer-java-spring:20261113-r530c": {
       "from": "arrowhead-choreographer-standalone:5.3.0",
-      "imageId": "sha256:de2ebb6d8e6efdf120a2962593cc21a5a4cf528a3c45cba1633ed04f57501887",
+      "imageId": "sha256:b0b07b33c35ea4914acbf417e028b220259c29890e7f8ca77b3cfe49624b47a2",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-configuration-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-configuration-java-spring-db:20261113-r530c": {
       "from": "arrowhead-configuration-standalone-db:5.3.0",
-      "imageId": "sha256:185d733e9398eb5440231cc2ea2349c60b8374fb533c1ca1ab3e25f13f7230b9",
+      "imageId": "sha256:e5f62155a78b23a92de01d09994b5fcd4a8bca33a5c0c33f996f895b14c042d4",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-configuration-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-configuration-java-spring:20261113-r530c": {
       "from": "arrowhead-configuration-standalone:5.3.0",
-      "imageId": "sha256:fba7057bb3036dc4b3f4db5e2fdfcaaecd08632d7b716f2b7399a9ae88b08747",
+      "imageId": "sha256:9d28f860930c08aa3294a1225f4a8495209c50db78a0f3f2b843b831e9ff01a0",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-datamanager-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-datamanager-java-spring-db:20261113-r530c": {
       "from": "arrowhead-datamanager-standalone-db:5.3.0",
-      "imageId": "sha256:e65cc8b8d93807131784d27ff6c711453a1289a6d27204c7b9ad6456c2c91037",
+      "imageId": "sha256:484fc4bc9436db79e5d9127753c7ab2f68d0e620fe56417b9711a1f7ae48d4ac",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-datamanager-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-datamanager-java-spring:20261113-r530c": {
       "from": "arrowhead-datamanager-standalone:5.3.0",
-      "imageId": "sha256:79b48ccbbdd1598ea20da483d4356afa9d58bded841973f8ee0ee8757e3a7232",
+      "imageId": "sha256:200cee06110cbbd1ebcad53c30301191763163d3e35f734b4e97faafd77837c4",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring-db:20261113-r530c": {
       "from": "arrowhead-device-qos-evaluator-standalone-db:5.3.0",
-      "imageId": "sha256:2ce02a2cd02194a240c2a52cf9931aab26242a95a71037c3671ca04a961b755e",
+      "imageId": "sha256:a617f3fe13791bc67b83e44496acc6ed14bc0930ec6dd57c72744176442a4957",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring:20261113-r530c": {
       "from": "arrowhead-device-qos-evaluator-standalone:5.3.0",
-      "imageId": "sha256:4362cf42b81bbe9b118cdcde56fe7cd8398132248d460758b9b83ac401f784ef",
+      "imageId": "sha256:683849d4f3e7f1bd9c3564ca8cd56e62fb5a92d6a67bcecae00cfa4fd1ba7d0b",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-eventhandler-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-eventhandler-java-spring-db:20261113-r530c": {
       "from": "arrowhead-eventhandler-standalone-db:5.3.0",
-      "imageId": "sha256:0c857e6dfd1d444d23a28d222447977ac5a1bf544c6063ab1fabecc488772afa",
+      "imageId": "sha256:47efe885c9089294e58ef89b53309e5105a92469c516194b69ba645c2306bc52",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-eventhandler-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-eventhandler-java-spring:20261113-r530c": {
       "from": "arrowhead-eventhandler-standalone:5.3.0",
-      "imageId": "sha256:4ee0e1bc3526cb9b5df8b1601ea7140e896d11e6c527c40b17afc4d5e5c26502",
+      "imageId": "sha256:b1a4e780ed7799a5896ad51222a0c2e281519b2b5e140d8e1b78ac32d857671c",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-gatekeeper-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-gatekeeper-java-spring-db:20261113-r530c": {
       "from": "arrowhead-gatekeeper-standalone-db:5.3.0",
-      "imageId": "sha256:759e8d24782b196969a647c25ff7d0319d78b7dbc4e980e5edfc10180a24bd7c",
+      "imageId": "sha256:9fa0d7624a5805dac919c04a9f8bbc7ae71eb334ca72eb061a0e750839ae30ea",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-gatekeeper-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-gatekeeper-java-spring:20261113-r530c": {
       "from": "arrowhead-gatekeeper-standalone:5.3.0",
-      "imageId": "sha256:e77f520808b43c43dd922cfa0dd6496ed450068caddac949f8e18cc84fba819c",
+      "imageId": "sha256:38830b6e796b941b2a16f0942ba1435bb648e53ece19d6650881ec1e20a609f3",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-gatetunnel-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-gatetunnel-java-spring-db:20261113-r530c": {
       "from": "arrowhead-gatetunnel-standalone-db:5.3.0",
-      "imageId": "sha256:6f0c8311df336dea7876b94178b0f6fae7a17dd9e68425957d638eff0862305b",
+      "imageId": "sha256:ce1cee75af7edb785be301ee8c3cb9bc5c22c3c5e5989d4f1df51c4c290bd286",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-gatetunnel-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-gatetunnel-java-spring:20261113-r530c": {
       "from": "arrowhead-gatetunnel-standalone:5.3.0",
-      "imageId": "sha256:c0017f946cf166d64233b4d8c0b149190ac62ccc085caf820cef1bf026167144",
+      "imageId": "sha256:18251e7ea9252233a14938f1ab209cc0f51733d2eb5d211d6988f4cf9935c3c0",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-graphdbmanager-java-spring-graphdb:20261113-r530": {
+    "arrowhead-java-v530/ah5-graphdbmanager-java-spring-graphdb:20261113-r530c": {
       "from": "arrowhead-graphdbmanager-standalone-graphdb:5.3.0",
-      "imageId": "sha256:173095419a4ea276d32d6d1eb8a2fa27a71032e9c7eea8c5b13dc2a89e92ad37",
+      "imageId": "sha256:97dea38c786a4bdd9e76ac06a520118ece5ab7327854d2e1a86f9d205b6614c9",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-graphdbmanager-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-graphdbmanager-java-spring:20261113-r530c": {
       "from": "arrowhead-graphdbmanager-standalone:5.3.0",
-      "imageId": "sha256:d004165aa22e7dd0ee904550f5f326cc8bb0d473475ed330ab77b15afad761c5",
+      "imageId": "sha256:a8ed063fcab96b363584f6f5e63ae1e1e7da6186dae738a812d852ecdff54944",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-localcloudconfigurator-java-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-localcloudconfigurator-java-db:20261113-r530c": {
       "from": "arrowhead-localcloudconfigurator-standalone-db:5.3.0",
-      "imageId": "sha256:ddc62467e83ca762993a382aa11a98151e3637e47de52eace5e634ec9c4e7108",
+      "imageId": "sha256:0a39ab1636b77721fb8b27262cbbf80bff5b44654b4abbce923286aa9466b933",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-localcloudconfigurator-java:20261113-r530": {
+    "arrowhead-java-v530/ah5-localcloudconfigurator-java:20261113-r530c": {
       "from": "arrowhead-localcloudconfigurator-standalone:5.3.0",
-      "imageId": "sha256:c9794125a58cebec270c2f01dfbc7e8dca80f9d911249f5bd108dc8c954fbb65",
+      "imageId": "sha256:a699d002868ef206317af9d5fffd3c62fbe75ab55a043a3ae80d3af9f0688997",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-localcloudmanager-java-spring-docker-proxy:20261113-r530": {
+    "arrowhead-java-v530/ah5-localcloudmanager-java-spring-docker-proxy:20261113-r530c": {
       "from": "arrowhead-localcloudmanager-docker-proxy-standalone:5.3.0",
-      "imageId": "sha256:3a649461036cba4187986764552b71dd97e3e1eefa59fee8ca7caee621fa8f9e",
+      "imageId": "sha256:79473babdc8ec4967c503b25826720e857f8fcab12a9c7f871279c0d3b32c8d2",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-localcloudmanager-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-localcloudmanager-java-spring:20261113-r530c": {
       "from": "arrowhead-localcloudmanager-standalone:5.3.0",
-      "imageId": "sha256:512cbe507cde12253fca5d9a8f047c2109d2e1d8f75f0642a0e06dfaccef1d2a",
+      "imageId": "sha256:d936e998d59f4709ea0db91d1404a52158b5886ec69fbbab7c7f93031bdd46d7",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-onboarding-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-onboarding-java-spring-db:20261113-r530c": {
       "from": "arrowhead-onboarding-standalone-db:5.3.0",
-      "imageId": "sha256:060885e394ae3f991b7b1235292be7e9e60bb0f22b5e8b3bae186eceac2ebd92",
+      "imageId": "sha256:8a5452b508acd709b0ab8b745841de74b4c9ebcba257c78e75fcb35e309ac747",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-onboarding-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-onboarding-java-spring:20261113-r530c": {
       "from": "arrowhead-onboarding-standalone:5.3.0",
-      "imageId": "sha256:2a34b49f6938919068e9d1ce95860065d4fd0f08de8f611ea46ed18b8b5f82c8",
+      "imageId": "sha256:55bfb7c140f307c9e4df34087adec49ae97f866999a1d85c24c663af513d666e",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring-db:20261113-r530c": {
       "from": "arrowhead-plantdescriptionengine-standalone-db:5.3.0",
-      "imageId": "sha256:8b9f3069a794ca7bf30aab8bdcce732a55f6c30d59df720013b4005b1113a7fd",
+      "imageId": "sha256:dec54b0f73d6e90c834b5fab53ef6efc9ee56a0c29b0a0240db26c0138054be1",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring:20261113-r530c": {
       "from": "arrowhead-plantdescriptionengine-standalone:5.3.0",
-      "imageId": "sha256:ab54bd2d79d62e76590da55276f0fa29d855d33d26a86ee46c4a5f4d32187d17",
+      "imageId": "sha256:3a2986688397f55cc9f055deddee65402790ecb96d704c3af35cbc7bb754ef0e",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-solocalcloudconfigurator-java-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-solocalcloudconfigurator-java-db:20261113-r530c": {
       "from": "arrowhead-solocalcloudconfigurator-standalone-db:5.3.0",
-      "imageId": "sha256:b94c5ac49012ad23f72954a1aaf00d002eced927e88ddb8d2a6bfbea8c02b600",
+      "imageId": "sha256:eb981319d4932037ae997e5bd80b68ef35165c185650e7e06aad01bf9c65b696",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-solocalcloudconfigurator-java:20261113-r530": {
+    "arrowhead-java-v530/ah5-solocalcloudconfigurator-java:20261113-r530c": {
       "from": "arrowhead-solocalcloudconfigurator-standalone:5.3.0",
-      "imageId": "sha256:a055247800084cba5fa9232ec3f2cbe7badcd84120be63e7b1b18ff14b1a7339",
+      "imageId": "sha256:8dfb0ecf16a947bbfb5b1284c6036aec461b8660bc29134b39dc00c2f7548e2b",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-sysmonitor-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-sysmonitor-java-spring-db:20261113-r530c": {
       "from": "arrowhead-sysmonitor-standalone-db:5.3.0",
-      "imageId": "sha256:f8b90f0e2226469a63f0aa8d8f4fea19acffb86431ade3f4285edc62eb6265b6",
+      "imageId": "sha256:04227e0f62df87b8c84f1810577c0993681a68a471acea4fc138de44917961d9",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-sysmonitor-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-sysmonitor-java-spring:20261113-r530c": {
       "from": "arrowhead-sysmonitor-standalone:5.3.0",
-      "imageId": "sha256:529d13507319499e48f1a242d0fc55444489eb5391688793b5bd0cb3fe7f75dc",
+      "imageId": "sha256:b2f66b983e9a497cedc903f93fcab6925302b2a82b092389a5377d17b266fb79",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-timemanager-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-timemanager-java-spring-db:20261113-r530c": {
       "from": "arrowhead-timemanager-standalone-db:5.3.0",
-      "imageId": "sha256:b6c6ebe771f9d0e48ba4ea398f4af8ce9417e1122fa511beb8ac17dd685721e3",
+      "imageId": "sha256:fc4813bb1776c24280f9c094628130bcaeb517b4947398a1f5a54205bb77f53d",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-timemanager-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-timemanager-java-spring:20261113-r530c": {
       "from": "arrowhead-timemanager-standalone:5.3.0",
-      "imageId": "sha256:da324b1d2f3e560af44110b4a280201aa25e4392693c475d68ac0ef7431daf27",
+      "imageId": "sha256:8c7faaa2895fbda5ff835745a9a12bbb0d87febd7df3d7be86c6226f461f037a",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-translationmanager-java-spring-db:20261113-r530": {
+    "arrowhead-java-v530/ah5-translationmanager-java-spring-db:20261113-r530c": {
       "from": "arrowhead-translation-manager-standalone-db:5.3.0",
-      "imageId": "sha256:dd6872ea00b34b9fa33c010ac1dab40f3439958e1a51cc3ec6ccb3f6d485b32f",
+      "imageId": "sha256:08dbbe6501754f0a0635023b7e25b63c7ebd73f234506b7e611d92304026bec0",
       "how": "tagged"
     },
-    "arrowhead-java-v530/ah5-translationmanager-java-spring:20261113-r530": {
+    "arrowhead-java-v530/ah5-translationmanager-java-spring:20261113-r530c": {
       "from": "arrowhead-translation-manager-standalone:5.3.0",
-      "imageId": "sha256:0f8dafb438e794054d3d3f7316445f81e358f5af14060c56fe7dadb9e9054a96",
+      "imageId": "sha256:4ec07184d69ce01c6fd0cfaee8041a4d6ae35d55f7b7f881b6eda509cc141af8",
       "how": "tagged"
     },
-    "arrowhead-java-v530/authentication-java:20261113-r530": {
+    "arrowhead-java-v530/authentication-java:20261113-r530c": {
       "from": "arrowhead-authentication:5.3.0",
-      "imageId": "sha256:ab5d5f27fde40553a91eb3b6631483de9cb9cd08d7c2a64aa726f6726fad805e",
-      "baseImageId": "sha256:98d2b3a5f3891b30dd7bb2b5c57e60d58f30a4eb86576029ad9a204a0d947969",
+      "imageId": "sha256:f5aba81833f5e856f570637c615ff5a72e1858a75c461863ab6aeefac08181b3",
+      "baseImageId": "sha256:587960f0cf3384462018ee506193aef3e5882964c39c4704c73816cddb819fa8",
       "how": "core-adapter on the release image"
     },
-    "arrowhead-java-v530/authentication-db:20261113-r530": {
-      "from": "core-db/Dockerfile, authentication at d25225ae",
-      "imageId": "sha256:00d9a54c317e245da0b8dda98b0996afdcc397dbad59dee224c8ee2b84dac79a",
-      "how": "built from the manifest commit"
+    "arrowhead-java-v530/authentication-db:20261113-r530c": {
+      "from": "arrowhead-authentication-db:5.3.0",
+      "imageId": "sha256:158188f4d00b209a7caeb669ee913654534072c121ddbfacc1fdf929b49cd7ba",
+      "how": "tagged"
     },
-    "arrowhead-java-v530/consumer-authorization-java:20261113-r530": {
+    "arrowhead-java-v530/consumer-authorization-java:20261113-r530c": {
       "from": "arrowhead-consumer-authorization:5.3.0",
-      "imageId": "sha256:f75f85beab67a40c29cd02f397cd0fb01bc0e9b31d736a9b55b4d30531d34fe9",
-      "baseImageId": "sha256:0adfb42ab77e6b265cdd44bd8be713637d0acd1c48ee572d8122708f5be17dae",
+      "imageId": "sha256:b877238d998f11838eb31da42f4186608c9443e8b317bc202401356ac0378489",
+      "baseImageId": "sha256:8a98c8602f903a74142487ee385b03ae5bba74e2dfd45e705345b79fae9d6073",
       "how": "core-adapter on the release image"
     },
-    "arrowhead-java-v530/consumer-authorization-db:20261113-r530": {
-      "from": "core-db/Dockerfile, consumer-authorization at d25225ae",
-      "imageId": "sha256:b1ed47273689481f581943c16981b700a309a202a5beecf7f44f43052c1db91c",
-      "how": "built from the manifest commit"
+    "arrowhead-java-v530/consumer-authorization-db:20261113-r530c": {
+      "from": "arrowhead-consumer-authorization-db:5.3.0",
+      "imageId": "sha256:55c77e4b8bfcd2328da149f75686c9243d6a14c0c131a0ff56a58f06fd05dd05",
+      "how": "tagged"
     },
-    "arrowhead-java-v530/serviceorchestration-dynamic-java:20261113-r530": {
+    "arrowhead-java-v530/serviceorchestration-dynamic-java:20261113-r530c": {
       "from": "arrowhead-serviceorchestration-dynamic:5.3.0",
-      "imageId": "sha256:88beb199077bb4a90529f8692d41e00b4a3b08212365230ddc83e0ee9da4c69c",
-      "baseImageId": "sha256:8462001d6ce000e57cd5e983dd84b86e5c603843bf4dac68ce50c30b8237b1af",
+      "imageId": "sha256:c5bccaf9b488b5359f82fe3ce300442d3470253c05fdcb633fa7c50cf4b62965",
+      "baseImageId": "sha256:581661aceb4b13e1908ed352acbf4e606597e7398dc83857ea2dc4ea705efb1b",
       "how": "core-adapter on the release image"
     },
-    "arrowhead-java-v530/serviceorchestration-dynamic-db:20261113-r530": {
-      "from": "core-db/Dockerfile, serviceorchestration-dynamic at d25225ae",
-      "imageId": "sha256:349350c2aa25c816085f0d549d0e6864ca189336143ccd5139dc6a194c3faef5",
-      "how": "built from the manifest commit"
+    "arrowhead-java-v530/serviceorchestration-dynamic-db:20261113-r530c": {
+      "from": "arrowhead-serviceorchestration-dynamic-db:5.3.0",
+      "imageId": "sha256:5d1d1fd02efe126b1d0744c0b40f14d1319bcac04e852980f8b15296d959bb4a",
+      "how": "tagged"
     },
-    "arrowhead-java-v530/serviceorchestration-simple-java:20261113-r530": {
+    "arrowhead-java-v530/serviceorchestration-simple-java:20261113-r530c": {
       "from": "arrowhead-serviceorchestration-simple:5.3.0",
-      "imageId": "sha256:6ae7a2aed248b702f8182dc49fa5775092ddc62e0f6e50c96df67c04890a5cb2",
-      "baseImageId": "sha256:17280d39b5774817a7af9df1ac2f1615fa5c4b9288434fcf8265b551ef340de4",
+      "imageId": "sha256:ab03b4dcea7c27416656bc325c0103623eeceaa15e450c9c21f6e182c18d2c5a",
+      "baseImageId": "sha256:f5756b554bc5cb9e879057da12195fd871ffdf48661f03fdfd442fb6d89dd3f8",
       "how": "core-adapter on the release image"
     },
-    "arrowhead-java-v530/serviceorchestration-simple-db:20261113-r530": {
-      "from": "core-db/Dockerfile, serviceorchestration-simple at d25225ae",
-      "imageId": "sha256:d18468836877ef65c6a9a9a345e429764d99ea906e0b9fc7803993ab8c6a35f8",
-      "how": "built from the manifest commit"
+    "arrowhead-java-v530/serviceorchestration-simple-db:20261113-r530c": {
+      "from": "arrowhead-serviceorchestration-simple-db:5.3.0",
+      "imageId": "sha256:4c234dab66980cbb25607e9bff1375b23cc7a6b1c55bd42b9738c256c240190e",
+      "how": "tagged"
     },
-    "arrowhead-java-v530/serviceregistry-java:20261113-r530": {
+    "arrowhead-java-v530/serviceregistry-java:20261113-r530c": {
       "from": "arrowhead-serviceregistry:5.3.0",
-      "imageId": "sha256:5ebc55233ea89a966f5da6c1add6970f7cb0c4d7c60781e8948d280ac458291f",
-      "baseImageId": "sha256:8f16b7062a26147bddaefebe7100d7de36f1a5aec0555030eb164b8969d4c9c2",
+      "imageId": "sha256:6acd60178da595506805ed069b4195dfe90fb799f9fe73228c56865dbbff41cb",
+      "baseImageId": "sha256:e6519722687f68f063f7dc289d2bd4c2a04474fc8b0e79805ec8bbad423cfe33",
       "how": "core-adapter on the release image"
     },
-    "arrowhead-java-v530/serviceregistry-db:20261113-r530": {
-      "from": "core-db/Dockerfile, serviceregistry at d25225ae",
-      "imageId": "sha256:30f6afe496312e0c0a9b22c2c61c7aec424c150880f49098dcc90730f5267225",
-      "how": "built from the manifest commit"
+    "arrowhead-java-v530/serviceregistry-db:20261113-r530c": {
+      "from": "arrowhead-serviceregistry-db:5.3.0",
+      "imageId": "sha256:fce239565eb6bb23bd82d906293194a622307666d31bf6d50154b13a1c0d2785",
+      "how": "tagged"
     }
   }
 }

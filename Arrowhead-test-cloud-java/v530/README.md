@@ -56,9 +56,9 @@ Then the LocalCloudConfigurator host worker: a `LocalCloudConfiguratorWorker` ce
 
 ## Release 5.3.0 images (2026-11-12)
 
-The cloud now runs the qualified 5.3.0 release images of `Eclipse-Arrowhead-java` (commit `d25225ae` since
-2026-11-13, first `02b4b4e2`; `verification/release-5.3.0/manifest.json`) instead of images built here, under the tag
-`20261113-r530` (first `20261112-r530`)
+The cloud now runs the qualified 5.3.0 release images of `Eclipse-Arrowhead-java` (commit `f1103ac9` since
+2026-11-13, before `d25225ae` and `02b4b4e2`; `verification/release-5.3.0/manifest.json`) instead of images built
+here, under the tag `20261113-r530c` (before `20261113-r530`, `20261112-r530`)
 (`TAG` in `generate.py`). The `20261111-v530` images are kept; set `TAG` back, run `generate.py` and `deploy.sh up` to
 return to them (the previous compose file is `compose.yaml.before-r530-20261112`).
 
@@ -68,7 +68,9 @@ python3 v530/generate.py && ./v530/deploy.sh up
 ```
 
 `use-release-images.py` tags the support images of the manifest under this cloud's names, builds `core-adapter/` on
-the release core images and `core-db/` from the manifest commit, and writes `release-images.json`. All 47 containers
+the release core images, and writes `release-images.json`. The core database images are tagged from the release when
+they are on MySQL 8.4 (since `f1103ac9`); for an earlier manifest, whose core database images were the upstream
+`mysql:8.1` ones, it builds `core-db/` from the manifest commit instead. All 47 containers
 of these images run the image IDs recorded there (checked after deployment). The brokers and RandomDataProducer are
 unchanged.
 
@@ -92,6 +94,17 @@ previous compose file is `compose.yaml.before-r530b-20261113`, and both earlier 
 - `scripts/smoke-test.sh`: 14/14 OK. `scripts/smoke-security.sh`: passed, 194 checks, 0 failures, relay checks skipped.
 - RandomDataProducer (unchanged demo image) was unhealthy for a few minutes while DataManager and the brokers were
   recreated, then published again.
+
+**2026-11-13, release core database images (`20261113-r530c`).** `Eclipse-Arrowhead-java` `f1103ac9` moves the
+release's five core database images to MySQL 8.4.13 (the recipe of `core-db/`), and the release was requalified on
+that commit. Redeployed with `use-release-images.py <manifest> 20261113-r530c` and `deploy.sh up`; the previous compose
+file is `compose.yaml.before-r530c-20261113`.
+
+- The five core databases now run the release's own images (tagged, not rebuilt). Their volumes, initialised by
+  MySQL 8.1 since 2026-11-11, were upgraded in place by MySQL 8.4.13 on first start; data and passwords kept.
+- `deploy.sh up` completed on the first attempt; no container logged "Invalid authorization header".
+- All 47 containers run the image IDs of `release-images.json`.
+- `scripts/smoke-test.sh`: 14/14 OK. `scripts/smoke-security.sh`: passed, 194 checks, 0 failures, relay checks skipped.
 
 ## Results (2026-11-11)
 

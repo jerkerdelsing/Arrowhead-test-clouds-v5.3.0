@@ -9,7 +9,9 @@ image of this cloud (generate.py's naming, arrowhead-java-v530/<folder>[-db|-gra
   - support systems: the release image of the same folder and service is tagged, so the cloud runs exactly that image;
   - core systems: the release image (built from ah5-core-java-spring/<module>/docker/Dockerfile-*) is the base of the
     read-only test-cloud adapter (core-adapter/), as build.py does with its own core build;
-  - core databases: core-db/Dockerfile built from the manifest commit (git archive), as build.py does.
+  - core databases: the release's own core database images (ah5-core-java-spring/<module>/docker/Dockerfile-*-DB, MySQL
+    8.4.13 since Eclipse-Arrowhead-java f1103ac9, the recipe of core-db/) are tagged; for a manifest of an earlier commit,
+    whose core database images were the unusable upstream mysql:8.1 ones, core-db/Dockerfile is built from that commit.
 Writes v530/release-images.json (cloud image -> release image and image IDs). Set TAG in generate.py to <tag>, then
 `python3 v530/generate.py` and `./v530/deploy.sh up`.
 """
@@ -66,8 +68,16 @@ def main() -> None:
             run("docker", "build", "-q", "-t", app, "--build-arg", f"BASE_IMAGE={release['image']}", str(HERE / "core-adapter"))
             out["images"][app] = {"from": release["image"], "imageId": image_id(app), "baseImageId": release["imageId"], "how": "core-adapter on the release image"}
             db = f"{REGISTRY}/{module}-db:{tag}"
-            run("docker", "build", "-q", "-t", db, "--build-arg", f"MODULE={module}", "-f", str(HERE / "core-db/Dockerfile"), str(src / "ah5-core-java-spring"))
-            out["images"][db] = {"from": f"core-db/Dockerfile, {module} at {commit[:8]}", "imageId": image_id(db), "how": "built from the manifest commit"}
+            release_db = next(e for e in manifest["images"] if e["image"] == f"arrowhead-{module}-db:{version}")
+            mysql84 = any(b.startswith("mysql:8.4") for b in release_db["baseImages"])
+            if mysql84:
+                if image_id(release_db["image"]) != release_db["imageId"]:
+                    raise SystemExit(f"{release_db['image']} is no longer the image of the manifest")
+                run("docker", "tag", release_db["image"], db)
+                out["images"][db] = {"from": release_db["image"], "imageId": release_db["imageId"], "how": "tagged"}
+            else:
+                run("docker", "build", "-q", "-t", db, "--build-arg", f"MODULE={module}", "-f", str(HERE / "core-db/Dockerfile"), str(src / "ah5-core-java-spring"))
+                out["images"][db] = {"from": f"core-db/Dockerfile, {module} at {commit[:8]}", "imageId": image_id(db), "how": "built from the manifest commit"}
             print("core", module, flush=True)
     (HERE / "release-images.json").write_text(json.dumps(out, indent=2) + "\n")
     print(len(out["images"]), "images ->", tag)
