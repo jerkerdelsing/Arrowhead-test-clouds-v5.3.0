@@ -56,8 +56,9 @@ Then the LocalCloudConfigurator host worker: a `LocalCloudConfiguratorWorker` ce
 
 ## Release 5.3.0 images (2026-11-12)
 
-The cloud now runs the qualified 5.3.0 release images of `Eclipse-Arrowhead-java` (commit `02b4b4e2`,
-`verification/release-5.3.0/manifest.json`) instead of images built here, under the tag `20261112-r530`
+The cloud now runs the qualified 5.3.0 release images of `Eclipse-Arrowhead-java` (commit `d25225ae` since
+2026-11-13, first `02b4b4e2`; `verification/release-5.3.0/manifest.json`) instead of images built here, under the tag
+`20261113-r530` (first `20261112-r530`)
 (`TAG` in `generate.py`). The `20261111-v530` images are kept; set `TAG` back, run `generate.py` and `deploy.sh up` to
 return to them (the previous compose file is `compose.yaml.before-r530-20261112`).
 
@@ -75,10 +76,22 @@ unchanged.
   both started on the next attempt, and the second `deploy.sh up` completed. Cause: at startup the common library
   logs in from the main thread and from its scheduled login job at nearly the same time (the job's `synchronized`
   does not cover both, as Quartz creates a job instance per run); the second token supersedes the first one while
-  the registration call is under way. A known, intermittent defect of `ah5-common-java-spring`, not of these images.
+  the registration call is under way. Intermittent; fixed on 2026-11-13 (below).
 - `scripts/smoke-test.sh`: 14/14 OK.
 - `scripts/smoke-security.sh`: passed, 194 checks, 0 failures; the relay checks are skipped without federation. Every
   check of the run on the `20261111-v530` images passes again; the 8 additional ones are the SoLC checks added since.
+
+**2026-11-13, fixed release images (`20261113-r530`).** The login race is fixed in the common library
+(`Eclipse-Arrowhead-java` `d25225ae`: one lock for all `OutsourcedLoginJob` instances) and the release was
+requalified on that commit. Redeployed with `use-release-images.py <manifest> 20261113-r530` and `deploy.sh up`; the
+previous compose file is `compose.yaml.before-r530b-20261113`, and both earlier tags are kept.
+
+- `deploy.sh up` completed on the first attempt. Every one of the 22 Arrowhead systems logged in exactly once at
+  start-up (before the fix: twice), and no container logged "Invalid authorization header".
+- All 47 containers run the image IDs of `release-images.json`.
+- `scripts/smoke-test.sh`: 14/14 OK. `scripts/smoke-security.sh`: passed, 194 checks, 0 failures, relay checks skipped.
+- RandomDataProducer (unchanged demo image) was unhealthy for a few minutes while DataManager and the brokers were
+  recreated, then published again.
 
 ## Results (2026-11-11)
 
