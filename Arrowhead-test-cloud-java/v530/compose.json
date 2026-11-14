@@ -4603,7 +4603,7 @@
         "SERVICE_REGISTRY_PORT": "8443",
         "SOLC_API_WHITELIST": "",
         "SOLC_SOURCE_COMMIT": "7c6ac61c29ed4714897cc7a420308dd21e732792",
-        "SOLC_SOURCE_REPOSITORY": "https://github.com/jerkerdelsing/Eclipse-Arrowhead-Java-v5.3.0.git",
+        "SOLC_SOURCE_REPOSITORY": "https://github.com/jerkerdelsing/Eclipse-Arrowhead-java.git",
         "SYSMONITOR_ENABLED": "true"
       },
       "image": "arrowhead-java-v530/ah5-solocalcloudconfigurator-java:20261113-r530f",
