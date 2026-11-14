@@ -1,0 +1,37 @@
+PASS console page served
+PASS /app.js served
+PASS /styles.css served
+PASS views need a login
+PASS wrong password refused
+PASS foreign Origin refused
+PASS foreign Host refused
+PASS login with the keychain password
+PASS cookie is __Host-, Secure, HttpOnly, SameSite=Strict
+PASS view /api/overview HTTP 200
+PASS view /api/overview without provider errors
+PASS overview lists all 22 systems
+PASS manager registered (from the registry)
+PASS view /api/service-registry-management HTTP 200
+PASS view /api/service-registry-management without provider errors
+PASS view /api/orchestration/rules HTTP 200
+PASS view /api/orchestration/rules without provider errors
+PASS view /api/orchestration/policies HTTP 200
+PASS view /api/orchestration/policies without provider errors
+PASS view /api/plantdescriptions HTTP 200
+PASS view /api/plantdescriptions without provider errors
+PASS view /api/sysmonitor HTTP 200
+PASS view /api/sysmonitor without provider errors
+PASS view /api/sysmonitor/subscriptions HTTP 200
+PASS view /api/sysmonitor/subscriptions without provider errors
+PASS view /api/datamanager?limit=240 HTTP 200
+PASS view /api/datamanager?limit=240 without provider errors
+PASS view /api/consumers HTTP 200
+PASS view /api/consumers without provider errors
+PASS view /api/intercloud HTTP 200
+PASS view /api/intercloud without provider errors
+PASS view /api/logs?service=serviceregistry&tail=180 HTTP 200
+PASS view /api/logs?service=serviceregistry&tail=180 without provider errors
+PASS mutation without confirm header refused
+PASS logout
+PASS session gone after logout
+console: 36 passed, 0 failed

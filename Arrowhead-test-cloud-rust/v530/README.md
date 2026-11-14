@@ -103,3 +103,15 @@ before). The changed file is rustfmt-clean and has no clippy findings; `cargo fm
   binary) still names `TestCloud` and defaults the project to `arrowhead-v53-test-cloud-rust`.
 - `ah5-LocalCloudManager-rust/tests/secure_console.rs` uses RustDev's project and port 10590 as fixtures. These are
   test data only.
+
+## 5.4.0 development image (2026-11-14)
+
+The cloud runs the image built from `Eclipse-Arrowhead-rust` `main` at `43b613f` (crate and reported versions 5.4.0;
+the "still 5.2.2" gap above no longer applies), under the tag `20261114-v540` (`build.sh`, `generate.py`,
+`smoke-security.py`). The `20261112-v530` image is kept; set the tag back, run `generate.py` and `deploy.sh up` to
+return to it.
+
+- `build.sh`: PASS. `generate.py` changed only the image tag in `compose.json`; credentials and state were kept.
+- `deploy.sh up`: 27 of 27 containers healthy; the brokers, edge and console proxy were not recreated.
+- `smoke.py`: 150 passed, 0 failed. `smoke-console.py`: 36 passed, 0 failed; the console reports release 5.4.0.
+  `smoke-security.py`: 141 passed, 0 failed. Its live-revocation check adds an entry to `trust/current.crl.pem`.

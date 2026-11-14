@@ -419,5 +419,426 @@
     "tests": null,
     "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-solocalcloudconfigurator-java-db_20261111-v530.log",
     "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-SoLocalCloudConfigurator-java"
+  },
+  "arrowhead-java-v530/ah5-aigym-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-aigym-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 38,
+    "tests": "Tests run: 3, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-aigym-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-AIGym-java-spring"
+  },
+  "arrowhead-java-v530/ah5-blacklist-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-blacklist-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 85,
+    "tests": "Tests run: 139, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-blacklist-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Blacklist-java-spring"
+  },
+  "arrowhead-java-v530/ah5-blacklist-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-blacklist-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 5,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-blacklist-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Blacklist-java-spring"
+  },
+  "arrowhead-java-v530/ah5-certificateauthority-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-certificateauthority-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 62,
+    "tests": "Tests run: 45, Failures: 0, Errors: 0, Skipped: 1",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-certificateauthority-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-CertificateAuthority-java-spring"
+  },
+  "arrowhead-java-v530/ah5-certificateauthority-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-certificateauthority-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 13,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-certificateauthority-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-CertificateAuthority-java-spring"
+  },
+  "arrowhead-java-v530/ah5-choreographer-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-choreographer-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 45,
+    "tests": "Tests run: 25, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-choreographer-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Choreographer-java-spring"
+  },
+  "arrowhead-java-v530/ah5-choreographer-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-choreographer-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 3,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-choreographer-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Choreographer-java-spring"
+  },
+  "arrowhead-java-v530/ah5-configuration-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-configuration-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 45,
+    "tests": "Tests run: 11, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-configuration-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Configuration-java-spring"
+  },
+  "arrowhead-java-v530/ah5-configuration-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-configuration-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 13,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-configuration-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Configuration-java-spring"
+  },
+  "arrowhead-java-v530/ah5-datamanager-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-datamanager-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 41,
+    "tests": "Tests run: 16, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-datamanager-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-DataManager-java-spring"
+  },
+  "arrowhead-java-v530/ah5-datamanager-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-datamanager-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 5,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-datamanager-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-DataManager-java-spring"
+  },
+  "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 60,
+    "tests": "Tests run: 317, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-deviceqosevaluator-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-DeviceQoSEvaluator-java-spring"
+  },
+  "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-deviceqosevaluator-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 6,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-deviceqosevaluator-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-DeviceQoSEvaluator-java-spring"
+  },
+  "arrowhead-java-v530/ah5-eventhandler-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-eventhandler-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 36,
+    "tests": "Tests run: 14, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-eventhandler-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-EventHandler-java-spring"
+  },
+  "arrowhead-java-v530/ah5-eventhandler-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-eventhandler-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 3,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-eventhandler-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-EventHandler-java-spring"
+  },
+  "arrowhead-java-v530/ah5-gatetunnel-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-gatetunnel-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 51,
+    "tests": "Tests run: 161, Failures: 0, Errors: 0, Skipped: 2",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-gatetunnel-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-GateTunnel-java-spring"
+  },
+  "arrowhead-java-v530/ah5-gatetunnel-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-gatetunnel-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 4,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-gatetunnel-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-GateTunnel-java-spring"
+  },
+  "arrowhead-java-v530/ah5-gatekeeper-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-gatekeeper-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 49,
+    "tests": "Tests run: 49, Failures: 0, Errors: 0, Skipped: 2",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-gatekeeper-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Gatekeeper-java-spring"
+  },
+  "arrowhead-java-v530/ah5-gatekeeper-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-gatekeeper-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 8,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-gatekeeper-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Gatekeeper-java-spring"
+  },
+  "arrowhead-java-v530/ah5-graphdbmanager-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-graphdbmanager-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 37,
+    "tests": "Tests run: 15, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-graphdbmanager-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-GraphDBManager-java-spring"
+  },
+  "arrowhead-java-v530/ah5-graphdbmanager-java-spring-graphdb:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-graphdbmanager-java-spring-graphdb:20261114-v540",
+    "result": "PASS",
+    "seconds": 1,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-graphdbmanager-java-spring-graphdb_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-GraphDBManager-java-spring"
+  },
+  "arrowhead-java-v530/ah5-localcloudmanager-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-localcloudmanager-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 47,
+    "tests": "Tests run: 51, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-localcloudmanager-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-LocalCloudManager-java-spring"
+  },
+  "arrowhead-java-v530/ah5-localcloudmanager-java-spring-docker-proxy:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-localcloudmanager-java-spring-docker-proxy:20261114-v540",
+    "result": "PASS",
+    "seconds": 16,
+    "tests": "Tests run: 7, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-localcloudmanager-java-spring-docker-proxy_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-LocalCloudManager-java-spring"
+  },
+  "arrowhead-java-v530/ah5-localcloudconfigurator-java:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-localcloudconfigurator-java:20261114-v540",
+    "result": "PASS",
+    "seconds": 48,
+    "tests": "Tests run: 42, Failures: 0, Errors: 0, Skipped: 7",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-localcloudconfigurator-java_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-LocalCloudConfigurator-java"
+  },
+  "arrowhead-java-v530/ah5-localcloudconfigurator-java-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-localcloudconfigurator-java-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 4,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-localcloudconfigurator-java-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-LocalCloudConfigurator-java"
+  },
+  "arrowhead-java-v530/ah5-onboarding-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-onboarding-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 37,
+    "tests": "Tests run: 25, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-onboarding-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Onboarding-java-spring"
+  },
+  "arrowhead-java-v530/ah5-onboarding-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-onboarding-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 2,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-onboarding-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-Onboarding-java-spring"
+  },
+  "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 25,
+    "tests": "Tests run: 27, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-plantdescriptionengine-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-PlantDescriptionEngine-java-spring"
+  },
+  "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-plantdescriptionengine-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 2,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-plantdescriptionengine-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-PlantDescriptionEngine-java-spring"
+  },
+  "arrowhead-java-v530/ah5-solocalcloudconfigurator-java:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-solocalcloudconfigurator-java:20261114-v540",
+    "result": "PASS",
+    "seconds": 30,
+    "tests": "Tests run: 20, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-solocalcloudconfigurator-java_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-SoLocalCloudConfigurator-java"
+  },
+  "arrowhead-java-v530/ah5-solocalcloudconfigurator-java-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-solocalcloudconfigurator-java-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 5,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-solocalcloudconfigurator-java-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-SoLocalCloudConfigurator-java"
+  },
+  "arrowhead-java-v530/ah5-sysmonitor-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-sysmonitor-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 36,
+    "tests": "Tests run: 63, Failures: 0, Errors: 0, Skipped: 3",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-sysmonitor-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-SysMonitor-java-spring"
+  },
+  "arrowhead-java-v530/ah5-sysmonitor-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-sysmonitor-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 4,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-sysmonitor-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-SysMonitor-java-spring"
+  },
+  "arrowhead-java-v530/ah5-timemanager-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-timemanager-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 22,
+    "tests": "Tests run: 17, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-timemanager-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-TimeManager-java-spring"
+  },
+  "arrowhead-java-v530/ah5-timemanager-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-timemanager-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 3,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-timemanager-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-TimeManager-java-spring"
+  },
+  "arrowhead-java-v530/ah5-translationmanager-java-spring:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-translationmanager-java-spring:20261114-v540",
+    "result": "PASS",
+    "seconds": 33,
+    "tests": "Tests run: 490, Failures: 0, Errors: 0, Skipped: 0",
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-translationmanager-java-spring_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-TranslationManager-java-spring"
+  },
+  "arrowhead-java-v530/ah5-translationmanager-java-spring-db:20261114-v540": {
+    "image": "arrowhead-java-v530/ah5-translationmanager-java-spring-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 3,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/ah5-translationmanager-java-spring-db_20261114-v540.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-TranslationManager-java-spring"
+  },
+  "arrowhead-java-v530/authentication-db:20261114-v540": {
+    "image": "arrowhead-java-v530/authentication-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 2,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/authentication-db.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/authentication/src/main/resources/database"
+  },
+  "arrowhead-java-v530/authentication-java-native:20261114-v540": {
+    "image": "arrowhead-java-v530/authentication-java-native:20261114-v540",
+    "result": "PASS",
+    "seconds": 127,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/authentication-java-native.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/authentication"
+  },
+  "arrowhead-java-v530/authentication-java:20261114-v540": {
+    "image": "arrowhead-java-v530/authentication-java:20261114-v540",
+    "result": "PASS",
+    "seconds": 1,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/authentication-java.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/authentication",
+    "adapter": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/core-adapter"
+  },
+  "arrowhead-java-v530/consumer-authorization-db:20261114-v540": {
+    "image": "arrowhead-java-v530/consumer-authorization-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 9,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/consumer-authorization-db.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/consumer-authorization/src/main/resources/database"
+  },
+  "arrowhead-java-v530/consumer-authorization-java-native:20261114-v540": {
+    "image": "arrowhead-java-v530/consumer-authorization-java-native:20261114-v540",
+    "result": "PASS",
+    "seconds": 28,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/consumer-authorization-java-native.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/consumer-authorization"
+  },
+  "arrowhead-java-v530/consumer-authorization-java:20261114-v540": {
+    "image": "arrowhead-java-v530/consumer-authorization-java:20261114-v540",
+    "result": "PASS",
+    "seconds": 1,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/consumer-authorization-java.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/consumer-authorization",
+    "adapter": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/core-adapter"
+  },
+  "arrowhead-java-v530/serviceorchestration-dynamic-db:20261114-v540": {
+    "image": "arrowhead-java-v530/serviceorchestration-dynamic-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 2,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/serviceorchestration-dynamic-db.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/serviceorchestration-dynamic/src/main/resources/database"
+  },
+  "arrowhead-java-v530/serviceorchestration-dynamic-java-native:20261114-v540": {
+    "image": "arrowhead-java-v530/serviceorchestration-dynamic-java-native:20261114-v540",
+    "result": "PASS",
+    "seconds": 30,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/serviceorchestration-dynamic-java-native.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/serviceorchestration-dynamic"
+  },
+  "arrowhead-java-v530/serviceorchestration-dynamic-java:20261114-v540": {
+    "image": "arrowhead-java-v530/serviceorchestration-dynamic-java:20261114-v540",
+    "result": "PASS",
+    "seconds": 1,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/serviceorchestration-dynamic-java.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/serviceorchestration-dynamic",
+    "adapter": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/core-adapter"
+  },
+  "arrowhead-java-v530/serviceorchestration-simple-db:20261114-v540": {
+    "image": "arrowhead-java-v530/serviceorchestration-simple-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 3,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/serviceorchestration-simple-db.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/serviceorchestration-simple/src/main/resources/database"
+  },
+  "arrowhead-java-v530/serviceorchestration-simple-java-native:20261114-v540": {
+    "image": "arrowhead-java-v530/serviceorchestration-simple-java-native:20261114-v540",
+    "result": "PASS",
+    "seconds": 30,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/serviceorchestration-simple-java-native.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/serviceorchestration-simple"
+  },
+  "arrowhead-java-v530/serviceorchestration-simple-java:20261114-v540": {
+    "image": "arrowhead-java-v530/serviceorchestration-simple-java:20261114-v540",
+    "result": "PASS",
+    "seconds": 1,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/serviceorchestration-simple-java.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/serviceorchestration-simple",
+    "adapter": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/core-adapter"
+  },
+  "arrowhead-java-v530/serviceregistry-db:20261114-v540": {
+    "image": "arrowhead-java-v530/serviceregistry-db:20261114-v540",
+    "result": "PASS",
+    "seconds": 3,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/serviceregistry-db.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/serviceregistry/src/main/resources/database"
+  },
+  "arrowhead-java-v530/serviceregistry-java-native:20261114-v540": {
+    "image": "arrowhead-java-v530/serviceregistry-java-native:20261114-v540",
+    "result": "PASS",
+    "seconds": 30,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/serviceregistry-java-native.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/serviceregistry"
+  },
+  "arrowhead-java-v530/serviceregistry-java:20261114-v540": {
+    "image": "arrowhead-java-v530/serviceregistry-java:20261114-v540",
+    "result": "PASS",
+    "seconds": 1,
+    "tests": null,
+    "log": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/build-logs/serviceregistry-java.log",
+    "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Eclipse-Arrowhead-java/ah5-core-java-spring/serviceregistry",
+    "adapter": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/core-adapter"
   }
 }

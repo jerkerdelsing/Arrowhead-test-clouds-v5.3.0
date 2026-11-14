@@ -2,7 +2,7 @@
   "name": "arrowhead-v530-test-cloud-rust",
   "services": {
     "serviceregistry": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-core"
       ],
@@ -117,7 +117,7 @@
       }
     },
     "authentication": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-core"
       ],
@@ -457,7 +457,7 @@
       }
     },
     "consumer-authorization": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-core"
       ],
@@ -581,7 +581,7 @@
       }
     },
     "serviceorchestration-dynamic": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-core"
       ],
@@ -696,7 +696,7 @@
       }
     },
     "serviceorchestration-simple": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-core"
       ],
@@ -811,7 +811,7 @@
       }
     },
     "aigym": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -926,7 +926,7 @@
       }
     },
     "blacklist": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -1041,7 +1041,7 @@
       }
     },
     "certificateauthority": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -1165,7 +1165,7 @@
       }
     },
     "choreographer": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -1280,7 +1280,7 @@
       }
     },
     "configuration": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -1395,7 +1395,7 @@
       }
     },
     "datamanager": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -1510,7 +1510,7 @@
       }
     },
     "deviceqosevaluator": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -1625,7 +1625,7 @@
       }
     },
     "eventhandler": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -1740,7 +1740,7 @@
       }
     },
     "gatekeeper": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -1855,7 +1855,7 @@
       }
     },
     "gatetunnel": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -1970,7 +1970,7 @@
       }
     },
     "onboarding": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -2094,7 +2094,7 @@
       }
     },
     "plantdescriptionengine": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -2209,7 +2209,7 @@
       }
     },
     "sysmonitor": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -2324,7 +2324,7 @@
       }
     },
     "timemanager": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -2439,7 +2439,7 @@
       }
     },
     "translationmanager": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/arrowhead-support"
       ],
@@ -2554,7 +2554,7 @@
       }
     },
     "random-data-producer": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/RandomDataProducer"
       ],
@@ -2669,7 +2669,7 @@
       }
     },
     "localcloudmanager": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/LocalCloudManager"
       ],
@@ -2809,7 +2809,7 @@
       }
     },
     "manager-docker-proxy": {
-      "image": "arrowhead-rust-v530/rust-systems:20261112-v530",
+      "image": "arrowhead-rust-v530/rust-systems:20261114-v540",
       "entrypoint": [
         "/usr/local/bin/localcloudmanager-docker-proxy"
       ],

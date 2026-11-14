@@ -164,3 +164,22 @@ list) to change that. Redeployed with `use-release-images.py <manifest> 20261113
     the console's orchestration rules view reaches it, LC status 48 running, `smoke-test.sh` OK, the other 46 untouched.
 - `make smoke-security`: passed, 186 checks (`smoke-security.log`). Its relay checks are skipped without federation
   (`scripts/smoke-security.sh` runs them only when `security/x509/ca-cross.crt` exists).
+
+## 5.4.0 development images (2026-11-14)
+
+The cloud runs images built here from `Eclipse-Arrowhead-java` `main` at `ee975d75` (version 5.4.0), under the tag
+`20261114-v540` (`TAG` in `generate.py`). The `20261113-r530f` release images are kept; set `TAG` back, run
+`generate.py` and `deploy.sh up` to return to them.
+
+```sh
+python3 v530/build.py && ./v530/deploy.sh up
+```
+
+- Before the redeploy, 31 of the 50 containers had been stopped since 08:05 UTC the same day; `deploy.sh up` started them.
+- `build.py`: 52 images PASS; the Maven builds ran 1537 tests with 0 failures and 0 errors (`build-run-v540.log`).
+  The core images take `AH_VERSION` from the primary core pom.
+- `deploy.sh up` completed on the first attempt: 50 containers running, none unhealthy; the 47 Arrowhead containers
+  run `20261114-v540`. Volumes, credentials and certificates were kept. The compose file changed only in the image
+  tag and `SOLC_SOURCE_COMMIT`.
+- `scripts/smoke-test.sh`: 14/14 OK. `scripts/smoke-security.sh`: passed, 200 checks, 0 failures, relay checks skipped.
+- The systems report 5.4.0 (CertificateAuthority banner; ServiceRegistry runs `arrowhead-serviceregistry-5.4.0.jar`).

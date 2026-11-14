@@ -93,3 +93,16 @@ python3 v530/generate.py        # compose.yaml
   container configuration or in PID 1's environment, which is what `smoke-security.sh` checks.
 - `ah5-LocalCloudConfigurator-go` is not deployed. It is a ColonyOS stack that pulls images from Docker Hub and needs a
   host executor.
+
+## 5.4.0 development images (2026-11-14)
+
+The cloud runs images built from `Eclipse-Arrowhead-go` `main` at `7cb7f7a` (reported version 5.4.0), under the tag
+`20261114-v540` (`TAG` in `build.sh` and `generate.py`). The `20261111-v530` images are kept; set both tags back, run
+`generate.py` and `deploy.sh up` to return to them.
+
+- `build.sh`: 22 of 22 images PASS (`build-run-v540.log`).
+- `deploy.sh up` completed on the first attempt: 27 of 27 containers healthy; the 22 Go containers run
+  `20261114-v540`. Volumes, secrets and certificates were kept; `compose.yaml` changed only in the image tag.
+- `scripts/smoke-test.sh`: 13/13 OK; with `SMOKE_ALL=1`: 19/19 OK. `scripts/smoke-security.sh`: passed, 130 checks,
+  0 failures.
+- `ARROWHEAD_VERSION` in `base-compose.json` is still `5.2.2`.

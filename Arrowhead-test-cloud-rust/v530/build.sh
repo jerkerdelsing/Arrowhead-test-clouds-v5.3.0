@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: EPL-2.0
 # Rust test cloud v5.3.0 (2026-11-12): the one application image, built from the primary source Eclipse-Arrowhead-rust
 # with v530/Dockerfile (context: the primary tree; v530/Dockerfile.dockerignore keeps target/ and .git out).
-#   build.sh            -> arrowhead-rust-v530/rust-systems:20261112-v530, log v530/build-logs/rust-systems.log,
+#   build.sh            -> arrowhead-rust-v530/rust-systems:20261114-v540, log v530/build-logs/rust-systems.log,
 #                          result line in v530/build-results.tsv
 set -eu
 HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 SRC=$(CDPATH= cd -- "$HERE/../../../Eclipse-Arrowhead-rust" && pwd)
-REF=arrowhead-rust-v530/rust-systems:20261112-v530
+REF=arrowhead-rust-v530/rust-systems:20261114-v540
 mkdir -p "$HERE/build-logs"
 commit=$(git -C "$SRC" rev-parse HEAD)
 dirty=$(git -C "$SRC" status --porcelain | wc -l | tr -d ' ')

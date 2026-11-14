@@ -30,7 +30,7 @@ import ahlib as ah
 
 ROOT = ah.ROOT
 PROJECT = ah.INV["project"]
-IMAGE = "arrowhead-rust-v530/rust-systems:20261112-v530"
+IMAGE = "arrowhead-rust-v530/rust-systems:20261114-v540"
 RESULTS = []
 
 

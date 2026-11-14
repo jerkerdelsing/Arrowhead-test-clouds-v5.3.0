@@ -6,13 +6,13 @@
 # Each image gets the deployment helpers of this cloud in one layer on top (v530/health/Dockerfile):
 #   ah-probe              TCP health probe (the systems are scratch images with mutual TLS on every request)
 #   ah-lcm-launcher       LocalCloudManager only: secrets from files and the Docker socket via docker-proxy (v530/console)
-# Tags: arrowhead-go-v530/<image>:20261111-v530 (the primary image itself: ...-base).
+# Tags: arrowhead-go-v530/<image>:20261114-v540 (the primary image itself: ...-base).
 #   build.sh [IMAGE ...]     default: all; results in v530/build-results.tsv, logs in v530/build-logs/
 set -eu
 HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 SRC=$(CDPATH= cd -- "$HERE/../../../Eclipse-Arrowhead-go" && pwd)
 GO_IMAGE=golang:1.27.4-alpine@sha256:0a5f7fe796599ff487605987432e7619ae45beeb2fba4c2ce0b907879932aebf
-TAG=20261111-v530
+TAG=20261114-v540
 R=arrowhead-go-v530
 # image name -> primary folder (ah5-LocalCloudConfigurator-go is a ColonyOS stack with a host executor, not built here)
 MAP="ah5-aigym-go:ah5-AIGym-go ah5-blacklist-go:ah5-Blacklist-go ah5-certificateauthority-go:ah5-CertificateAuthority-go
