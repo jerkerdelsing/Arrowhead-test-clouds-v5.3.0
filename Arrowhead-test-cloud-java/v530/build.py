@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
+import re
 import shutil
 import subprocess
 import tempfile
@@ -21,6 +22,14 @@ import time
 from generate import CORE, PRIMARY, REGISTRY, SUPPORT, TAG, image, render
 
 HERE = pathlib.Path(__file__).resolve().parent
+
+
+def primary_version() -> str:
+    """The primary core's <revision>: the version in the core jar names, which the core Dockerfiles take as AH_VERSION."""
+    m = re.search(r"<revision>([^<]+)</revision>", (PRIMARY / "ah5-core-java-spring/pom.xml").read_text())
+    if not m:
+        raise SystemExit("no <revision> in the primary ah5-core-java-spring/pom.xml")
+    return m.group(1).strip()
 
 
 def exists(tag: str) -> bool:
@@ -79,7 +88,7 @@ def main() -> None:
                 dockerfile = next(p for p in (pathlib.Path(tmp) / "ah5-core-java-spring" / module / "docker").glob("Dockerfile-*")
                                   if not p.name.endswith("-DB"))
                 native = f"{REGISTRY}/{module}-java-native:{TAG}"
-                r = build(native, pathlib.Path(tmp), dockerfile, args, logs / f"{module}-java-native.log", ["--build-arg", "AH_VERSION=5.3.0"])
+                r = build(native, pathlib.Path(tmp), dockerfile, args, logs / f"{module}-java-native.log", ["--build-arg", f"AH_VERSION={primary_version()}"])
                 results[native] = r | {"source": str(PRIMARY / "ah5-core-java-spring" / module)}
                 print(r["result"], native, flush=True)
                 # read-only test-cloud adapter on top of the primary build
