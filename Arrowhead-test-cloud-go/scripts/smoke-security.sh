@@ -228,7 +228,7 @@ rabbitmq=$(docker compose exec -T amqp-broker rabbitmqctl -q version 2>/dev/null
 check "RabbitMQ 4.1+ ($rabbitmq)" "$rabbitmq" "$(at_least 4.1 "$rabbitmq")"
 nginx=$(docker compose exec -T console-proxy nginx -v 2>&1 | sed -n 's#.*nginx/\([0-9.]*\).*#\1#p')
 check "console proxy on nginx 1.30+ ($nginx)" "$nginx" "$(at_least 1.30 "$nginx")"
-# the Go version recorded in a deployed binary (v5.3.0: the images of v530/build.sh)
+# the Go version recorded in a deployed binary (v5.3.0: the images of generator/build.sh)
 golang=""
 bin_dir=$(mktemp -d)
 if command -v go >/dev/null 2>&1 && docker compose cp blacklist:/usr/local/bin/Blacklist "$bin_dir/Blacklist" >/dev/null 2>&1; then

@@ -1,22 +1,22 @@
-# Rust test cloud v5.3.0 (2026-11-12), see v530/README.md
+# Rust test cloud v5.3.0 (2026-11-12), see generator/README.md
 PROJECT := arrowhead-v530-test-cloud-rust
 .PHONY: build generate up down ps smoke smoke-security smoke-console test console-password
 build:
-	./v530/build.sh
+	./generator/build.sh
 generate:
-	python3 v530/generate.py
+	python3 generator/generate.py
 up:
-	./v530/deploy.sh up
+	./generator/deploy.sh up
 down:
-	./v530/deploy.sh down
+	./generator/deploy.sh down
 ps:
 	docker compose -f compose.json ps
 smoke:
-	python3 v530/smoke.py
+	python3 generator/smoke.py
 smoke-security:
-	python3 v530/smoke-security.py
+	python3 generator/smoke-security.py
 smoke-console:
-	python3 v530/smoke-console.py
+	python3 generator/smoke-console.py
 test: smoke smoke-security smoke-console
 # prints the console password from the macOS keychain (service arrowhead-console-$(PROJECT))
 console-password:

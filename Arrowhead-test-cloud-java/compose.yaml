@@ -3191,7 +3191,7 @@
         },
         {
           "type": "bind",
-          "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/v530/localcloud-catalog",
+          "source": "/Users/jerkerdelsing/Work/lule/EISLAB/Project/Eclipse/Arrowhead-test-clouds/Arrowhead-test-cloud-java/generator/localcloud-catalog",
           "target": "/cloud-catalog",
           "read_only": true,
           "bind": {

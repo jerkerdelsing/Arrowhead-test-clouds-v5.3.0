@@ -1,0 +1,280 @@
+{
+  "time": "2026-11-14T21:35:19.596858+00:00",
+  "passed": 36,
+  "failed": 0,
+  "error": null,
+  "checks": [
+    {
+      "test": "console page served",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "test": "/app.js served",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "/styles.css served",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "views need a login",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "wrong password refused",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "foreign Origin refused",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "foreign Host refused",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "login with the keychain password",
+      "passed": true,
+      "detail": "HTTP 204"
+    },
+    {
+      "test": "cookie is __Host-, Secure, HttpOnly, SameSite=Strict",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/overview HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"cloud\": {\"dockerReachable\": true, \"implementation\": \"rust\", \"name\": \"arrowhead-v530-test-cloud-rust\", \"registryReachable\": true, \"release\": \"5.4.0\"}, \"collectedAt\": \"2026-11-14T21:35:06.669Z\", \"containers\": [{\"created\": 1794690255, \"displayName\": \"LocalCloudManager\", \"health\": \"healthy\", \"id\": \"cf"
+    },
+    {
+      "test": "view /api/overview without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "overview lists all 22 systems",
+      "passed": true,
+      "detail": "missing []"
+    },
+    {
+      "test": "manager registered (from the registry)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/service-registry-management HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"cloud\": {\"dockerReachable\": true, \"implementation\": \"rust\", \"name\": \"arrowhead-v530-test-cloud-rust\", \"registryReachable\": true, \"release\": \"5.4.0\"}, \"collectedAt\": \"2026-11-14T21:35:06.865Z\", \"devices\": [{\"addresses\": [], \"deployed\": true, \"metadata\": {}, \"name\": \"No registered device\", \"register"
+    },
+    {
+      "test": "view /api/service-registry-management without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/orchestration/rules HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"catalog\": {\"consumers\": [{\"interfaceTemplates\": [\"generic_amqps\", \"generic_https\"], \"name\": \"ServiceRegistry\", \"version\": \"5.4.0\", \"x509\": false}, {\"interfaceTemplates\": [\"generic_amqps\", \"generic_https\"], \"name\": \"ConsumerAuthorization\", \"version\": \"5.4.0\", \"x509\": false}, {\"interfaceTemplates\": "
+    },
+    {
+      "test": "view /api/orchestration/rules without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/orchestration/policies HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"collectedAt\": \"2026-11-14T21:35:07.832Z\", \"entries\": [{\"cloud\": \"LOCAL\", \"createdAt\": \"2026-11-12T07:00:04.376Z\", \"createdBy\": \"Sysop\", \"defaultPolicy\": {\"policyList\": [\"AIGym\"], \"policyType\": \"WHITELIST\"}, \"description\": \"Rust test cloud v5.3.0\", \"instanceId\": \"MGMT|LOCAL|SysMonitor|SERVICE_DEF|s"
+    },
+    {
+      "test": "view /api/orchestration/policies without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/plantdescriptions HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"collectedAt\": \"2026-11-14T21:35:08.097Z\", \"entries\": [], \"registryError\": null, \"services\": [{\"interfaces\": [\"generic_https\"], \"provider\": \"ServiceRegistry\", \"serviceDefinition\": \"deviceDiscovery\"}, {\"interfaces\": [\"generic_https\"], \"provider\": \"ServiceRegistry\", \"serviceDefinition\": \"echo\"}, {\"in"
+    },
+    {
+      "test": "view /api/plantdescriptions without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/sysmonitor HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"collectedAt\": \"2026-11-14T21:35:17.885Z\", \"observations\": [{\"metadata\": {\"arrowheadVersion\": \"5.4.0\", \"implementation\": \"rust\", \"publisherMode\": \"native\"}, \"observationId\": \"40a791ca-37a6-40bf-9f27-de53f34735b7\", \"observationType\": \"status\", \"pipeline\": {\"revision\": 1, \"sysMonitor\": \"SysMonitor\"},"
+    },
+    {
+      "test": "view /api/sysmonitor without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/sysmonitor/subscriptions HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"collectedAt\": \"2026-11-14T21:35:18.188Z\", \"defaultSubscription\": \"all\", \"intake\": {\"bindings\": [\"RustCloud.sysmonitor.AIGym.AIGym.echo\", \"RustCloud.sysmonitor.AIGym.AIGym.power\", \"RustCloud.sysmonitor.AIGym.AIGym.status\", \"RustCloud.sysmonitor.Authentication.Authentication.echo\", \"RustCloud.sysmon"
+    },
+    {
+      "test": "view /api/sysmonitor/subscriptions without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/datamanager?limit=240 HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"collectedAt\": \"2026-11-14T21:35:18.758Z\", \"count\": 240, \"entries\": [{\"name\": \"urn:arrowhead:random-data-producer:random-number\", \"serviceName\": \"randomNumberProducer\", \"systemName\": \"RandomDataProducer\", \"time\": 1794673382.455, \"unit\": \"1\", \"value\": {\"v\": 13, \"vb\": null, \"vs\": null}}, {\"name\": \"ur"
+    },
+    {
+      "test": "view /api/datamanager?limit=240 without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/consumers HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"collectedAt\": \"2026-11-14T21:35:19.062Z\", \"errors\": [], \"localCloud\": \"RustCloud.Company.arrowhead.eu\", \"plantRules\": [], \"policies\": {\"count\": 39, \"entries\": [{\"cloud\": \"LOCAL\", \"createdAt\": \"2026-11-12T07:00:04.376Z\", \"createdBy\": \"Sysop\", \"defaultPolicy\": {\"policyList\": [\"AIGym\"], \"policyType\":"
+    },
+    {
+      "test": "view /api/consumers without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/intercloud HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"capabilityAvailable\": false, \"collectedAt\": \"2026-11-14T21:35:19.387Z\", \"localCloud\": \"RustCloud.Company.arrowhead.eu\", \"neighbourClouds\": [], \"neighbourError\": null, \"producer\": {\"enabled\": false, \"endpoint\": null, \"lastError\": null, \"lastPublishedAt\": null, \"lastValue\": null, \"provider\": null, \""
+    },
+    {
+      "test": "view /api/intercloud without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "view /api/logs?service=serviceregistry&tail=180 HTTP 200",
+      "passed": true,
+      "detail": "HTTP 200 {\"collectedAt\": \"2026-11-14T21:35:19.550843963+00:00\", \"lines\": [\"2026-11-14T21:03:57.784136883Z ServiceRegistry Rust core listening on 0.0.0.0:8443 (mandatory mutual TLS)\", \"2026-11-14T21:03:57.974718467Z ServiceRegistry monitor publication unavailable (503)\"], \"service\": \"serviceregistry\"}"
+    },
+    {
+      "test": "view /api/logs?service=serviceregistry&tail=180 without provider errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "mutation without confirm header refused",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "logout",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "session gone after logout",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "views": {
+    "/api/overview": {
+      "cloud": 5,
+      "collectedAt": "2026-11-14T21:35:06.669Z",
+      "containers": 27,
+      "devices": 0,
+      "errors": 2,
+      "history": 4,
+      "infrastructure": 0,
+      "naming": 3,
+      "orchestrations": 0,
+      "registration": 4,
+      "registryManagement": 3,
+      "services": 122,
+      "summary": 8,
+      "systems": 23
+    },
+    "/api/service-registry-management": {
+      "cloud": 5,
+      "collectedAt": "2026-11-14T21:35:06.865Z",
+      "devices": 1,
+      "errors": 2,
+      "runtimeOnly": 0,
+      "summary": 7
+    },
+    "/api/orchestration/rules": {
+      "catalog": 2,
+      "collectedAt": "2026-11-14T21:35:07.551Z",
+      "count": 5,
+      "dynamic": 500,
+      "dynamicError": null,
+      "rules": 5
+    },
+    "/api/orchestration/policies": {
+      "collectedAt": "2026-11-14T21:35:07.832Z",
+      "entries": 39,
+      "readOnlyEntries": 0
+    },
+    "/api/plantdescriptions": {
+      "collectedAt": "2026-11-14T21:35:08.097Z",
+      "entries": 0,
+      "registryError": null,
+      "services": 122,
+      "systems": 23
+    },
+    "/api/sysmonitor": {
+      "collectedAt": "2026-11-14T21:35:17.885Z",
+      "observations": 1000,
+      "retentionDays": 30,
+      "selectedSystem": "AIGym",
+      "storedObservations": 22000,
+      "systems": 22
+    },
+    "/api/sysmonitor/subscriptions": {
+      "collectedAt": "2026-11-14T21:35:18.188Z",
+      "defaultSubscription": "all",
+      "intake": 6,
+      "providers": 22,
+      "status": 17,
+      "subscriptions": 0
+    },
+    "/api/datamanager?limit=240": {
+      "collectedAt": "2026-11-14T21:35:18.758Z",
+      "count": 240,
+      "entries": 240,
+      "latest": 0,
+      "series": 1
+    },
+    "/api/consumers": {
+      "collectedAt": "2026-11-14T21:35:19.062Z",
+      "errors": 0,
+      "localCloud": "RustCloud.Company.arrowhead.eu",
+      "plantRules": 0,
+      "policies": 2,
+      "rows": 122
+    },
+    "/api/intercloud": {
+      "capabilityAvailable": false,
+      "collectedAt": "2026-11-14T21:35:19.387Z",
+      "localCloud": "RustCloud.Company.arrowhead.eu",
+      "neighbourClouds": 0,
+      "neighbourError": null,
+      "producer": 9,
+      "relay": 2,
+      "sessions": 3
+    },
+    "/api/logs?service=serviceregistry&tail=180": {
+      "collectedAt": "2026-11-14T21:35:19.550843963+00:00",
+      "lines": 2,
+      "service": "serviceregistry"
+    }
+  }
+}

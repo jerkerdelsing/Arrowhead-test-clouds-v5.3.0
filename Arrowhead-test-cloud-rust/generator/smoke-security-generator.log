@@ -1,0 +1,142 @@
+PASS [H1] only edge and console-proxy publish ports
+PASS [H1] all 25 published ports bind 127.0.0.1 only
+PASS [H1] console published on 127.0.0.1:6490 only
+PASS [H1] Docker socket only in manager-docker-proxy
+PASS [H1] Docker socket mounted read-only
+PASS [H1] Docker gateway only on the internal manager-control network
+PASS [H1] console network holds only the manager and its relay
+PASS [J] system and gateway networks are internal
+PASS [J] no system on a network with a route outside
+PASS [J] no egress from the system network
+PASS [H1] Docker gateway unreachable from the system network
+PASS [H1] manager console refuses a client on the system network
+PASS [H1] Docker gateway refuses a request without its token
+PASS [H1] Docker gateway refuses a wrong token
+PASS [H1] console relay refuses other containers (only the host gateway)
+PASS [H1] manager console refuses a container on its console network that is not the relay
+PASS [J] localcloudmanager hardened
+PASS [J] onboarding hardened
+PASS [J] choreographer hardened
+PASS [J] aigym hardened
+PASS [J] timemanager hardened
+PASS [J] deviceqosevaluator hardened
+PASS [J] sysmonitor hardened
+PASS [J] plantdescriptionengine hardened
+PASS [J] random-data-producer hardened
+PASS [J] eventhandler hardened
+PASS [J] gatekeeper hardened
+PASS [J] datamanager hardened
+PASS [J] translationmanager hardened
+PASS [J] configuration hardened
+PASS [J] gatetunnel hardened
+PASS [J] manager-docker-proxy hardened
+PASS [J] serviceorchestration-simple hardened
+PASS [J] blacklist hardened
+PASS [J] serviceorchestration-dynamic hardened
+PASS [J] authentication hardened
+PASS [J] consumer-authorization hardened
+PASS [J] serviceregistry hardened
+PASS [J] certificateauthority hardened
+PASS [J] console-proxy hardened
+PASS [J] edge hardened
+PASS [J] amqp-broker hardened
+PASS [J] mqtt-broker hardened
+PASS [J] all 27 containers healthy
+PASS [H2] secrets/ is 700
+PASS [H2] private keys and passwords are 600
+PASS [H2] 27 secret values are distinct
+PASS [H2] no secret shorter than 32 characters
+PASS [H2] no secret value in compose.json
+PASS [H2] no secret value in config/*.json
+PASS [H2] no secret value in container environment
+PASS [H2] no secret value in container commands
+PASS [H2] console password in no file of the cloud folder (keychain only)
+PASS [H2] console password not in any container environment
+PASS [H2] manager holds only an scrypt hash of the console password
+PASS [H2] one identity per system, only Sysop is sysop
+PASS [H2] only CertificateAuthority holds the CA signing key
+PASS [H2] only Authentication holds the bootstrap passwords
+PASS [H3] only CertificateAuthority can write the published CRL
+PASS [H1] console reachable from the host through its relay (server-only TLS, cloud CA)
+PASS [H1] manager system API refuses clients without a certificate
+PASS [H3] serviceregistry accepts the operator certificate
+PASS [H3] serviceregistry refuses no client certificate
+PASS [H3] serviceregistry refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] authentication accepts the operator certificate
+PASS [H3] authentication refuses no client certificate
+PASS [H3] authentication refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] consumer-authorization accepts the operator certificate
+PASS [H3] consumer-authorization refuses no client certificate
+PASS [H3] consumer-authorization refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] serviceorchestration-dynamic accepts the operator certificate
+PASS [H3] serviceorchestration-dynamic refuses no client certificate
+PASS [H3] serviceorchestration-dynamic refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] serviceorchestration-simple accepts the operator certificate
+PASS [H3] serviceorchestration-simple refuses no client certificate
+PASS [H3] serviceorchestration-simple refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] aigym accepts the operator certificate
+PASS [H3] aigym refuses no client certificate
+PASS [H3] aigym refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] blacklist accepts the operator certificate
+PASS [H3] blacklist refuses no client certificate
+PASS [H3] blacklist refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] certificateauthority accepts the operator certificate
+PASS [H3] certificateauthority refuses no client certificate
+PASS [H3] certificateauthority refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] choreographer accepts the operator certificate
+PASS [H3] choreographer refuses no client certificate
+PASS [H3] choreographer refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] configuration accepts the operator certificate
+PASS [H3] configuration refuses no client certificate
+PASS [H3] configuration refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] datamanager accepts the operator certificate
+PASS [H3] datamanager refuses no client certificate
+PASS [H3] datamanager refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] deviceqosevaluator accepts the operator certificate
+PASS [H3] deviceqosevaluator refuses no client certificate
+PASS [H3] deviceqosevaluator refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] eventhandler accepts the operator certificate
+PASS [H3] eventhandler refuses no client certificate
+PASS [H3] eventhandler refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] gatekeeper accepts the operator certificate
+PASS [H3] gatekeeper refuses no client certificate
+PASS [H3] gatekeeper refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] gatetunnel accepts the operator certificate
+PASS [H3] gatetunnel refuses no client certificate
+PASS [H3] gatetunnel refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] onboarding accepts the operator certificate
+PASS [H3] onboarding refuses no client certificate
+PASS [H3] onboarding refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] plantdescriptionengine accepts the operator certificate
+PASS [H3] plantdescriptionengine refuses no client certificate
+PASS [H3] plantdescriptionengine refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] sysmonitor accepts the operator certificate
+PASS [H3] sysmonitor refuses no client certificate
+PASS [H3] sysmonitor refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] timemanager accepts the operator certificate
+PASS [H3] timemanager refuses no client certificate
+PASS [H3] timemanager refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] translationmanager accepts the operator certificate
+PASS [H3] translationmanager refuses no client certificate
+PASS [H3] translationmanager refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] localcloudmanager accepts the operator certificate
+PASS [H3] localcloudmanager refuses no client certificate
+PASS [H3] localcloudmanager refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] random-data-producer accepts the operator certificate
+PASS [H3] random-data-producer refuses no client certificate
+PASS [H3] random-data-producer refuses a foreign-CA certificate with a valid-looking name
+PASS [H3] amqp-broker accepts a cloud certificate
+PASS [H3] amqp-broker refuses no client certificate
+PASS [H3] amqp-broker refuses a foreign-CA certificate
+PASS [H3] mqtt-broker accepts a cloud certificate
+PASS [H3] mqtt-broker refuses no client certificate
+PASS [H3] mqtt-broker refuses a foreign-CA certificate
+PASS [H3] ServiceRegistry refuses TLS 1.0/1.1
+PASS [H3] published CRL is valid and issued by the cloud CA
+PASS [H3] CertificateAuthority issues a disposable identity (HTTP 201)
+PASS [H3] disposable identity accepted by all 22 listeners before revocation
+PASS [H3] revocation accepted (HTTP 200)
+PASS [H3] revoked identity refused at TLS by all listeners (0 s)
+PASS [H3] no container restarted for the CRL update
+PASS [J] other clouds still running {'arrowhead-v53-test-cloud-go': 27, 'arrowhead-v53-test-cloud': 50, 'arrowhead-v52-test-cloud-go': 27}
+security: 141 passed, 0 failed

@@ -1,0 +1,151 @@
+21:34:58  docker compose -f compose.json config --quiet
+21:34:58  docker compose -f compose.json up -d --wait --wait-timeout 180 amqp-broker mqtt-broker certificateauthority
+ Container arrowhead-v530-test-cloud-rust-certificateauthority-1 Running 
+ Container arrowhead-v530-test-cloud-rust-amqp-broker-1 Running 
+ Container arrowhead-v530-test-cloud-rust-mqtt-broker-1 Running 
+ Container arrowhead-v530-test-cloud-rust-mqtt-broker-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-certificateauthority-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-amqp-broker-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-amqp-broker-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-certificateauthority-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-mqtt-broker-1 Healthy 
+21:34:59  docker compose -f compose.json up -d --wait --wait-timeout 180 serviceregistry authentication consumer-authorization edge
+ Container arrowhead-v530-test-cloud-rust-serviceregistry-1 Running 
+ Container arrowhead-v530-test-cloud-rust-authentication-1 Running 
+ Container arrowhead-v530-test-cloud-rust-consumer-authorization-1 Running 
+ Container arrowhead-v530-test-cloud-rust-edge-1 Running 
+ Container arrowhead-v530-test-cloud-rust-consumer-authorization-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-edge-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-serviceregistry-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-authentication-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-consumer-authorization-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-serviceregistry-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-edge-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-authentication-1 Healthy 
+21:35:00  docker compose -f compose.json up -d --wait --wait-timeout 180 serviceorchestration-simple serviceorchestration-dynamic blacklist
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-dynamic-1 Running 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-simple-1 Running 
+ Container arrowhead-v530-test-cloud-rust-blacklist-1 Running 
+ Container arrowhead-v530-test-cloud-rust-blacklist-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-dynamic-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-simple-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-dynamic-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-simple-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-blacklist-1 Healthy 
+21:35:01  python3 generator/configure.py
+34 local policies granted
+21:35:01  docker compose -f compose.json up -d --wait --wait-timeout 300
+ Container arrowhead-v530-test-cloud-rust-mqtt-broker-1 Running 
+ Container arrowhead-v530-test-cloud-rust-authentication-1 Running 
+ Container arrowhead-v530-test-cloud-rust-consumer-authorization-1 Running 
+ Container arrowhead-v530-test-cloud-rust-console-proxy-1 Running 
+ Container arrowhead-v530-test-cloud-rust-choreographer-1 Running 
+ Container arrowhead-v530-test-cloud-rust-amqp-broker-1 Running 
+ Container arrowhead-v530-test-cloud-rust-configuration-1 Running 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-dynamic-1 Running 
+ Container arrowhead-v530-test-cloud-rust-random-data-producer-1 Running 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-simple-1 Running 
+ Container arrowhead-v530-test-cloud-rust-gatekeeper-1 Running 
+ Container arrowhead-v530-test-cloud-rust-edge-1 Running 
+ Container arrowhead-v530-test-cloud-rust-onboarding-1 Running 
+ Container arrowhead-v530-test-cloud-rust-localcloudmanager-1 Running 
+ Container arrowhead-v530-test-cloud-rust-timemanager-1 Running 
+ Container arrowhead-v530-test-cloud-rust-manager-docker-proxy-1 Running 
+ Container arrowhead-v530-test-cloud-rust-gatetunnel-1 Running 
+ Container arrowhead-v530-test-cloud-rust-deviceqosevaluator-1 Running 
+ Container arrowhead-v530-test-cloud-rust-eventhandler-1 Running 
+ Container arrowhead-v530-test-cloud-rust-datamanager-1 Running 
+ Container arrowhead-v530-test-cloud-rust-translationmanager-1 Running 
+ Container arrowhead-v530-test-cloud-rust-serviceregistry-1 Running 
+ Container arrowhead-v530-test-cloud-rust-certificateauthority-1 Running 
+ Container arrowhead-v530-test-cloud-rust-aigym-1 Running 
+ Container arrowhead-v530-test-cloud-rust-blacklist-1 Running 
+ Container arrowhead-v530-test-cloud-rust-plantdescriptionengine-1 Running 
+ Container arrowhead-v530-test-cloud-rust-sysmonitor-1 Running 
+ Container arrowhead-v530-test-cloud-rust-manager-docker-proxy-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-manager-docker-proxy-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-localcloudmanager-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-localcloudmanager-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-authentication-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-aigym-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-blacklist-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-simple-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-configuration-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-random-data-producer-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-translationmanager-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-serviceregistry-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-plantdescriptionengine-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-edge-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-amqp-broker-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-deviceqosevaluator-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-eventhandler-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-dynamic-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-timemanager-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-manager-docker-proxy-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-sysmonitor-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-mqtt-broker-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-onboarding-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-gatekeeper-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-console-proxy-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-localcloudmanager-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-certificateauthority-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-gatetunnel-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-datamanager-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-consumer-authorization-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-choreographer-1 Waiting 
+ Container arrowhead-v530-test-cloud-rust-aigym-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-amqp-broker-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-choreographer-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-consumer-authorization-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-timemanager-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-authentication-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-console-proxy-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-deviceqosevaluator-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-edge-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-eventhandler-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-simple-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-manager-docker-proxy-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-certificateauthority-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-serviceorchestration-dynamic-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-onboarding-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-gatetunnel-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-mqtt-broker-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-plantdescriptionengine-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-random-data-producer-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-serviceregistry-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-datamanager-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-sysmonitor-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-blacklist-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-translationmanager-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-gatekeeper-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-configuration-1 Healthy 
+ Container arrowhead-v530-test-cloud-rust-localcloudmanager-1 Healthy 
+21:35:03  docker compose -f compose.json ps --format table {{.Service}}\t{{.Status}}
+SERVICE                        STATUS
+aigym                          Up 30 minutes (healthy)
+amqp-broker                    Up 13 hours (healthy)
+authentication                 Up 31 minutes (healthy)
+blacklist                      Up 30 minutes (healthy)
+certificateauthority           Up 31 minutes (healthy)
+choreographer                  Up 30 minutes (healthy)
+configuration                  Up 30 minutes (healthy)
+console-proxy                  Up 13 hours (healthy)
+consumer-authorization         Up 31 minutes (healthy)
+datamanager                    Up 30 minutes (healthy)
+deviceqosevaluator             Up 30 minutes (healthy)
+edge                           Up 13 hours (healthy)
+eventhandler                   Up 30 minutes (healthy)
+gatekeeper                     Up 30 minutes (healthy)
+gatetunnel                     Up 30 minutes (healthy)
+localcloudmanager              Up 30 minutes (healthy)
+manager-docker-proxy           Up 30 minutes (healthy)
+mqtt-broker                    Up 13 hours (healthy)
+onboarding                     Up 30 minutes (healthy)
+plantdescriptionengine         Up 30 minutes (healthy)
+random-data-producer           Up 30 minutes (healthy)
+serviceorchestration-dynamic   Up 30 minutes (healthy)
+serviceorchestration-simple    Up 30 minutes (healthy)
+serviceregistry                Up 31 minutes (healthy)
+sysmonitor                     Up 30 minutes (healthy)
+timemanager                    Up 30 minutes (healthy)
+translationmanager             Up 30 minutes (healthy)
